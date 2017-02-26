@@ -7,14 +7,48 @@ build = 'make'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-hook_add = 'let g:deoplete#enable_at_startup = 1'
-
+hook_add = '''
+let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
+let g:deoplete#enable_at_startup = 1
+'''
 [[plugins]]
 repo = 'zchee/deoplete-clang'
+hook_source = '''
+let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/3.9.1/lib/libclang.dylib'
+let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/3.9.1/lib/clang'
+'''
 
-[[plugins]]
-repo = 'Shougo/unite.vim'
-depends = 'neomru.vim'
+on_ft = ['c', 'cpp', 'cmake']
+depends = ['deoplete.nvim']
+
+#[[plugins]]
+#repo = 'Shougo/unite.vim'
+#depends = 'neomru.vim'
 
 [[plugins]]
 repo = 'critiqjo/lldb.nvim'
+
+[[plugins]]
+repo = 'tomasr/molokai'
+hook_add = '''
+autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
+colorscheme molokai
+syntax on
+" 256色
+set t_Co=256
+" 背景色
+set background=dark
+'''
+
+[[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]] 
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]] 
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'

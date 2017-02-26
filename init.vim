@@ -66,14 +66,31 @@
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+ ""
  set clipboard=unnamedplus
- 
+
+ if has("mouse") " Enable the use of the mouse in all modes
+   set mouse=a
+ endif
+
+" code folding settings
+set foldcolumn=0
+set foldmethod=indent       " fold based on indent
+set foldnestmax=10          " deepest fold is 10 levels
+set nofoldenable            " don't fold by default
+set foldlevel=1
+
+set ttyfast                 " faster redrawing
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
 filetype indent on
+
+" python
+" let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
+ let g:python_host_prog = expand('~/.pyenv/shims/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

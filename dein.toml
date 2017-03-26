@@ -11,19 +11,25 @@ hook_add = '''
 let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
 let g:deoplete#enable_at_startup = 1
 '''
+
+# [[plugins]]
+# repo = 'zchee/deoplete-clang'
+# hook_source = '''
+# let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/3.9.1/lib/libclang.dylib'
+# let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/3.9.1/lib/clang/'
+# '''
+# on_ft = ['c', 'cpp', 'cmake']
+# depends = ['deoplete.nvim']
+
+# [[plugins]]
+# repo = 'Valloric/YouCompleteMe'
+
 [[plugins]]
-repo = 'zchee/deoplete-clang'
-hook_source = '''
-let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/3.9.1/lib/libclang.dylib'
-let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/3.9.1/lib/clang'
-'''
+repo = 'tweekmonster/deoplete-clang2'
 
-on_ft = ['c', 'cpp', 'cmake']
-depends = ['deoplete.nvim']
-
-#[[plugins]]
-#repo = 'Shougo/unite.vim'
-#depends = 'neomru.vim'
+# [[plugins]]
+# repo = 'Shougo/unite.vim'
+# depends = 'neomru.vim'
 
 [[plugins]]
 repo = 'critiqjo/lldb.nvim'
@@ -52,3 +58,10 @@ repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = "https://github.com/tyru/caw.vim.git"
+hook_add = '''
+nmap <C-_> <Plug>(caw:hatpos:toggle)
+vmap <C-_> <Plug>(caw:hatpos:toggle)
+'''

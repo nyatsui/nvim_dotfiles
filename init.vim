@@ -89,8 +89,8 @@ endif
 filetype indent on
 
 " python
-" let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
- let g:python_host_prog = expand('~/.pyenv/shims/python')
+let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
+" let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

@@ -22,8 +22,8 @@
  hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
  " 現在の行を強調表示（縦）
- hi CursorColumn cterm=bold ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
- set cursorcolumn
+ " hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
+ " set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
  " インデントはスマートインデント
@@ -89,8 +89,8 @@ endif
 filetype indent on
 
 " python
-let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
 " let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
+ let g:python_host_prog = expand('/usr/local/Cellar/python/2.7.13/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

@@ -27,12 +27,12 @@ let g:deoplete#enable_at_startup = 1
 [[plugins]]
 repo = 'tweekmonster/deoplete-clang2'
 
-# [[plugins]]
-# repo = 'Shougo/unite.vim'
-# depends = 'neomru.vim'
-
 [[plugins]]
-repo = 'critiqjo/lldb.nvim'
+repo = 'Shougo/denite.nvim'
+depends = 'neomru.vim'
+
+# [[plugins]]
+# repo = 'critiqjo/lldb.nvim'
 
 [[plugins]]
 repo = 'tomasr/molokai'

@@ -17,12 +17,12 @@
  set number
  
  set ruler " Show the line and column numbers of the cursor.
-
+ hi Cursor guifg=#121212 guibg=#afd700
  " 現在の行を強調表示
  hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
  " 現在の行を強調表示（縦）
- hi CursorColumn cterm=bold ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
+ hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
@@ -113,7 +113,14 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
+
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
   call dein#install()
 endif
+
+"""
+ syntax on "コードの色分け
+ " コメントを緑にする
+ autocmd ColorScheme * highlight Comment ctermfg=Green guifg=#008800
+ colorscheme molokai

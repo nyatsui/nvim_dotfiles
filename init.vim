@@ -22,8 +22,8 @@
  hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
  " 現在の行を強調表示（縦）
- " hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
- " set cursorcolumn
+ hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
+ set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
  " インデントはスマートインデント
@@ -74,11 +74,7 @@
  endif
 
 " code folding settings
-set foldcolumn=0
-set foldmethod=indent       " fold based on indent
-set foldnestmax=10          " deepest fold is 10 levels
-set nofoldenable            " don't fold by default
-set foldlevel=1
+" runtime! atom-style-folding.vim
 
 set ttyfast                 " faster redrawing
 
@@ -86,10 +82,14 @@ if &compatible
   set nocompatible               " Be iMproved
 endif
 
-filetype indent on
+
+" map <C-s> to :update
+noremap <silent> <C-S>      :update<CR>
+" noremap <silent> <C-S>     <Esc><C-C>:update<CR>
+" inoremap <silent> <C-S>     <Esc><C-O>:update<CR>
+inoremap <silent> <C-S>     <Esc>:update<CR>
 
 " python
-" let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
  let g:python_host_prog = expand('/usr/local/Cellar/python/2.7.13/bin/python')
 
 "dein Scripts-----------------------------
@@ -118,8 +118,8 @@ if dein#load_state(s:dein_dir)
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
   let g:rc_dir    = expand("~/.config/nvim/")
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let s:toml      = g:rc_dir . 'dein.toml'
+  let s:lazy_toml = g:rc_dir . 'dein_lazy.toml'
 
   " TOML を読み込み、キャッシュしておく
   call dein#load_toml(s:toml,      {'lazy': 0})
@@ -134,3 +134,8 @@ endif
 if dein#check_install()
   call dein#install()
 endif
+
+
+syntax on
+filetype indent on
+filetype plugin indent on

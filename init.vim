@@ -94,7 +94,9 @@ inoremap <silent> <C-S>     <Esc>:update<CR>
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ
-if has('nvim')
+if exists('g:nyaovim_version')
+  let s:dein_cache_path = expand('~/.cache/nyaovim/dein')
+elseif has('nvim')
   let s:dein_cache_path = expand('~/.cache/nvim/dein')
 else
   let s:dein_cache_path = expand('~/.cache/vim/dein')

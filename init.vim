@@ -15,7 +15,7 @@
  " 見た目系
  " 行番号を表示
  set number
- 
+
  set ruler " Show the line and column numbers of the cursor.
 
  " 現在の行を強調表示
@@ -90,7 +90,7 @@ noremap <silent> <C-S>      :update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
 " python
- let g:python_host_prog = expand('/usr/local/Cellar/python/2.7.13/bin/python')
+" let g:python_host_prog = expand('/usr/local/Cellar/python/2.7.13/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

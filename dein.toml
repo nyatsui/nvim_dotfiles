@@ -5,12 +5,12 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-hook_add = '''
-let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
-let g:deoplete#enable_at_startup = 1
-'''
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# hook_add = '''
+# let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
+# let g:deoplete#enable_at_startup = 1
+# '''
 
 # [[plugins]]
 # repo = 'zchee/deoplete-clang'
@@ -24,8 +24,8 @@ let g:deoplete#enable_at_startup = 1
 # [[plugins]]
 # repo = 'Valloric/YouCompleteMe'
 
-[[plugins]]
-repo = 'tweekmonster/deoplete-clang2'
+# [[plugins]]
+# repo = 'tweekmonster/deoplete-clang2'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
@@ -73,7 +73,7 @@ set background=dark
 [[plugins]]
 repo = 'cespare/vim-toml'
 
-[[plugins]] 
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
@@ -100,3 +100,9 @@ depends = ['vim-airline-themes']
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+
+[[plugins]]
+repo = 'tpope/vim-surround'

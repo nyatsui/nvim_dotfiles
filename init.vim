@@ -67,7 +67,8 @@
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
  ""
- set clipboard=unnamedplus
+ "set clipboard=unnamedplus
+ set clipboard=unnamed
 
  if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a
@@ -81,6 +82,22 @@ set ttyfast                 " faster redrawing
 if &compatible
   set nocompatible               " Be iMproved
 endif
+
+
+" https://qiita.com/hikaruna/items/83c1220eede810bee492
+" vモードの置換連続ペースト用
+function! Put_text_without_override_register()
+  let line_len = strlen(getline('.'))
+  execute "normal! `>"
+  let col_loc = col('.')
+  execute 'normal! gv"_x'
+  if line_len == col_loc
+    execute 'normal! p'
+  else
+    execute 'normal! P'
+  endif
+endfunction
+xnoremap <silent> p :call Put_text_without_override_register()<CR>
 
 
 " map <C-s> to :update

@@ -106,3 +106,13 @@ repo = 'scrooloose/nerdtree'
 
 [[plugins]]
 repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = ['vim-operator-user']
+hook_add = '''
+map <Space>r <Plug>(operator-replace)
+'''

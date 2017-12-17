@@ -66,9 +66,26 @@
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" 行を移動
+nnoremap <C-Up> "zdd<Up>"zP
+nnoremap <C-Down> "zdd"zp
+" 複数行を移動
+vnoremap <C-Up> "zx<Up>"zP`[V`]
+vnoremap <C-Down> "zx"zp`[V`]
+
+" emacs key bind in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
+
+
  ""
- set clipboard=unnamedplus
- "set clipboard=unnamed
+ " set clipboard=unnamedplus
+set clipboard=unnamed
 
  if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a
@@ -94,9 +111,6 @@ noremap <silent> <C-S>      :update<CR>
 " inoremap <silent> <C-S>     <Esc><C-O>:update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
-" python
-" let g:python_host_prog = expand('/usr/local/Cellar/python/2.7.13/bin/python')
-" let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

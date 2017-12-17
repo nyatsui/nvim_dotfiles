@@ -78,27 +78,13 @@
 " runtime! atom-style-folding.vim
 
 set ttyfast                 " faster redrawing
+set lazyredraw
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
 set backspace=indent,eol,start
-
-" https://qiita.com/hikaruna/items/83c1220eede810bee492
-" vモードの置換連続ペースト用
-" function! Put_text_without_override_register()
-"   let line_len = strlen(getline('.'))
-"   execute "normal! `>"
-"   let col_loc = col('.')
-"   execute 'normal! gv"_x'
-"   if line_len == col_loc
-"     execute 'normal! p'
-"   else
-"     execute 'normal! P'
-"   endif
-" endfunction
-" xnoremap <silent> p :call Put_text_without_override_register()<CR>
 
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 

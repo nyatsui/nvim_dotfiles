@@ -5,16 +5,43 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
-[[plugins]]
-repo = 'Shougo/deoplete.nvim'
-hook_add = 'let g:deoplete#enable_at_startup = 1'
+# [[plugins]]
+# repo = 'Shougo/deoplete.nvim'
+# hook_add = 'let g:deoplete#enable_at_startup = 1'
+
+# [[plugins]]
+# repo = 'zchee/deoplete-clang'
+
+# [[plugins]]
+# repo = 'tweekmonster/deoplete-clang2'
 
 [[plugins]]
-repo = 'zchee/deoplete-clang'
-
-[[plugins]]
-repo = 'Shougo/unite.vim'
+repo = 'Shougo/denite.nvim'
 depends = 'neomru.vim'
+on_event = 'BufRead'
+hook_add = '''
+nmap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+nmap <silent> <C-p> :<C-u>Denite file_rec<CR>
+nmap <silent> <C-u>b :<C-u>Denite buffer<CR>
+nmap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+nmap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+nmap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+nmap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nmap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nmap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+nmap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+nmap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+nmap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+'''
+hook_post_source = '''
+call denite#custom#var('file_rec', 'command',
+\ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+call denite#custom#var('grep', 'command',
+\ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+call denite#custom#var('grep', 'default_opts', [])
+call denite#custom#var('grep', 'recursive_opts', [])
+'''
 
 [[plugins]]
 repo = 'critiqjo/lldb.nvim'
@@ -32,3 +59,32 @@ hook_add = '''
 
 [[plugins]]
 repo = 'tomasr/molokai'
+hook_add = '''
+autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
+colorscheme molokai
+syntax on
+" 256色
+set t_Co=256
+" 背景色
+set background=dark
+'''
+
+[[plugins]]
+repo = 'airblade/vim-gitgutter'
+
+[[plugins]]
+repo = "https://github.com/tyru/caw.vim.git"
+hook_add = '''
+nmap <C-_> <Plug>(caw:hatpos:toggle)
+vmap <C-_> <Plug>(caw:hatpos:toggle)
+'''
+
+[[plugins]]
+repo = 'Townk/vim-autoclose'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'

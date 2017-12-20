@@ -67,13 +67,19 @@
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
  set clipboard=unnamedplus
- 
+  if has("mouse") " Enable the use of the mouse in all modes
+   set mouse=a
+ endif
+
+set ttyfast                 " faster redrawing
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-filetype indent on
+" map <C-s> to :update
+noremap <silent> <C-S>      :update<CR>
+inoremap <silent> <C-S>     <Esc>:update<CR>
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ
@@ -120,7 +126,6 @@ if dein#check_install()
 endif
 
 """
- syntax on "コードの色分け
- " コメントを緑にする
- autocmd ColorScheme * highlight Comment ctermfg=Green guifg=#008800
- colorscheme molokai
+syntax on "コードの色分け
+filetype indent on
+filetype plugin indent on

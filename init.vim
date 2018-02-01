@@ -17,7 +17,9 @@
  set number
  
  set ruler " Show the line and column numbers of the cursor.
+
  hi Cursor guifg=#121212 guibg=#afd700
+
  " 現在の行を強調表示
  hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
@@ -66,20 +68,46 @@
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" 行を移動
+nnoremap <C-Up> "zdd<Up>"zP
+nnoremap <C-Down> "zdd"zp
+" 複数行を移動
+vnoremap <C-Up> "zx<Up>"zP`[V`]
+vnoremap <C-Down> "zx"zp`[V`]
+
+" emacs key bind in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
+
+
  set clipboard=unnamedplus
-  if has("mouse") " Enable the use of the mouse in all modes
+
+ if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a
  endif
 
 set ttyfast                 " faster redrawing
+set lazyredraw
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
+set backspace=indent,eol,start
+
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
+
 " map <C-s> to :update
 noremap <silent> <C-S>      :update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
+
+" python path
+let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

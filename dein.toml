@@ -20,6 +20,7 @@ repo = 'Shougo/denite.nvim'
 depends = 'neomru.vim'
 on_event = 'BufRead'
 hook_add = '''
+let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 nmap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nmap <silent> <C-p> :<C-u>Denite file_rec<CR>
 nmap <silent> <C-u>b :<C-u>Denite buffer<CR>
@@ -70,6 +71,16 @@ set background=dark
 '''
 
 [[plugins]]
+repo = 'cespare/vim-toml'
+
+[[plugins]]
+repo = 'osyo-manga/vim-precious'
+depends = ['context_filetype.vim']
+
+[[plugins]]
+repo = 'Shougo/context_filetype.vim'
+
+[[plugins]]
 repo = 'airblade/vim-gitgutter'
 
 [[plugins]]
@@ -85,6 +96,48 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 depends = ['vim-airline-themes']
+hook_add = '''
+" カーソルキーでbuffer移動
+nnoremap <Left> :bp<CR>
+nnoremap <Right> :bn<CR>
+" Smarter tab line有効化
+let g:airline#extensions#tabline#enabled = 1
+" powerline font入れないと若干ダサい
+let g:airline_powerline_fonts = 1
+" vim-airline-themesが必要
+let g:airline_theme='behelit'
+'''
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+map <C-n> :NERDTreeToggle<CR>
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = ['vim-operator-user']
+hook_add = '''
+map <Space>r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+on_if  = '''
+!has('nvim')
+'''
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if  = '''
+!has('nvim')
+'''

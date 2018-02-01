@@ -21,10 +21,11 @@
  hi Cursor guifg=#121212 guibg=#afd700
 
  " 現在の行を強調表示
- hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
+ " hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
+ " hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=NONE guifg=NONE
  " 現在の行を強調表示（縦）
- hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
+ " hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
@@ -39,8 +40,8 @@
  " コマンドラインの補完
  set wildmode=list:longest
  " 折り返し時に表示行単位での移動できるようにする
- nnoremap j gj
- nnoremap k gk
+ noremap j gj
+ noremap k gk
 
 "
  " Tab系
@@ -107,7 +108,7 @@ noremap <silent> <C-S>      :update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
 " python path
-let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
+" let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

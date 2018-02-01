@@ -21,18 +21,18 @@ depends = 'neomru.vim'
 on_event = 'BufRead'
 hook_add = '''
 let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
-nmap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-nmap <silent> <C-p> :<C-u>Denite file_rec<CR>
-nmap <silent> <C-u>b :<C-u>Denite buffer<CR>
-nmap <silent> <C-u><C-j> :<C-u>Denite line<CR>
-nmap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
-nmap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
-nmap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
-nmap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
-nmap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
-nmap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
-nmap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
-nmap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
+nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
 nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
 '''
 hook_post_source = '''
@@ -62,6 +62,9 @@ hook_add = '''
 repo = 'tomasr/molokai'
 hook_add = '''
 autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
+autocmd ColorScheme * highlight Visual  ctermbg=236 guibg=grey22
+autocmd ColorScheme * hi CursorLine  cterm=NONE ctermbg=236 ctermfg=NONE guibg=grey17 guifg=NONE
+autocmd ColorScheme * hi Search cterm=NONE ctermfg=NONE ctermbg=243 guibg=midnightblue guifg=NONE
 colorscheme molokai
 syntax on
 " 256色
@@ -140,4 +143,26 @@ on_if  = '''
 repo = 'roxma/vim-hug-neovim-rpc'
 on_if  = '''
 !has('nvim')
+'''
+
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'zebult/auto-gtags.vim'
+hook_add = '''
+let g:auto_update_gtags = 1
+'''
+
+[[plugins]]
+repo = 'lighttiger2505/gtags.vim'
+hook_add = '''
+    " Options
+    let g:Gtags_Auto_Map = 0
+    let g:Gtags_OpenQuickfixWindow = 1
+    " Keymap
+    " Show definetion of function cousor word on quickfix
+    nmap <silent> K :<C-u>exe("Gtags ".expand('<cword>'))<CR>
+    " Show reference of cousor word on quickfix
+    nmap <silent> R :<C-u>exe("Gtags -r ".expand('<cword>'))<CR>
 '''

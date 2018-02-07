@@ -39,6 +39,7 @@
  set laststatus=2
  " コマンドラインの補完
  set wildmode=list:longest
+ set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
  " 折り返し時に表示行単位での移動できるようにする
  noremap j gj
  noremap k gk

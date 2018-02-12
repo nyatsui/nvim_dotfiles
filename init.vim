@@ -15,8 +15,10 @@
  " 見た目系
  " 行番号を表示
  set number
- 
+
  set ruler " Show the line and column numbers of the cursor.
+
+ hi Cursor guifg=#121212 guibg=#afd700
 
  " 現在の行を強調表示
  hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
@@ -36,9 +38,10 @@
  set laststatus=2
  " コマンドラインの補完
  set wildmode=list:longest
+ set wildignore=*.o,*.obj,*.pyc,*.so,*.dllset
  " 折り返し時に表示行単位での移動できるようにする
- nnoremap j gj
- nnoremap k gk
+ noremap j gj
+ noremap k gk
 
 "
  " Tab系
@@ -66,6 +69,22 @@
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" 行を移動
+nnoremap <C-Up> "zdd<Up>"zP
+nnoremap <C-Down> "zdd"zp
+" 複数行を移動
+vnoremap <C-Up> "zx<Up>"zP`[V`]
+vnoremap <C-Down> "zx"zp`[V`]
+
+" emacs key bind in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
+
  ""
  "set clipboard=unnamedplus
  set clipboard=unnamed
@@ -78,27 +97,15 @@
 " runtime! atom-style-folding.vim
 
 set ttyfast                 " faster redrawing
+set lazyredraw
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
+set backspace=indent,eol,start
 
-" https://qiita.com/hikaruna/items/83c1220eede810bee492
-" vモードの置換連続ペースト用
-function! Put_text_without_override_register()
-  let line_len = strlen(getline('.'))
-  execute "normal! `>"
-  let col_loc = col('.')
-  execute 'normal! gv"_x'
-  if line_len == col_loc
-    execute 'normal! p'
-  else
-    execute 'normal! P'
-  endif
-endfunction
-xnoremap <silent> p :call Put_text_without_override_register()<CR>
-
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
 
 " map <C-s> to :update
 noremap <silent> <C-S>      :update<CR>

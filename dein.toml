@@ -30,11 +30,11 @@ repo = 'tweekmonster/deoplete-clang2'
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = 'neomru.vim'
-on_event = 'BufRead'
+# on_event = 'BufRead'
 hook_add = '''
 nmap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nmap <silent> <C-p> :<C-u>Denite file_rec<CR>
-nmap <silent> <C-u>b :<C-u>Denite buffer<CR>
+nmap <silent> <C-b> :<C-u>Denite buffer<CR>
 nmap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nmap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nmap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
@@ -45,14 +45,21 @@ nmap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
 nmap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 nmap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
 nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
-'''
-hook_post_source = '''
+
 call denite#custom#var('file_rec', 'command',
 \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
 call denite#custom#var('grep', 'command',
 \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
 call denite#custom#var('grep', 'default_opts', [])
 call denite#custom#var('grep', 'recursive_opts', [])
+'''
+hook_post_source = '''
+" call denite#custom#var('file_rec', 'command',
+" \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+" call denite#custom#var('grep', 'command',
+" \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+" call denite#custom#var('grep', 'default_opts', [])
+" call denite#custom#var('grep', 'recursive_opts', [])
 '''
 
 # [[plugins]]
@@ -62,18 +69,22 @@ call denite#custom#var('grep', 'recursive_opts', [])
 repo = 'tomasr/molokai'
 hook_add = '''
 autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
+autocmd ColorScheme * highlight Visual  ctermbg=236 guibg=grey22
+autocmd ColorScheme * hi CursorLine  cterm=NONE ctermbg=236 ctermfg=NONE guibg=grey17 guifg=NONE
+autocmd ColorScheme * hi Search cterm=NONE ctermfg=NONE ctermbg=243 guibg=midnightblue guifg=NONE
 colorscheme molokai
 syntax on
 " 256色
 set t_Co=256
 " 背景色
 set background=dark
+set termguicolors
 '''
 
 [[plugins]]
 repo = 'cespare/vim-toml'
 
-[[plugins]] 
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
@@ -82,6 +93,9 @@ repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+let g:gitgutter_log=1
+'''
 
 [[plugins]]
 repo = "https://github.com/tyru/caw.vim.git"
@@ -97,9 +111,29 @@ repo = 'Townk/vim-autoclose'
 [[plugins]]
 repo = 'vim-airline/vim-airline'
 depends = ['vim-airline-themes']
+hook_add = '''
+" カーソルキーでbuffer移動
+nnoremap <Left> :bp<CR>
+nnoremap <Right> :bn<CR>
+" Smarter tab line有効化
+let g:airline#extensions#tabline#enabled = 1
+" powerline font入れないと若干ダサい
+let g:airline_powerline_fonts = 1
+" vim-airline-themesが必要
+let g:airline_theme='behelit'
+'''
 
 [[plugins]]
 repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+map <C-n> :NERDTreeToggle<CR>
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
@@ -110,3 +144,41 @@ depends = ['vim-operator-user']
 hook_add = '''
 map <Space>r <Plug>(operator-replace)
 '''
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+on_if  = '''
+!has('nvim')
+'''
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if  = '''
+!has('nvim')
+'''
+
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'zebult/auto-gtags.vim'
+hook_add = '''
+let g:auto_update_gtags = 1
+'''
+
+[[plugins]]
+repo = 'lighttiger2505/gtags.vim'
+hook_add = '''
+    " Options
+    let g:Gtags_Auto_Map = 0
+    let g:Gtags_OpenQuickfixWindow = 1
+    " Keymap
+    " Show definetion of function cousor word on quickfix
+    nmap <silent> K :<C-u>exe("Gtags ".expand('<cword>'))<CR>
+    " Show reference of cousor word on quickfix
+    nmap <silent> R :<C-u>exe("Gtags -r ".expand('<cword>'))<CR>
+'''
+
+[[plugins]]
+repo = "tpope/vim-fugitive"
+# hook_add = ''''''

@@ -78,7 +78,6 @@ syntax on
 set t_Co=256
 " 背景色
 set background=dark
-set termguicolors
 '''
 
 [[plugins]]

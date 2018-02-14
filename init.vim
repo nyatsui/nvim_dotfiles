@@ -15,10 +15,8 @@
  " 見た目系
  " 行番号を表示
  set number
- 
- set ruler " Show the line and column numbers of the cursor.
 
- hi Cursor guifg=#121212 guibg=#afd700
+ set ruler " Show the line and column numbers of the cursor.
 
  " 現在の行を強調表示
  set cursorline
@@ -146,9 +144,11 @@ if dein#load_state(s:dein_dir)
 
   " 設定終了
   call dein#end()
+  call dein#call_hook('source')
   call dein#save_state()
 endif
 
+autocmd VimEnter * call dein#call_hook('post_source')
 
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
@@ -156,6 +156,14 @@ if dein#check_install()
 endif
 
 """
+hi Cursor guifg=#121212 guibg=#afd700
+
+colorscheme molokai
 syntax on "コードの色分け
+" 256色
+set t_Co=256
+" 背景色
+set background=dark
+
 filetype indent on
 filetype plugin indent on

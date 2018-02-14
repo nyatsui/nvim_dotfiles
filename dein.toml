@@ -35,21 +35,14 @@ nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
 nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
 
-call denite#custom#var('file_rec', 'command',
-\ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
-call denite#custom#var('grep', 'command',
-\ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
-call denite#custom#var('grep', 'default_opts', [])
-call denite#custom#var('grep', 'recursive_opts', [])
 '''
-# not work
 hook_post_source = '''
-" call denite#custom#var('file_rec', 'command',
-" \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
-" call denite#custom#var('grep', 'command',
-" \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
-" call denite#custom#var('grep', 'default_opts', [])
-" call denite#custom#var('grep', 'recursive_opts', [])
+ call denite#custom#var('file_rec', 'command',
+ \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+ call denite#custom#var('grep', 'command',
+ \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+ call denite#custom#var('grep', 'default_opts', [])
+ call denite#custom#var('grep', 'recursive_opts', [])
 '''
 
 [[plugins]]
@@ -73,12 +66,6 @@ autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
 autocmd ColorScheme * highlight Visual  ctermbg=236 guibg=grey22
 autocmd ColorScheme * hi CursorLine  cterm=NONE ctermbg=236 ctermfg=NONE guibg=grey17 guifg=NONE
 autocmd ColorScheme * hi Search cterm=NONE ctermfg=NONE ctermbg=243 guibg=midnightblue guifg=NONE
-colorscheme molokai
-syntax on
-" 256色
-set t_Co=256
-" 背景色
-set background=dark
 '''
 
 [[plugins]]

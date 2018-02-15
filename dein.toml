@@ -89,7 +89,8 @@ vmap <C-_> <Plug>(caw:hatpos:toggle)
 '''
 
 [[plugins]]
-repo = 'Townk/vim-autoclose'
+# repo = 'Townk/vim-autoclose'
+repo = 'ivang/vim-autoclose'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'

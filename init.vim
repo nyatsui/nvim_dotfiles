@@ -20,10 +20,7 @@
 
  " 現在の行を強調表示
  set cursorline
- " hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
- " hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=NONE guifg=NONE
  " 現在の行を強調表示（縦）
- " hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
@@ -106,6 +103,8 @@ xnoremap <expr> p 'pgv"'.v:register.'y`>'
 noremap <silent> <C-S>      :update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
 " python path
 " let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
@@ -167,3 +166,14 @@ set background=dark
 
 filetype indent on
 filetype plugin indent on
+
+augroup TransparentBG
+  autocmd!
+  autocmd VimEnter,Colorscheme * highlight Normal ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight NonText ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight LineNr ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight Folded ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight EndOfBuffer ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
+augroup END

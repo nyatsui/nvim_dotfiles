@@ -6,58 +6,31 @@ repo = 'Shougo/vimproc.vim'
 build = 'make'
 
 # [[plugins]]
-# repo = 'Shougo/deoplete.nvim'
-# hook_add = 'let g:deoplete#enable_at_startup = 1'
-
-# [[plugins]]
-# repo = 'zchee/deoplete-clang'
-
-# [[plugins]]
-# repo = 'tweekmonster/deoplete-clang2'
-
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = 'neomru.vim'
-on_event = 'BufRead'
-hook_add = '''
-let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
-nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
-nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
-nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
-nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
-nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
-nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
-nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
-nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
-nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
-nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
-nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
-nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
-
-'''
-hook_post_source = '''
- call denite#custom#var('file_rec', 'command',
- \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
- call denite#custom#var('grep', 'command',
- \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
- call denite#custom#var('grep', 'default_opts', [])
- call denite#custom#var('grep', 'recursive_opts', [])
-'''
-
-[[plugins]]
-repo = 'critiqjo/lldb.nvim'
-hook_add = '''
-    nmap <M-b> <Plug>LLBreakSwitch
-    vmap <F2> <Plug>LLStdInSelected
-    nnoremap <F4> :LLstdin<CR>
-    nnoremap <F5> :LLmode debug<CR>
-    nnoremap <S-F5> :LLmode code<CR>
-    nnoremap <F8> :LL continue<CR>
-    nnoremap <S-F8> :LL process interrupt<CR>
-    nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
-    vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
-'''
+# repo = 'Shougo/denite.nvim'
+# depends = 'neomru.vim'
+# on_event = 'BufRead'
+# hook_add = '''
+# let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
+# nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+# nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
+# nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+# nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+# nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+# nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+# nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+# nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+# nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+# nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+# nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+# nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+# nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+# call denite#custom#var('file_rec', 'command',
+# \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+# call denite#custom#var('grep', 'command',
+# \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+# call denite#custom#var('grep', 'default_opts', [])
+# call denite#custom#var('grep', 'recursive_opts', [])
+# '''
 
 [[plugins]]
 repo = 'tomasr/molokai'

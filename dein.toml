@@ -99,6 +99,8 @@ hook_add = '''
 " カーソルキーでbuffer移動
 nnoremap <Left> :bp<CR>
 nnoremap <Right> :bn<CR>
+nnoremap <C-h> :bp<CR>
+nnoremap <C-l> :bn<CR>
 " Smarter tab line有効化
 let g:airline#extensions#tabline#enabled = 1
 " powerline font入れないと若干ダサい
@@ -166,3 +168,6 @@ hook_add = '''
 [[plugins]]
 repo = "tpope/vim-fugitive"
 # hook_add = ''''''
+
+[[plugins]]
+repo = "chrismccord/bclose.vim"

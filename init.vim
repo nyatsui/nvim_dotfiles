@@ -1,3 +1,18 @@
+
+" Init
+let s:is_windows = has('win32') || has('win64')
+
+function! IsWindows() abort
+  return s:is_windows
+endfunction
+
+function! IsMac() abort
+  return !s:is_windows && !has('win32unix')
+      \ && (has('mac') || has('macunix') || has('gui_macvim')
+      \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
+endfunction
+
+
 " setting
  "文字コードをUFT-8に設定
  set fenc=utf-8
@@ -15,14 +30,12 @@
  " 見た目系
  " 行番号を表示
  set number
- 
+
  set ruler " Show the line and column numbers of the cursor.
 
  " 現在の行を強調表示
- hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
  " 現在の行を強調表示（縦）
- hi CursorColumn cterm=bold ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
@@ -36,9 +49,10 @@
  set laststatus=2
  " コマンドラインの補完
  set wildmode=list:longest
+ set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
  " 折り返し時に表示行単位での移動できるようにする
- nnoremap j gj
- nnoremap k gk
+ noremap j gj
+ noremap k gk
 
 "
  " Tab系
@@ -66,12 +80,28 @@
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
- ""
+" 行を移動
+nnoremap <C-Up> "zdd<Up>"zP
+nnoremap <C-Down> "zdd"zp
+" 複数行を移動
+vnoremap <C-Up> "zx<Up>"zP`[V`]
+vnoremap <C-Down> "zx"zp`[V`]
+
+" emacs key bind in command mode
+cnoremap <C-p> <Up>
+cnoremap <C-n> <Down>
+cnoremap <C-b> <Left>
+cnoremap <C-f> <Right>
+cnoremap <C-a> <Home>
+cnoremap <C-e> <End>
+cnoremap <C-d> <Del>
+
  set clipboard=unnamedplus
 
  if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a
  endif
+
 
 " code folding settings
 set foldcolumn=0
@@ -81,16 +111,27 @@ set nofoldenable            " don't fold by default
 set foldlevel=1
 
 set ttyfast                 " faster redrawing
+set lazyredraw
 
 if &compatible
   set nocompatible               " Be iMproved
 endif
 
-filetype indent on
+set backspace=indent,eol,start
 
-" python
-let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
+
+" map <C-s> to :update
+noremap <silent> <C-S>      :update<CR>
+inoremap <silent> <C-S>     <Esc>:update<CR>
+
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+" python path
+let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
+" let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
 " let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
+" let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ
@@ -127,10 +168,38 @@ if dein#load_state(s:dein_dir)
 
   " 設定終了
   call dein#end()
+  call dein#call_hook('source')
   call dein#save_state()
 endif
+
+autocmd VimEnter * call dein#call_hook('post_source')
 
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
   call dein#install()
 endif
+
+"""
+hi Cursor guifg=#121212 guibg=#afd700
+
+colorscheme molokai
+syntax on "コードの色分け
+" 256色
+set t_Co=256
+" 背景色
+set background=dark
+
+filetype indent on
+filetype plugin indent on
+
+" Transparent setting
+augroup TransparentBG
+  autocmd!
+  autocmd VimEnter,Colorscheme * highlight Normal ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight NonText ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight LineNr ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight Folded ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight EndOfBuffer ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
+augroup END

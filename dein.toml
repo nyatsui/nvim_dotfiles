@@ -7,8 +7,8 @@ build = 'make'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
+on_if  = 'has('nvim')'
 hook_add = '''
-let g:python3_host_prog = '/Library/Frameworks/Python.framework/Versions/3.6/bin/python3'
 let g:deoplete#enable_at_startup = 1
 '''
 
@@ -27,33 +27,69 @@ let g:deoplete#enable_at_startup = 1
 [[plugins]]
 repo = 'tweekmonster/deoplete-clang2'
 
-# [[plugins]]
-# repo = 'Shougo/unite.vim'
-# depends = 'neomru.vim'
+[[plugins]]
+repo = 'critiqjo/lldb.nvim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = 'neomru.vim'
+on_event = 'BufRead'
+hook_add = '''
+nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
+nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+
+'''
+hook_post_source = '''
+ call denite#custom#var('file_rec', 'command',
+ \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+ call denite#custom#var('grep', 'command',
+ \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+ call denite#custom#var('grep', 'default_opts', [])
+ call denite#custom#var('grep', 'recursive_opts', [])
+'''
 
 [[plugins]]
 repo = 'critiqjo/lldb.nvim'
+hook_add = '''
+    nmap <M-b> <Plug>LLBreakSwitch
+    vmap <F2> <Plug>LLStdInSelected
+    nnoremap <F4> :LLstdin<CR>
+    nnoremap <F5> :LLmode debug<CR>
+    nnoremap <S-F5> :LLmode code<CR>
+    nnoremap <F8> :LL continue<CR>
+    nnoremap <S-F8> :LL process interrupt<CR>
+    nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+    vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
+'''
 
 [[plugins]]
 repo = 'tomasr/molokai'
 hook_add = '''
 autocmd ColorScheme * highlight Comment ctermfg=40 guifg=#008800
-colorscheme molokai
-syntax on
-" 256色
-set t_Co=256
-" 背景色
-set background=dark
+autocmd ColorScheme * highlight Visual  ctermbg=236 guibg=grey22
+autocmd ColorScheme * hi CursorLine  cterm=NONE ctermbg=236 ctermfg=NONE guibg=grey17 guifg=NONE
+autocmd ColorScheme * hi Search cterm=NONE ctermfg=NONE ctermbg=243 guibg=midnightblue guifg=NONE
 '''
 
 [[plugins]]
 repo = 'cespare/vim-toml'
 
-[[plugins]] 
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
-[[plugins]] 
+[[plugins]]
 repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
@@ -65,3 +101,86 @@ hook_add = '''
 nmap <C-_> <Plug>(caw:hatpos:toggle)
 vmap <C-_> <Plug>(caw:hatpos:toggle)
 '''
+
+[[plugins]]
+# repo = 'Townk/vim-autoclose'
+repo = 'ivang/vim-autoclose'
+
+[[plugins]]
+repo = 'vim-airline/vim-airline'
+depends = ['vim-airline-themes']
+hook_add = '''
+" カーソルキーでbuffer移動
+nnoremap <Left> :bp<CR>
+nnoremap <Right> :bn<CR>
+nnoremap <C-h> :bp<CR>
+nnoremap <C-l> :bn<CR>
+" Smarter tab line有効化
+let g:airline#extensions#tabline#enabled = 1
+" powerline font入れないと若干ダサい
+let g:airline_powerline_fonts = 1
+" vim-airline-themesが必要
+let g:airline_theme='behelit'
+'''
+
+[[plugins]]
+repo = 'vim-airline/vim-airline-themes'
+
+[[plugins]]
+repo = 'scrooloose/nerdtree'
+hook_add = '''
+map <C-n> :NERDTreeToggle<CR>
+'''
+
+[[plugins]]
+repo = 'tpope/vim-surround'
+
+[[plugins]]
+repo = 'kana/vim-operator-user'
+
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = ['vim-operator-user']
+hook_add = '''
+map <Space>r <Plug>(operator-replace)
+'''
+
+[[plugins]]
+repo = 'roxma/nvim-yarp'
+on_if  = '''
+!has('nvim')
+'''
+
+[[plugins]]
+repo = 'roxma/vim-hug-neovim-rpc'
+on_if  = '''
+!has('nvim')
+'''
+
+[[plugins]]
+repo = 'bronson/vim-trailing-whitespace'
+
+[[plugins]]
+repo = 'zebult/auto-gtags.vim'
+hook_add = '''
+let g:auto_update_gtags = 1
+'''
+
+[[plugins]]
+repo = 'lighttiger2505/gtags.vim'
+hook_add = '''
+    " Options
+    let g:Gtags_Auto_Map = 0
+    let g:Gtags_OpenQuickfixWindow = 1
+    " Keymap
+    " Show definetion of function cousor word on quickfix
+    nmap <silent> K :<C-u>exe("Gtags ".expand('<cword>'))<CR>
+    " Show reference of cousor word on quickfix
+    nmap <silent> R :<C-u>exe("Gtags -r ".expand('<cword>'))<CR>
+'''
+
+[[plugins]]
+repo = "tpope/vim-fugitive"
+
+[[plugins]]
+repo = "chrismccord/bclose.vim"

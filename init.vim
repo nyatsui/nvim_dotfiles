@@ -1,3 +1,18 @@
+
+" Init
+let s:is_windows = has('win32') || has('win64')
+
+function! IsWindows() abort
+  return s:is_windows
+endfunction
+
+function! IsMac() abort
+  return !s:is_windows && !has('win32unix')
+      \ && (has('mac') || has('macunix') || has('gui_macvim')
+      \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
+endfunction
+
+
 " setting
  "文字コードをUFT-8に設定
  set fenc=utf-8
@@ -19,10 +34,8 @@
  set ruler " Show the line and column numbers of the cursor.
 
  " 現在の行を強調表示
- hi CursorLine   cterm=underline ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorline
  " 現在の行を強調表示（縦）
- hi CursorColumn cterm=NONE ctermbg=NONE ctermfg=NONE "guibg=lightgrey guifg=white
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
  set virtualedit=onemore
@@ -36,9 +49,10 @@
  set laststatus=2
  " コマンドラインの補完
  set wildmode=list:longest
+ set wildignore=*.o,*.obj,*.pyc,*.so,*.dll
  " 折り返し時に表示行単位での移動できるようにする
- nnoremap j gj
- nnoremap k gk
+ noremap j gj
+ noremap k gk
 
 "
  " Tab系
@@ -91,6 +105,7 @@ set clipboard=unnamed
    set mouse=a
  endif
 
+
 " code folding settings
 " runtime! atom-style-folding.vim
 
@@ -107,10 +122,15 @@ xnoremap <expr> p 'pgv"'.v:register.'y`>'
 
 " map <C-s> to :update
 noremap <silent> <C-S>      :update<CR>
-" noremap <silent> <C-S>     <Esc><C-C>:update<CR>
-" inoremap <silent> <C-S>     <Esc><C-O>:update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
+command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
+
+" python path
+let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
+" let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
+" let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
+" let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ
@@ -149,15 +169,38 @@ if dein#load_state(s:dein_dir)
 
   " 設定終了
   call dein#end()
+  call dein#call_hook('source')
   call dein#save_state()
 endif
+
+autocmd VimEnter * call dein#call_hook('post_source')
 
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
   call dein#install()
 endif
 
+"""
+hi Cursor guifg=#121212 guibg=#afd700
 
-syntax on
+colorscheme molokai
+syntax on "コードの色分け
+" 256色
+set t_Co=256
+" 背景色
+set background=dark
+
 filetype indent on
 filetype plugin indent on
+
+" Transparent setting
+augroup TransparentBG
+  autocmd!
+  autocmd VimEnter,Colorscheme * highlight Normal ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight NonText ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight LineNr ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight Folded ctermbg=none
+  autocmd VimEnter,Colorscheme * highlight EndOfBuffer ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight SignColumn ctermbg=none
+  autocmd VimEnter,ColorScheme * highlight VertSplit ctermbg=none
+augroup END

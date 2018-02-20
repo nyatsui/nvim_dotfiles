@@ -104,11 +104,11 @@ cnoremap <C-d> <Del>
 
 
 " code folding settings
-set foldcolumn=0
-set foldmethod=indent       " fold based on indent
-set foldnestmax=10          " deepest fold is 10 levels
-set nofoldenable            " don't fold by default
-set foldlevel=1
+" set foldcolumn=0
+" set foldmethod=indent       " fold based on indent
+" set foldnestmax=10          " deepest fold is 10 levels
+" set nofoldenable            " don't fold by default
+" set foldlevel=1
 
 set ttyfast                 " faster redrawing
 set lazyredraw

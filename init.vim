@@ -96,12 +96,14 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-d> <Del>
 
- set clipboard=unnamedplus
+
+ ""
+ " set clipboard=unnamedplus
+set clipboard=unnamed
 
  if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a
  endif
-
 
 " code folding settings
 " set foldcolumn=0
@@ -109,6 +111,7 @@ cnoremap <C-d> <Del>
 " set foldnestmax=10          " deepest fold is 10 levels
 " set nofoldenable            " don't fold by default
 " set foldlevel=1
+" runtime! atom-style-folding.vim
 
 set ttyfast                 " faster redrawing
 set lazyredraw
@@ -135,7 +138,9 @@ let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ
-if has('nvim')
+if exists('g:nyaovim_version')
+  let s:dein_cache_path = expand('~/.cache/nyaovim/dein')
+elseif has('nvim')
   let s:dein_cache_path = expand('~/.cache/nvim/dein')
 else
   let s:dein_cache_path = expand('~/.cache/vim/dein')
@@ -159,8 +164,8 @@ if dein#load_state(s:dein_dir)
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
   let g:rc_dir    = expand("~/.config/nvim/")
-  let s:toml      = g:rc_dir . '/dein.toml'
-  let s:lazy_toml = g:rc_dir . '/dein_lazy.toml'
+  let s:toml      = g:rc_dir . 'dein.toml'
+  let s:lazy_toml = g:rc_dir . 'dein_lazy.toml'
 
   " TOML を読み込み、キャッシュしておく
   call dein#load_toml(s:toml,      {'lazy': 0})

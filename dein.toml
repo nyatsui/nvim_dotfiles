@@ -7,7 +7,7 @@ build = 'make'
 
 [[plugins]]
 repo = 'Shougo/deoplete.nvim'
-on_if  = 'has('nvim')'
+if = 'has("python3")'
 hook_add = '''
 let g:deoplete#enable_at_startup = 1
 '''
@@ -26,13 +26,15 @@ let g:deoplete#enable_at_startup = 1
 
 [[plugins]]
 repo = 'tweekmonster/deoplete-clang2'
+depends = 'deoplete.nvim'
 
 [[plugins]]
-repo = 'critiqjo/lldb.nvim'
+repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
 depends = 'neomru.vim'
+if = 'has("python3")'
 on_event = 'BufRead'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
@@ -99,6 +101,7 @@ repo = 'airblade/vim-gitgutter'
 [[plugins]]
 repo = "https://github.com/tyru/caw.vim.git"
 hook_add = '''
+let g:caw_no_default_keymappings = 1
 nmap <C-_> <Plug>(caw:hatpos:toggle)
 vmap <C-_> <Plug>(caw:hatpos:toggle)
 '''

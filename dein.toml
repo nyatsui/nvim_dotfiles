@@ -5,31 +5,74 @@ repo = 'Shougo/dein.vim'
 repo = 'Shougo/vimproc.vim'
 build = 'make'
 
+[[plugins]]
+repo = 'Shougo/deoplete.nvim'
+if = 'has("python3")'
+hook_add = '''
+let g:deoplete#enable_at_startup = 1
+'''
+
 # [[plugins]]
-# repo = 'Shougo/denite.nvim'
-# depends = 'neomru.vim'
-# on_event = 'BufRead'
+# repo = 'zchee/deoplete-clang'
+# hook_source = '''
+# let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/3.9.1/lib/libclang.dylib'
+# let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/3.9.1/lib/clang/'
+# '''
+# on_ft = ['c', 'cpp', 'cmake']
+# depends = ['deoplete.nvim']
+
+# [[plugins]]
+# repo = 'Valloric/YouCompleteMe'
+
+[[plugins]]
+repo = 'tweekmonster/deoplete-clang2'
+depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'Shougo/neomru.vim'
+
+[[plugins]]
+repo = 'Shougo/denite.nvim'
+depends = 'neomru.vim'
+if = 'has("python3")'
+on_event = 'BufRead'
+hook_add = '''
+nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
+nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+nnoremap <silent> <Space>b :<C-u>Denite buffer<CR>
+nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+'''
+hook_post_source = '''
+ call denite#custom#var('file_rec', 'command',
+ \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
+ call denite#custom#var('grep', 'command',
+ \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+ call denite#custom#var('grep', 'default_opts', [])
+ call denite#custom#var('grep', 'recursive_opts', [])
+'''
+
+# [[plugins]]
+# repo = 'critiqjo/lldb.nvim'
 # hook_add = '''
-# let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
-# nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-# nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
-# nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
-# nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
-# nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
-# nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
-# nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
-# nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
-# nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
-# nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
-# nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
-# nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
-# nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
-# call denite#custom#var('file_rec', 'command',
-# \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '-g', ''])
-# call denite#custom#var('grep', 'command',
-# \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
-# call denite#custom#var('grep', 'default_opts', [])
-# call denite#custom#var('grep', 'recursive_opts', [])
+#     nmap <M-b> <Plug>LLBreakSwitch
+#     vmap <F2> <Plug>LLStdInSelected
+#     nnoremap <F4> :LLstdin<CR>
+#     nnoremap <F5> :LLmode debug<CR>
+#     nnoremap <S-F5> :LLmode code<CR>
+#     nnoremap <F8> :LL continue<CR>
+#     nnoremap <S-F8> :LL process interrupt<CR>
+#     nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+#     vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 # '''
 
 [[plugins]]
@@ -57,12 +100,14 @@ repo = 'airblade/vim-gitgutter'
 [[plugins]]
 repo = "https://github.com/tyru/caw.vim.git"
 hook_add = '''
+let g:caw_no_default_keymappings = 1
 nmap <C-_> <Plug>(caw:hatpos:toggle)
 vmap <C-_> <Plug>(caw:hatpos:toggle)
 '''
 
 [[plugins]]
-repo = 'Townk/vim-autoclose'
+# repo = 'Townk/vim-autoclose'
+repo = 'ivang/vim-autoclose'
 
 [[plugins]]
 repo = 'vim-airline/vim-airline'
@@ -71,6 +116,8 @@ hook_add = '''
 " カーソルキーでbuffer移動
 nnoremap <Left> :bp<CR>
 nnoremap <Right> :bn<CR>
+nnoremap <C-h> :bp<CR>
+nnoremap <C-l> :bn<CR>
 " Smarter tab line有効化
 let g:airline#extensions#tabline#enabled = 1
 " powerline font入れないと若干ダサい
@@ -137,4 +184,6 @@ hook_add = '''
 
 [[plugins]]
 repo = "tpope/vim-fugitive"
-# hook_add = ''''''
+
+[[plugins]]
+repo = "chrismccord/bclose.vim"

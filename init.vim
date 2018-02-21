@@ -98,8 +98,8 @@ cnoremap <C-d> <Del>
 
 
  ""
- " set clipboard=unnamedplus
-set clipboard=unnamed
+set clipboard=unnamedplus
+" set clipboard=unnamed
 
  if has("mouse") " Enable the use of the mouse in all modes
    set mouse=a

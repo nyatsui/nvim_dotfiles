@@ -11,6 +11,10 @@ autocmd ColorScheme * hi Search cterm=NONE ctermfg=NONE ctermbg=243 guibg=midnig
 '''
 
 [[plugins]]
+repo = 'cespare/vim-toml'
+on_ft = 'toml'
+
+[[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
 
@@ -72,6 +76,13 @@ map <Space>r <Plug>(operator-replace)
 '''
 
 [[plugins]]
+repo = 'kana/vim-textobj-user'
+
+[[plugins]]
+repo = 'kana/vim-textobj-fold'
+depends = ['vim-textobj-user']
+
+[[plugins]]
 repo = 'roxma/nvim-yarp'
 on_if  = '''
 !has('nvim')
@@ -110,3 +121,6 @@ repo = "tpope/vim-fugitive"
 
 [[plugins]]
 repo = "chrismccord/bclose.vim"
+
+[[plugins]]
+repo = "kana/vim-tabpagecd"

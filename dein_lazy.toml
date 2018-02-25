@@ -61,17 +61,17 @@ hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
-nnoremap <silent> <Space>b :<C-u>Denite buffer<CR>
+nnoremap <silent> sb :<C-u>Denite buffer<CR>
 nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
 nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
-nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
-nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
-nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
-nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+" nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
+" nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
+" nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
+" nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
 
 '''
 hook_post_source = '''
@@ -99,6 +99,31 @@ hook_add = '''
 '''
 
 [[plugins]]
-repo = 'cespare/vim-toml'
-on_ft = 'toml'
+repo = 'Shougo/deol.nvim'
+on_cmd = 'Deol'
+on_source = 'denite.nvim'
+hook_add = '''
+  nnoremap <silent> N :<C-u>call deol#new({'command': 'bash'})<CR>
+  nnoremap <silent> [Space]s :<C-u>Deol bash<CR>
+  nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
+'''
+hook_source = '''
+  let g:deol#prompt_pattern = '\w*%'
+  autocmd FileType deol call s:on_deol()
+  function! s:on_deol() abort
+    nnoremap <buffer><silent> [Space]gs :<C-u>call deol#send('git status')<CR>
+    nnoremap <buffer><silent> [Space]gc :<C-u>call deol#send('git commit')<CR>
+    nnoremap <buffer><silent> [Space]gA :<C-u>call deol#send('git commit --amend')<CR>
+  endfunction
+'''
+
+[[plugins]]
+repo = 'Shougo/neoyank.vim'
+on_if = 1
+on_event = 'TextYankPost'
+on_source = ['denite.nvim']
+
+# [[plugins]]
+# repo = "huawenyu/neogdb.vim"
+# on_ft = ['c', 'cpp']
 

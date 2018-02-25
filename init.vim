@@ -80,6 +80,7 @@ endfunction
  " ESC連打でハイライト解除
  nmap <Esc><Esc> :nohlsearch<CR><Esc>
 
+" Key mapping setttigs
 " 行を移動
 nnoremap <C-Up> "zdd<Up>"zP
 nnoremap <C-Down> "zdd"zp
@@ -96,8 +97,44 @@ cnoremap <C-a> <Home>
 cnoremap <C-e> <End>
 cnoremap <C-d> <Del>
 
+" Smart space mapping.
+nmap  <Space>   [Space]
+nnoremap  [Space]   <Nop>
 
- ""
+" The prefix key.
+nnoremap    [Window]   <Nop>
+nmap    s [Window]
+
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
+
+" map <C-s> to :update
+noremap <silent> <C-S>      :update<CR>
+inoremap <silent> <C-S>     <Esc>:update<CR>
+
+if exists(':tnoremap')
+  tnoremap   <ESC>      <C-\><C-n>
+  tnoremap   <C-j>         <C-\><C-n>
+  " tnoremap   j<Space>   j
+  tnoremap <expr> ;  vimrc#sticky_func()
+endif
+" =============================
+
+" auto group
+augroup MyAutoCmd
+  autocmd!
+  autocmd CursorHold *.toml syntax sync minlines=300
+augroup END
+
+
+" Terminal Setting
+if(has('nvim'))
+  " Modifiable terminal
+  autocmd MyAutoCmd TermOpen * setlocal modifiable
+  autocmd MyAutoCmd TermClose * buffer #
+endif
+
+
+""
 set clipboard=unnamedplus
 " set clipboard=unnamed
 
@@ -121,12 +158,6 @@ if &compatible
 endif
 
 set backspace=indent,eol,start
-
-xnoremap <expr> p 'pgv"'.v:register.'y`>'
-
-" map <C-s> to :update
-noremap <silent> <C-S>      :update<CR>
-inoremap <silent> <C-S>     <Esc>:update<CR>
 
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 

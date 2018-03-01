@@ -124,3 +124,6 @@ repo = "chrismccord/bclose.vim"
 
 [[plugins]]
 repo = "kana/vim-tabpagecd"
+
+[[plugins]]
+repo = "vim-ctrlspace/vim-ctrlspace"

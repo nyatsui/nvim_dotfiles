@@ -117,6 +117,8 @@ if exists(':tnoremap')
   " tnoremap   j<Space>   j
   tnoremap <expr> ;  vimrc#sticky_func()
 endif
+
+imap <Nul> <Nop>
 " =============================
 
 " auto group

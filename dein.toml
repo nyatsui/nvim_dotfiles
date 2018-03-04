@@ -125,5 +125,14 @@ repo = "chrismccord/bclose.vim"
 [[plugins]]
 repo = "kana/vim-tabpagecd"
 
+# [[plugins]]
+# repo = "vim-ctrlspace/vim-ctrlspace"
+
 [[plugins]]
-repo = "vim-ctrlspace/vim-ctrlspace"
+repo = "airblade/vim-rooter"
+hook_add = '''
+let g:rooter_use_lcd = 1
+'''
+
+[[plugins]]
+repo = 'yonchu/accelerated-smooth-scroll'

@@ -56,12 +56,14 @@ repo = 'Shougo/neomru.vim'
 repo = 'Shougo/denite.nvim'
 depends = 'neomru.vim'
 if = 'has("python3")'
-on_event = 'BufRead'
+on_cmd = 'Denite'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
+nnoremap <silent> sB :<C-u>Denite buffer<CR>
 nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
+nnoremap <silent> sc :<C-u>DeniteBuffer buffer/project<CR>
 nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
@@ -72,13 +74,13 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 " nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
 " nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
- nnoremap <silent> / :<C-u>Denite -buffer-name=search -auto-highlight
+ nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -auto-highlight
         \ line<CR>
- nnoremap <silent> * :<C-u>DeniteCursorWord -buffer-name=search
+ nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search
         \ -auto-highlight -mode=normal line<CR>
  nnoremap <silent> ;g :<C-u>Denite -buffer-name=search
         \ -no-empty -mode=normal grep<CR>
- nnoremap <silent> n :<C-u>Denite -buffer-name=search
+ nnoremap <silent> sn :<C-u>Denite -buffer-name=search
         \ -resume -mode=normal -refresh<CR>
  nnoremap <silent> ;;
         \ :<C-u>Denite command command_history<CR>
@@ -123,7 +125,7 @@ repo = 'Shougo/deol.nvim'
 on_cmd = 'Deol'
 on_source = 'denite.nvim'
 hook_add = '''
-  nnoremap <silent> N :<C-u>call deol#new({'command': 'bash'})<CR>
+  nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'bash'})<CR>
   nnoremap <silent> [Space]s :<C-u>Deol bash<CR>
   nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
 '''
@@ -147,5 +149,5 @@ on_source = ['denite.nvim']
 # repo = "huawenyu/neogdb.vim"
 # on_ft = ['c', 'cpp']
 
-[[plugins]]
-repo = 'equalsraf/neovim-gui-shim'
+# [[plugins]]
+# repo = 'equalsraf/neovim-gui-shim'

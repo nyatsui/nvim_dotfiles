@@ -30,6 +30,8 @@ hook_add = '''
 let g:caw_no_default_keymappings = 1
 nmap <C-_> <Plug>(caw:hatpos:toggle)
 vmap <C-_> <Plug>(caw:hatpos:toggle)
+nmap <C-/> <Plug>(caw:hatpos:toggle)
+vmap <C-/> <Plug>(caw:hatpos:toggle)
 '''
 
 [[plugins]]
@@ -121,6 +123,9 @@ repo = "tpope/vim-fugitive"
 
 [[plugins]]
 repo = "chrismccord/bclose.vim"
+hook_add = '''
+nnoremap <silent> sq :<C-u>Bclose<CR>
+'''
 
 [[plugins]]
 repo = "kana/vim-tabpagecd"
@@ -136,3 +141,12 @@ let g:rooter_use_lcd = 1
 
 [[plugins]]
 repo = 'yonchu/accelerated-smooth-scroll'
+
+[[plugins]]
+repo = 'equalsraf/neovim-gui-shim'
+
+# [[plugins]]
+# repo = 'vim-pandoc/vim-pandoc'
+#
+# [[plugins]]
+# repo = 'vim-pandoc/vim-pandoc-syntax'

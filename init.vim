@@ -12,7 +12,6 @@ function! IsMac() abort
       \     || (!executable('xdg-open') && system('uname') =~? '^darwin'))
 endfunction
 
-
 " setting
  "文字コードをUFT-8に設定
  set fenc=utf-8
@@ -119,6 +118,12 @@ if exists(':tnoremap')
 endif
 
 imap <Nul> <Nop>
+
+" TAB indent
+nnoremap <TAB> >>
+nnoremap <S-TAB> <<
+vnoremap <TAB> >gv
+vnoremap <S-TAB> <gv
 " =============================
 
 " auto group

@@ -124,6 +124,21 @@ nnoremap <TAB> >>
 nnoremap <S-TAB> <<
 vnoremap <TAB> >gv
 vnoremap <S-TAB> <gv
+
+" Tab
+" 新しいタブを一番右に作る
+nnoremap <silent> tc :tablast <bar> tabnew<CR>
+" タブを閉じる
+nnoremap <silent> tq :tabclose<CR>
+" 次のタブ
+nnoremap <silent> tl :tabnext<CR>
+" 前のタブ
+nnoremap <silent> th :tabprevious<CR>
+
+" Buffer
+noremap <silent> [Window]l :bnext<CR>
+noremap <silent> [Window]h :bprevious<CR>
+
 " =============================
 
 " auto group

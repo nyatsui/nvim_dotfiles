@@ -150,3 +150,11 @@ repo = 'equalsraf/neovim-gui-shim'
 #
 # [[plugins]]
 # repo = 'vim-pandoc/vim-pandoc-syntax'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+'''

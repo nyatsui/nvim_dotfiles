@@ -43,10 +43,10 @@ repo = 'vim-airline/vim-airline'
 depends = ['vim-airline-themes']
 hook_add = '''
 " カーソルキーでbuffer移動
-nnoremap <Left> :bp<CR>
-nnoremap <Right> :bn<CR>
-nnoremap <C-h> :bp<CR>
-nnoremap <C-l> :bn<CR>
+" nnoremap <Left> :bp<CR>
+" nnoremap <Right> :bn<CR>
+" nnoremap <C-h> :bp<CR>
+" nnoremap <C-l> :bn<CR>
 " Smarter tab line有効化
 let g:airline#extensions#tabline#enabled = 1
 " powerline font
@@ -150,3 +150,11 @@ repo = 'equalsraf/neovim-gui-shim'
 #
 # [[plugins]]
 # repo = 'vim-pandoc/vim-pandoc-syntax'
+
+[[plugins]]
+repo = 'tyru/open-browser.vim'
+hook_add = '''
+let g:netrw_nogx = 1 " disable netrw's gx mapping.
+nmap gx <Plug>(openbrowser-smart-search)
+vmap gx <Plug>(openbrowser-smart-search)
+'''

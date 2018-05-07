@@ -120,8 +120,8 @@ endif
 imap <Nul> <Nop>
 
 " TAB indent
-nnoremap <TAB> >>
-nnoremap <S-TAB> <<
+" nnoremap <TAB> >>
+" nnoremap <S-TAB> <<
 vnoremap <TAB> >gv
 vnoremap <S-TAB> <gv
 
@@ -155,6 +155,8 @@ if(has('nvim'))
   autocmd MyAutoCmd TermClose * buffer #
 endif
 
+" Turn off paste mode when leaving insert
+autocmd InsertLeave * set nopaste
 
 ""
 set clipboard=unnamedplus

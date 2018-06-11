@@ -48,6 +48,9 @@ depends = 'deoplete.nvim'
 repo = 'zchee/deoplete-jedi'
 on_event = 'InsertEnter'
 on_ft = 'python'
+hook_add = '''
+let g:deoplete#sources#jedi#show_docstring = 0
+'''
 
 [[plugins]]
 repo = 'Shougo/neomru.vim'

@@ -139,6 +139,23 @@ nnoremap <silent> th :tabprevious<CR>
 noremap <silent> [Window]l :bnext<CR>
 noremap <silent> [Window]h :bprevious<CR>
 
+" Better x
+nnoremap x "_x
+
+" The prefix key.
+nnoremap [Alt]   <Nop>
+nmap    S  [Alt]
+
+" Indent paste.
+nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
+nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
+
+" カーソル下の単語をハイライトする
+nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+
+" カーソル下の単語をハイライトしてから置換する
+nmap # <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
+xmap # "zy:%s/<C-r>z//gc<Left><Left><Left>
 " =============================
 
 " auto group

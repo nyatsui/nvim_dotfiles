@@ -155,3 +155,18 @@ on_source = ['denite.nvim']
 
 # [[plugins]]
 # repo = 'equalsraf/neovim-gui-shim'
+
+[[plugins]]
+repo = 'plasticboy/vim-markdown'
+on_ft = ['markdown']
+hook_add = '''
+let g:vim_markdown_folding_disabled = 1
+" let g:vim_markdown_folding_level = 6
+'''
+
+[[plugins]]
+repo = 'dhruvasagar/vim-table-mode'
+on_ft = ['markdown']
+hook_add = '''
+let g:table_mode_corner="|"
+'''

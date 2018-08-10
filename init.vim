@@ -156,6 +156,8 @@ nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearc
 " カーソル下の単語をハイライトしてから置換する
 nmap # <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
 xmap # "zy:%s/<C-r>z//gc<Left><Left><Left>
+
+nnoremap <CR> o<ESC>
 " =============================
 
 " auto group

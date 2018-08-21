@@ -53,6 +53,10 @@ endfunction
  noremap j gj
  noremap k gk
 
+" natural split
+set splitbelow
+set splitright
+
 "
  " Tab系
  " 不可視文字を可視化(タブが「?-」と表示される)

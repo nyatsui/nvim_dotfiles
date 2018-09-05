@@ -164,3 +164,6 @@ vmap gx <Plug>(openbrowser-smart-search)
 
 [[plugins]]
 repo = 'skywind3000/asyncrun.vim'
+
+# [[plugins]]
+# repo = 'tpope/vim-dispatch'

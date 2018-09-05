@@ -64,10 +64,11 @@ hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
 nnoremap <silent> sp :<C-u>Denite file_rec<CR>
+nnoremap <silent> sc :<C-u>DeniteBufferDir file_rec<CR>
 nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
 nnoremap <silent> sB :<C-u>Denite buffer<CR>
 nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
-nnoremap <silent> sc :<C-u>DeniteBuffer buffer/project<CR>
+nnoremap <silent> sC :<C-u>DeniteBuffer buffer/project<CR>
 nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>

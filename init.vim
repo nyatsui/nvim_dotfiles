@@ -118,7 +118,7 @@ if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
   tnoremap   <C-j>         <C-\><C-n><C-w>p
   " tnoremap   j<Space>   j
-  tnoremap <expr> ;  vimrc#sticky_func()
+  " tnoremap <expr> ;  vimrc#sticky_func()
 endif
 
 imap <Nul> <Nop>
@@ -155,7 +155,8 @@ nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
 nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
 
 " カーソル下の単語をハイライトする
-nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+" nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>:%s/<C-r>z//gn<CR>
 
 " カーソル下の単語をハイライトしてから置換する
 nmap # <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
@@ -303,3 +304,8 @@ augroup END
 autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 
+augroup QfAutoCommands
+  autocmd!
+  " Auto-close quickfix window
+  au WinEnter * if winnr('$') == 1 && getbufvar(winbufnr(winnr()), "&buftype") == "quickfix"|q|endif
+augroup END

@@ -83,12 +83,12 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
         \ line<CR>
  nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search
         \ -auto-highlight -mode=normal line<CR>
- nnoremap <silent> ;g :<C-u>Denite -buffer-name=search
+ nnoremap <silent> sg :<C-u>Denite -buffer-name=search
         \ -no-empty -mode=normal grep<CR>
  nnoremap <silent> sn :<C-u>Denite -buffer-name=search
         \ -resume -mode=normal -refresh<CR>
- nnoremap <silent> ;;
-        \ :<C-u>Denite command command_history<CR>
+ nnoremap <silent> s;
+        \ :<C-u>Denite command_history command <CR>
  " nnoremap <silent> <C-k> :<C-u>Denite -mode=normal change jump<CR>
 '''
 hook_post_source = '''

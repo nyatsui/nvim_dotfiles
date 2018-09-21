@@ -114,6 +114,12 @@ xnoremap <expr> p 'pgv"'.v:register.'y`>'
 noremap <silent> <C-S>      :update<CR>
 inoremap <silent> <C-S>     <Esc>:update<CR>
 
+nnoremap [Window]e :e<CR>
+nnoremap [Window]Q :q<CR>
+
+noremap <C-j> <esc>
+noremap! <C-j> <esc>
+
 if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
   tnoremap   <C-j>         <C-\><C-n><C-w>p
@@ -155,14 +161,21 @@ nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
 nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
 
 " カーソル下の単語をハイライトする
-" nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
-nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>:%s/<C-r>z//gn<CR>
+nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+nnoremap <silent> <Space>c "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>:%s/<C-r>z//gn<CR>
 
 " カーソル下の単語をハイライトしてから置換する
 nmap # <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
 xmap # "zy:%s/<C-r>z//gc<Left><Left><Left>
 
-nnoremap <CR> o<ESC>
+" CR and indent
+" nnoremap  <CR> o<Space><BS><ESC><Right>
+" nnoremap  <CR> o<ESC>
+" nnoremap  s<CR> O<ESC>
+nnoremap  <CR> mzo<ESC>`z
+nnoremap  s<CR> mzO<ESC>`z
+
+inoremap <C-]> <Esc><Right>
 " =============================
 
 " auto group
@@ -301,8 +314,8 @@ augroup Binary
 augroup END
 
 " Auto close preview window
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+" autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
+autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
 
 augroup QfAutoCommands
   autocmd!

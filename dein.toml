@@ -125,12 +125,13 @@ hook_add = '''
 repo = "tpope/vim-fugitive"
 hook_add = '''
 autocmd QuickFixCmdPost *grep* cwindow
+nnoremap <silent> [Window]G :Gstatus<CR>
 '''
 
 [[plugins]]
 repo = "chrismccord/bclose.vim"
 hook_add = '''
-nnoremap <silent> sq :<C-u>Bclose<CR>
+nnoremap <silent> [Window]q :<C-u>Bclose<CR>
 '''
 
 [[plugins]]

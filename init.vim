@@ -37,7 +37,7 @@ endfunction
  " 現在の行を強調表示（縦）
  set cursorcolumn
  " 行末の1文字先までカーソルを移動できるように
- set virtualedit=onemore
+ set virtualedit=onemore,block
  " インデントはスマートインデント
  set smartindent
  " ビープ音を可視化
@@ -122,7 +122,8 @@ noremap! <C-j> <esc>
 
 if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
-  tnoremap   <C-j>         <C-\><C-n><C-w>p
+  " tnoremap   <C-j>         <C-\><C-n><C-w>p
+  tnoremap   <C-j>         <C-\><C-n><C-^>
   " tnoremap   j<Space>   j
   " tnoremap <expr> ;  vimrc#sticky_func()
 endif

@@ -117,13 +117,20 @@ inoremap <silent> <C-S>     <Esc>:update<CR>
 nnoremap [Window]e :e<CR>
 nnoremap [Window]Q :q<CR>
 
-noremap <C-j> <esc>
-noremap! <C-j> <esc>
+" inoremap <C-j> <esc>
+nnoremap <C-j> <C-^>
+inoremap <C-n> <esc>
+nnoremap <C-n> <C-^>
+
+inoremap <C-h> <C-o>h
+inoremap <C-j> <C-o>j
+inoremap <C-k> <C-o>k
+inoremap <C-l> <C-o>l
 
 if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
   " tnoremap   <C-j>         <C-\><C-n><C-w>p
-  tnoremap   <C-j>         <C-\><C-n><C-^>
+  tnoremap   <C-n>         <C-\><C-n><C-^>
   " tnoremap   j<Space>   j
   " tnoremap <expr> ;  vimrc#sticky_func()
 endif
@@ -156,6 +163,8 @@ nnoremap x "_x
 " The prefix key.
 nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
+
+inoremap <C-y> <C-o>p
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^

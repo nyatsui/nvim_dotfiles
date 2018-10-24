@@ -64,7 +64,7 @@ repo = 'vim-airline/vim-airline-themes'
 [[plugins]]
 repo = 'scrooloose/nerdtree'
 hook_add = '''
-map <C-n> :NERDTreeToggle<CR>
+" map <C-n> :NERDTreeToggle<CR>
 '''
 
 [[plugins]]
@@ -175,3 +175,6 @@ let g:asyncrun_trim = 1
 
 # [[plugins]]
 # repo = 'tpope/vim-dispatch'
+
+# [[plugins]]
+# repo = 'Shougo/defx.nvim'

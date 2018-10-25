@@ -128,7 +128,7 @@ inoremap <C-l> <C-o>l
 if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
   " tnoremap   <C-j>         <C-\><C-n><C-w>p
-  tnoremap   <C-n>         <C-\><C-n><C-^>
+  tnoremap   <C-j>         <C-\><C-n><C-^>
   " tnoremap   j<Space>   j
   " tnoremap <expr> ;  vimrc#sticky_func()
 endif

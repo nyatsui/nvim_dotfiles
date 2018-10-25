@@ -118,9 +118,7 @@ nnoremap [Window]e :e<CR>
 nnoremap [Window]Q :q<CR>
 
 " inoremap <C-j> <esc>
-nnoremap <C-j> <C-^>
-inoremap <C-n> <esc>
-nnoremap <C-n> <C-^>
+nnoremap <C-l> <C-^>
 
 inoremap <C-h> <C-o>h
 inoremap <C-j> <C-o>j
@@ -164,7 +162,7 @@ nnoremap x "_x
 nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
-inoremap <C-y> <C-o>p
+inoremap <C-y> <C-o>P
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^

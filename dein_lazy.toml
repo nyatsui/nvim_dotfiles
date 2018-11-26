@@ -63,7 +63,7 @@ on_cmd = 'Denite'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
-nnoremap <silent> sp :<C-u>Denite file_rec<CR>
+nnoremap <silent> sp :<C-u>Denite buffer/project file_rec<CR>
 nnoremap <silent> sc :<C-u>DeniteBufferDir file_rec<CR>
 nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
 nnoremap <silent> sB :<C-u>Denite buffer<CR>

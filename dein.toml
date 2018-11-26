@@ -178,3 +178,10 @@ let g:asyncrun_trim = 1
 
 # [[plugins]]
 # repo = 'Shougo/defx.nvim'
+
+
+[[plugins]]
+repo = 'junegunn/vim-easy-align'
+hook_add = '''
+xmap ga <Plug>(EasyAlign)
+'''

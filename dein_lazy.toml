@@ -24,6 +24,15 @@ inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
+
+let g:deoplete#sources#jedi#worker_threads = 2
+'''
+
+hook_source = '''
+call deoplete#custom#option('camel_case', v:true)
+call deoplete#custom#option('refresh_always', v:true)
+call deoplete#custom#option('auto_complete_delay', 0)
+call deoplete#custom#option('async_timeout', 100)
 '''
 
 # [[plugins]]
@@ -43,6 +52,17 @@ repo = 'tweekmonster/deoplete-clang2'
 on_ft = ['c', 'cpp']
 on_event = 'InsertEnter'
 depends = 'deoplete.nvim'
+
+# [[plugins]]
+# repo = 'Shougo/deoplete-clangx'
+# on_ft = ['c', 'cpp']
+
+[[plugins]]
+repo = 'davidhalter/jedi-vim'
+on_ft = 'python'
+hook_add = '''
+let g:jedi#completions_enabled = 0
+'''
 
 [[plugins]]
 repo = 'zchee/deoplete-jedi'
@@ -185,3 +205,17 @@ let g:fruzzy#sortonempty = 0
 '''
 hook_post_update = 'call fruzzy#install()'
 
+[[plugins]]
+repo = 'rhysd/accelerated-jk'
+on_map = {n = '<Plug>'}
+hook_add = '''
+  nmap <silent>j <Plug>(accelerated_jk_gj)
+  nmap <silent>k <Plug>(accelerated_jk_gk)
+'''
+
+# [[plugins]]
+# repo   = 'vim-scripts/renamer.vim'
+# on_cmd = ['Renamer']
+
+# [[plugins]]
+# repo = 'bfredl/nvim-ipy'

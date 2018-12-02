@@ -232,9 +232,6 @@ command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
 " python path
 let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
-" let g:python_host_prog = expand('~/.pyenv/versions/anaconda-2.4.0/bin/python')
-" let g:python_host_prog = expand('/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python')
-" let g:python3_host_prog = expand('/Library/Frameworks/Python.framework/Versions/3.6/bin/python3')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

@@ -185,3 +185,11 @@ repo = 'junegunn/vim-easy-align'
 hook_add = '''
 xmap ga <Plug>(EasyAlign)
 '''
+
+[[plugins]]
+repo = 'nyatsui/pyinstall.nvim'
+hook_add = '''
+let g:pyinstall#py_version = '3.6.1'
+let g:pyinstall#envname = 'nvim-env'
+let g:pyinstall#py_modules = ['']
+'''

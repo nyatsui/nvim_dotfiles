@@ -230,8 +230,6 @@ set backspace=indent,eol,start
 
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
-" python path
-let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

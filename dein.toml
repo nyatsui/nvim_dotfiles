@@ -176,10 +176,6 @@ let g:asyncrun_trim = 1
 # [[plugins]]
 # repo = 'tpope/vim-dispatch'
 
-# [[plugins]]
-# repo = 'Shougo/defx.nvim'
-
-
 [[plugins]]
 repo = 'junegunn/vim-easy-align'
 hook_add = '''

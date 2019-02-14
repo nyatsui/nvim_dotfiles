@@ -230,8 +230,20 @@ set backspace=indent,eol,start
 
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
-" python path
-let g:python3_host_prog = expand('~/.pyenv/versions/3.5.2/bin/python')
+if !IsWindows()
+  " Python3 install
+  let s:pyinstall_cache_path = expand('~/.cache/nvim/pyinstall.nvim')
+  if &runtimepath !~ '/pyinstall.nvim'
+    let g:pyinstall#py_version = '3.6.1'
+    let g:pyinstall#envname = 'nvim-env'
+    let g:pyinstall#py_modules = ['']
+    if !isdirectory(s:pyinstall_cache_path)
+      execute '!git clone --recursive https://github.com/nyatsui/pyinstall.nvim.git' s:pyinstall_cache_path
+    endif
+    execute 'set runtimepath+=' . s:pyinstall_cache_path
+    call pyinstall#install()
+  endif
+endif
 
 "dein Scripts-----------------------------
 " プラグインがインストールされるディレクトリ

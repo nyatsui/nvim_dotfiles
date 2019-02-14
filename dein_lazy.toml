@@ -25,7 +25,7 @@ inoremap <expr><S-TAB>  pumvisible() ? "\<C-p>" : "\<C-h>"
 " <CR>: close popup and save indent.
 inoremap <expr><CR>  pumvisible() ? deoplete#close_popup() : "<CR>"
 
-let g:deoplete#sources#jedi#worker_threads = 2
+" let g:deoplete#sources#jedi#worker_threads = 2
 '''
 
 hook_source = '''
@@ -47,15 +47,15 @@ call deoplete#custom#option('async_timeout', 100)
 # [[plugins]]
 # repo = 'Valloric/YouCompleteMe'
 
-[[plugins]]
-repo = 'tweekmonster/deoplete-clang2'
-on_ft = ['c', 'cpp']
-on_event = 'InsertEnter'
-depends = 'deoplete.nvim'
-
 # [[plugins]]
-# repo = 'Shougo/deoplete-clangx'
+# repo = 'tweekmonster/deoplete-clang2'
 # on_ft = ['c', 'cpp']
+# on_event = 'InsertEnter'
+# depends = 'deoplete.nvim'
+
+[[plugins]]
+repo = 'Shougo/deoplete-clangx'
+on_ft = ['c', 'cpp']
 
 [[plugins]]
 repo = 'davidhalter/jedi-vim'
@@ -113,7 +113,7 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 '''
 hook_post_source = '''
  call denite#custom#var('file_rec', 'command',
- \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', (has('win32') ? '-g:' : '-g='), ''])
+ \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
  call denite#custom#source('file_rec', 'matchers',
  \ ['matcher/fruzzy'])
  call denite#custom#var('grep', 'command',
@@ -129,7 +129,7 @@ hook_post_source = '''
       \ ['matcher/fruzzy', 'matcher_project_files'])
  call denite#custom#alias('source', 'buffer/project', 'buffer')
  call denite#custom#source('buffer/project', 'matchers',
-      \ ['matcher/fruzzy', 'matcher_project_files'])
+      \ ['matcher/fruzzy', 'matcher_project_files', 'matcher/ignore_current_buffer'])
 '''
 
 [[plugins]]
@@ -201,6 +201,7 @@ let g:table_mode_corner="|"
 repo = 'raghur/fruzzy'
 on_source = ['denite.nvim']
 hook_source = '''
+let g:fruzzy#usenative = 1
 let g:fruzzy#sortonempty = 0
 '''
 hook_post_update = 'call fruzzy#install()'

@@ -73,11 +73,20 @@ repo = 'tpope/vim-surround'
 [[plugins]]
 repo = 'kana/vim-operator-user'
 
+# [[plugins]]
+# repo = 'kana/vim-operator-replace'
+# depends = ['vim-operator-user']
+# hook_add = '''
+# map <Space>r <Plug>(operator-replace)
+# '''
+
 [[plugins]]
-repo = 'kana/vim-operator-replace'
+repo = 'rhysd/vim-operator-surround'
 depends = ['vim-operator-user']
 hook_add = '''
-map <Space>r <Plug>(operator-replace)
+nmap <silent>sa <Plug>(operator-surround-append)
+nmap <silent>sd <Plug>(operator-surround-delete)
+nmap <silent>sr <Plug>(operator-surround-replace)
 '''
 
 [[plugins]]

@@ -162,7 +162,7 @@ nnoremap x "_x
 nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
-inoremap <C-y> <C-o>P
+inoremap <C-y> <C-r>"
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^

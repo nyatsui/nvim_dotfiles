@@ -241,7 +241,7 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> p
  \ defx#do_action('paste')
   nnoremap <silent><buffer><expr> l
- \ defx#async_action('open')
+ \ defx#async_action('open_directory')
   nnoremap <silent><buffer><expr> E
  \ defx#do_action('open', 'vsplit')
   nnoremap <silent><buffer><expr> P
@@ -276,6 +276,8 @@ function! s:defx_my_settings() abort
  \ defx#do_action('quit')
   nnoremap <silent><buffer><expr> <Space>
  \ defx#do_action('toggle_select') . 'j'
+  vnoremap <silent><buffer><expr> <Space>
+ \ defx#do_action('toggle_select_visual')
   nnoremap <silent><buffer><expr> *
  \ defx#do_action('toggle_select_all')
   nnoremap <silent><buffer><expr> j

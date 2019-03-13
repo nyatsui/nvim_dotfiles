@@ -162,18 +162,18 @@ nnoremap x "_x
 nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
-inoremap <C-y> <C-r>"
+inoremap <C-y> <C-r>+
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
 nnoremap <silent> [Alt]P O<Esc>Pm``[=`]``^
 
 " カーソル下の単語をハイライトする
-nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
-nnoremap <silent> <Space>c "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>:%s/<C-r>z//gn<CR>
+nnoremap <silent> m "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
+" nnoremap <silent> m "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>:%s/<C-r>z//gn<CR>
 
 " カーソル下の単語をハイライトしてから置換する
-nmap # <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
+nmap # m:%s/<C-r>///gc<Left><Left><Left>
 xmap # "zy:%s/<C-r>z//gc<Left><Left><Left>
 
 " CR and indent
@@ -230,12 +230,18 @@ set backspace=indent,eol,start
 
 command! -nargs=1 -complete=file Rename f <args>|call delete(expand('#'))
 
+" persistent undo
+if has('persistent_undo')
+  set undodir=~/.cache/nvim/undo
+  set undofile
+endif
+
 if !IsWindows()
   " Python3 install
   let s:pyinstall_cache_path = expand('~/.cache/nvim/pyinstall.nvim')
   if &runtimepath !~ '/pyinstall.nvim'
     let g:pyinstall#py_version = '3.7.0'
-    let g:pyinstall#py_modules = ['']
+    let g:pyinstall#py_modules = ['Send2Trash']
     if !isdirectory(s:pyinstall_cache_path)
       execute '!git clone --recursive https://github.com/nyatsui/pyinstall.nvim.git' s:pyinstall_cache_path
     endif

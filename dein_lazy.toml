@@ -236,6 +236,7 @@ function! s:defx_my_settings() abort
  \ defx#do_action('copy')
   nnoremap <silent><buffer><expr> !
  \ defx#do_action('execute_command')
+  nnoremap <silent><buffer> m m
   nnoremap <silent><buffer><expr> m
  \ defx#do_action('move')
   nnoremap <silent><buffer><expr> p

@@ -23,6 +23,9 @@ repo = 'Shougo/context_filetype.vim'
 
 [[plugins]]
 repo = 'airblade/vim-gitgutter'
+hook_add = '''
+nnoremap <silent>gp :<C-u>GitGutterPreviewHunk<CR>
+'''
 
 [[plugins]]
 repo = "https://github.com/tyru/caw.vim.git"
@@ -158,6 +161,9 @@ let g:rooter_use_lcd = 1
 [[plugins]]
 repo = 'yonchu/accelerated-smooth-scroll'
 
+# [[plugins]]
+# repo = 'yuttie/comfortable-motion.vim'
+
 [[plugins]]
 repo = 'equalsraf/neovim-gui-shim'
 
@@ -212,3 +218,6 @@ nmap sj <Plug>(easymotion-bd-jk)
 let g:EasyMotion_keys = 'FJDKSLA;YUITREOPWQVBNCMXZ'
 let g:EasyMotion_startofline = 0
 '''
+
+[[plugins]]
+repo = 'tpope/vim-repeat'

@@ -111,13 +111,12 @@ nmap    s [Window]
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 
 " map <C-s> to :update
-noremap <silent> <C-S>      :update<CR>
-inoremap <silent> <C-S>     <Esc>:update<CR>
+noremap <silent> <C-S>      :<C-u>update<CR>
+inoremap <silent> <C-S>     <Esc>:<C-u>update<CR>
 
-nnoremap [Window]e :e<CR>
-nnoremap [Window]Q :q<CR>
+nnoremap [Window]e :<C-u>e<CR>
+nnoremap [Window]Q :<C-u>q<CR>
 
-" inoremap <C-j> <esc>
 nnoremap <C-l> <C-^>
 
 inoremap <C-h> <C-o>h
@@ -129,8 +128,6 @@ if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
   tnoremap   <C-w>         <C-\><C-n><C-w>p
   tnoremap   <C-j>         <C-\><C-n><C-^>
-  " tnoremap   j<Space>   j
-  " tnoremap <expr> ;  vimrc#sticky_func()
 endif
 
 imap <Nul> <Nop>
@@ -143,17 +140,17 @@ vnoremap <S-TAB> <gv
 
 " Tab
 " 新しいタブを一番右に作る
-nnoremap <silent> tc :tablast <bar> tabnew<CR>
+nnoremap <silent> tc :<C-u>tablast <bar> tabnew<CR>
 " タブを閉じる
-nnoremap <silent> tq :tabclose<CR>
+nnoremap <silent> tq :<C-u>tabclose<CR>
 " 次のタブ
-nnoremap <silent> tl :tabnext<CR>
+nnoremap <silent> tl :<C-u>tabnext<CR>
 " 前のタブ
-nnoremap <silent> th :tabprevious<CR>
+nnoremap <silent> th :<C-u>tabprevious<CR>
 
 " Buffer
-noremap <silent> [Window]l :bnext<CR>
-noremap <silent> [Window]h :bprevious<CR>
+noremap <silent> [Window]l :<C-u>bnext<CR>
+noremap <silent> [Window]h :<C-u>bprevious<CR>
 
 " Better x
 nnoremap x "_x
@@ -248,6 +245,8 @@ if !IsWindows()
     execute 'set runtimepath+=' . s:pyinstall_cache_path
     call pyinstall#install()
   endif
+else
+  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.0\Python.exe')
 endif
 
 "dein Scripts-----------------------------
@@ -338,6 +337,9 @@ augroup END
 " Auto close preview window
 " autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
 autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
+
+" Close preview window
+nnoremap <silent>q :<C-u>pc<CR>
 
 augroup QfAutoCommands
   autocmd!

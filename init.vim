@@ -198,15 +198,18 @@ if(has('nvim'))
 endif
 
 " Turn off paste mode when leaving insert
-autocmd InsertLeave * set nopaste
+augroup PasteModeCmd
+  autocmd!
+  autocmd InsertLeave * set nopaste
+augroup END
 
 ""
 set clipboard=unnamedplus
 " set clipboard=unnamed
 
- if has("mouse") " Enable the use of the mouse in all modes
-   set mouse=a
- endif
+if has("mouse") " Enable the use of the mouse in all modes
+  set mouse=a
+endif
 
 " code folding settings
 " set foldcolumn=0
@@ -290,7 +293,10 @@ if dein#load_state(s:dein_dir)
   call dein#save_state()
 endif
 
-autocmd VimEnter * call dein#call_hook('post_source')
+augroup DeinPostCmd
+  autocmd!
+  autocmd VimEnter * call dein#call_hook('post_source')
+augroup END
 
 " もし、未インストールものものがあったらインストール
 if dein#check_install()
@@ -335,8 +341,11 @@ augroup Binary
 augroup END
 
 " Auto close preview window
-" autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
+augroup PreviewClose
+  autocmd!
+  " autocmd CursorMovedI * if pumvisible() == 0|silent! pclose|endif
+  autocmd InsertLeave * if pumvisible() == 0|silent! pclose|endif
+augroup END
 
 " Close preview window
 nnoremap <silent>q :<C-u>pc<CR>

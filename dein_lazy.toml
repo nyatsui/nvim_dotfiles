@@ -82,9 +82,9 @@ if = 'has("python3")'
 on_cmd = 'Denite'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-nnoremap <silent> <C-p> :<C-u>Denite file_rec<CR>
-nnoremap <silent> sp :<C-u>Denite buffer/project file_rec<CR>
-nnoremap <silent> sc :<C-u>DeniteBufferDir file_rec<CR>
+nnoremap <silent> <C-p> :<C-u>Denite file/rec<CR>
+nnoremap <silent> sp :<C-u>Denite buffer/project file/rec<CR>
+nnoremap <silent> sc :<C-u>DeniteBufferDir file/rec<CR>
 nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
 nnoremap <silent> sB :<C-u>Denite buffer<CR>
 nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
@@ -97,8 +97,8 @@ nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
 " nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
-" nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file_rec', 'args': ['~/dotfiles']}])<CR>
-" nnoremap ml :<C-u>call denite#start([{'name': 'file_rec', 'args': [g:memolist_path]}])<CR>
+" nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file/rec', 'args': ['~/dotfiles']}])<CR>
+" nnoremap ml :<C-u>call denite#start([{'name': 'file/rec', 'args': [g:memolist_path]}])<CR>
  nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -auto-highlight
         \ line<CR>
  nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search
@@ -113,7 +113,7 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 '''
 hook_post_source = '''
  if executable('pt')
-   call denite#custom#var('file_rec', 'command',
+   call denite#custom#var('file/rec', 'command',
   \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
    call denite#custom#var('grep', 'command',
   \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
@@ -123,10 +123,10 @@ hook_post_source = '''
    call denite#custom#var('file/rec', 'command', ['scantree.py'])
  endif
 
- call denite#custom#source('file_rec', 'matchers',
+ call denite#custom#source('file/rec', 'matchers',
  \ ['matcher/fruzzy'])
- call denite#custom#alias('source', 'file_rec/git', 'file_rec')
- call denite#custom#var('file_rec/git', 'command',
+ call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+ call denite#custom#var('file/rec/git', 'command',
      \ ['git', 'ls-files', '-co', '--exclude-standard'])
  call denite#custom#source(
      \ 'file_mru', 'matchers', ['matcher/fruzzy', 'matcher_project_files'])
@@ -163,12 +163,12 @@ hook_add = '''
 '''
 hook_source = '''
   let g:deol#prompt_pattern = '\w*%'
-  autocmd FileType deol call s:on_deol()
-  function! s:on_deol() abort
-    nnoremap <buffer><silent> [Space]gs :<C-u>call deol#send('git status')<CR>
-    nnoremap <buffer><silent> [Space]gc :<C-u>call deol#send('git commit')<CR>
-    nnoremap <buffer><silent> [Space]gA :<C-u>call deol#send('git commit --amend')<CR>
-  endfunction
+  " autocmd FileType deol call s:on_deol()
+  " function! s:on_deol() abort
+  "   nnoremap <buffer><silent> [Space]gs :<C-u>call deol#send('git status')<CR>
+  "   nnoremap <buffer><silent> [Space]gc :<C-u>call deol#send('git commit')<CR>
+  "   nnoremap <buffer><silent> [Space]gA :<C-u>call deol#send('git commit --amend')<CR>
+  " endfunction
 '''
 
 [[plugins]]

@@ -70,18 +70,18 @@ hook_add = '''
 " map <C-n> :NERDTreeToggle<CR>
 '''
 
-[[plugins]]
-repo = 'tpope/vim-surround'
+# [[plugins]]
+# repo = 'tpope/vim-surround'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
 
-# [[plugins]]
-# repo = 'kana/vim-operator-replace'
-# depends = ['vim-operator-user']
-# hook_add = '''
-# map <Space>r <Plug>(operator-replace)
-# '''
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = ['vim-operator-user']
+hook_add = '''
+map <Space>r <Plug>(operator-replace)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
@@ -167,11 +167,18 @@ repo = 'yonchu/accelerated-smooth-scroll'
 [[plugins]]
 repo = 'equalsraf/neovim-gui-shim'
 
-# [[plugins]]
-# repo = 'vim-pandoc/vim-pandoc'
-#
-# [[plugins]]
-# repo = 'vim-pandoc/vim-pandoc-syntax'
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc'
+hook_add = '''
+" let g:pandoc#filetypes#pandoc_markdown = 0
+let g:pandoc#modules#disabled = ["folding", "spell"]
+'''
+
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc-syntax'
+hook_add = '''
+let g:pandoc#syntax#conceal#use = 0
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'

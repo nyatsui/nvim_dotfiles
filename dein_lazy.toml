@@ -99,17 +99,16 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 " nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file/rec', 'args': ['~/dotfiles']}])<CR>
 " nnoremap ml :<C-u>call denite#start([{'name': 'file/rec', 'args': [g:memolist_path]}])<CR>
- nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -start_filter
+ nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -auto-action='highlight'
         \ line<CR>
- nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search
-        \ -mode=normal line<CR>
- nnoremap <silent> sg :<C-u>Denite -buffer-name=search
+ nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search -auto-action='highlight'
+        \  -no-start-filter line<CR>
+ nnoremap <silent> sg :<C-u>Denite -buffer-name=search -auto-action='preview' -no-start-filter
         \ -no-empty grep<CR>
- nnoremap <silent> sn :<C-u>Denite -buffer-name=search
-        \ -resume -mode=normal -refresh<CR>
+ nnoremap <silent> sn :<C-u>Denite -buffer-name=search -auto-action='highlight' -no-start-filter
+        \ -resume -refresh -cursor-pos=+1 <CR>
  nnoremap <silent> s;
         \ :<C-u>Denite command_history command <CR>
- " nnoremap <silent> <C-k> :<C-u>Denite -mode=normal change jump<CR>
 
  function! s:denite_my_settings() abort
     nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
@@ -124,14 +123,16 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 endfunction
 
 function! s:denite_filter_my_settings() abort
-  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+  " open and close preview window
+  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action').':<C-u>pc<CR>'
   inoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
-  inoremap <silent><buffer><expr> <esc> denite#do_map('quit')
+  " quit and close preview window
+  inoremap <silent><buffer><expr> <esc> denite#do_map('quit').':<C-u>pc<CR>'
   imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
   inoremap <silent><buffer> <C-g>
-  \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR><C-w>pA
+  \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
   inoremap <silent><buffer> <C-t>
-  \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR><C-w>pA
+  \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
   " call deoplete#custom#buffer_option('auto_complete', v:false)
 endfunction
 
@@ -147,7 +148,7 @@ hook_post_source = '''
    call denite#custom#var('file/rec', 'command',
   \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
    call denite#custom#var('grep', 'command',
-  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden', '--ignore=.git/*'])
    call denite#custom#var('grep', 'default_opts', [])
    call denite#custom#var('grep', 'recursive_opts', [])
  else
@@ -166,6 +167,11 @@ hook_post_source = '''
  call denite#custom#alias('source', 'buffer/project', 'buffer')
  call denite#custom#source('buffer/project', 'matchers',
       \ ['matcher/fruzzy', 'matcher_project_files', 'matcher/ignore_current_buffer'])
+
+ " Change ignore_globs
+ call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+       \ [ '.git/', '.ropeproject/', '__pycache__/',
+       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
 
 
 call denite#custom#option('_', {

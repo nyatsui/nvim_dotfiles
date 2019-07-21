@@ -359,3 +359,9 @@ call defx#custom#column('filename', {
      \ 'max_width': 300,
      \ })
 '''
+
+[[plugins]]
+repo = 'tbodt/deoplete-tabnine'
+depends = ['deoplete.nvim']
+on_event = ['InsertEnter']
+build = './install.sh'

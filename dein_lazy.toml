@@ -303,3 +303,12 @@ function! s:defx_my_settings() abort
  \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
 endfunction
 '''
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+build = 'cd app & yarn install'
+hook_add = '''
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_echo_preview_url = 1
+'''

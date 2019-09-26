@@ -249,7 +249,7 @@ if !IsWindows()
     call pyinstall#install()
   endif
 else
-  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.0\Python.exe')
+  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.4\Python.exe')
 endif
 
 "dein Scripts-----------------------------

@@ -93,6 +93,7 @@ nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
 nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nnoremap <silent> su :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
@@ -185,6 +186,7 @@ call denite#custom#option('_', {
       \ 'split': 'floating',
       \ 'start_filter': v:true,
       \ 'statusline': v:false,
+      \ 'max_dynamic_update_candidates': 1000000,
       \ })
 '''
 
@@ -281,7 +283,7 @@ hook_add = '''
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 nnoremap <silent>   [Space]f
-\ :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
+\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
@@ -351,6 +353,9 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
  \ ':<C-u>wincmd w<CR>' :
  \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
+ nnoremap <silent><buffer><expr> C
+ \ defx#do_action('toggle_columns',
+ \                'mark:indent:icon:filename:type:size:time')
 endfunction
 '''
 hook_post_source = '''
@@ -360,18 +365,18 @@ call defx#custom#column('filename', {
      \ })
 '''
 
-[[plugins]]
-repo = 'tbodt/deoplete-tabnine'
-depends = ['deoplete.nvim']
-on_event = ['InsertEnter']
-hook_post_update = '''
-if has('win32') || has('win64')
-  let cmd = 'powershell.exe .\install.ps1'
-else
-  let cmd = './install.sh'
-endif
-let g:dein#plugin.build = cmd
-'''
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# depends = ['deoplete.nvim']
+# on_event = ['InsertEnter']
+# hook_post_update = '''
+# if has('win32') || has('win64')
+#   let cmd = 'powershell.exe .\install.ps1'
+# else
+#   let cmd = './install.sh'
+# endif
+# let g:dein#plugin.build = cmd
+# '''
 
 [[plugins]]
 repo = 'iamcco/markdown-preview.nvim'

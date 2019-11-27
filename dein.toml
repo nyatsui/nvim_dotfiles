@@ -80,7 +80,7 @@ repo = 'kana/vim-operator-user'
 repo = 'kana/vim-operator-replace'
 depends = ['vim-operator-user']
 hook_add = '''
-map <Space>r <Plug>(operator-replace)
+map sr <Plug>(operator-replace)
 '''
 
 [[plugins]]
@@ -244,7 +244,7 @@ let g:ale_fixers = {
 
 " Path
 let g:ale_python_flake8_executable = g:python3_host_prog
-let g:ale_python_flake8_options = '-m flake8'
+let g:ale_python_flake8_options = '-m flake8 --extend-ignore=E111,E114'
 let g:ale_python_autopep8_executable = g:python3_host_prog
 let g:ale_python_autopep8_options = '-m autopep8'
 let g:ale_python_isort_executable = g:python3_host_prog

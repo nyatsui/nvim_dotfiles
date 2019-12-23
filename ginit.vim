@@ -1,2 +1,2 @@
-GuiFont! Myrica MM:h10
-let g:gonvim_start_fullscreen = 1
+Guifont! Noto Sans Mono CJK JP Regular:h11
+" Guifont! Myrica MM:h11

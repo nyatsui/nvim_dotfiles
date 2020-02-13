@@ -181,7 +181,6 @@ call denite#custom#option('_', {
       \ 'cursor_wrap': v:true,
       \ 'highlight_filter_background': 'DeniteFilter',
       \ 'highlight_matched_char': 'Underlined',
-      \ 'matchers': 'matcher/fruzzy',
       \ 'prompt': '> ',
       \ 'split': 'floating',
       \ 'start_filter': v:true,

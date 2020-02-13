@@ -358,6 +358,7 @@ function! s:defx_my_settings() abort
  \                'mark:indent:icon:filename:type:size:time')
 endfunction
 '''
+
 hook_post_source = '''
 call defx#custom#column('filename', {
      \ 'min_width': 80,

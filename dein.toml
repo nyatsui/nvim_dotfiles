@@ -70,18 +70,18 @@ hook_add = '''
 " map <C-n> :NERDTreeToggle<CR>
 '''
 
-[[plugins]]
-repo = 'tpope/vim-surround'
+# [[plugins]]
+# repo = 'tpope/vim-surround'
 
 [[plugins]]
 repo = 'kana/vim-operator-user'
 
-# [[plugins]]
-# repo = 'kana/vim-operator-replace'
-# depends = ['vim-operator-user']
-# hook_add = '''
-# map <Space>r <Plug>(operator-replace)
-# '''
+[[plugins]]
+repo = 'kana/vim-operator-replace'
+depends = ['vim-operator-user']
+hook_add = '''
+map sr <Plug>(operator-replace)
+'''
 
 [[plugins]]
 repo = 'rhysd/vim-operator-surround'
@@ -167,11 +167,18 @@ repo = 'yonchu/accelerated-smooth-scroll'
 [[plugins]]
 repo = 'equalsraf/neovim-gui-shim'
 
-# [[plugins]]
-# repo = 'vim-pandoc/vim-pandoc'
-#
-# [[plugins]]
-# repo = 'vim-pandoc/vim-pandoc-syntax'
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc'
+hook_add = '''
+let g:pandoc#filetypes#pandoc_markdown = 0
+let g:pandoc#modules#disabled = ["folding", "spell"]
+'''
+
+[[plugins]]
+repo = 'vim-pandoc/vim-pandoc-syntax'
+hook_add = '''
+let g:pandoc#syntax#conceal#use = 0
+'''
 
 [[plugins]]
 repo = 'tyru/open-browser.vim'
@@ -221,3 +228,27 @@ let g:EasyMotion_startofline = 0
 
 [[plugins]]
 repo = 'tpope/vim-repeat'
+
+[[plugins]]
+repo = 'w0rp/ale'
+hook_add = '''
+" Linter
+let g:ale_linters = {
+    \ 'python': ['flake8'],
+    \ }
+
+" Fixer
+let g:ale_fixers = {
+    \ 'python': ['autopep8', 'black', 'isort'],
+    \ }
+
+" Path
+let g:ale_python_flake8_executable = g:python3_host_prog
+let g:ale_python_flake8_options = '-m flake8 --extend-ignore=E111,E114'
+let g:ale_python_autopep8_executable = g:python3_host_prog
+let g:ale_python_autopep8_options = '-m autopep8'
+let g:ale_python_isort_executable = g:python3_host_prog
+let g:ale_python_isort_options = '-m isort'
+let g:ale_python_black_executable = g:python3_host_prog
+let g:ale_python_black_options = '-m black'
+'''

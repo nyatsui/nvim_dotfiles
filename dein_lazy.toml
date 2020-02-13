@@ -94,30 +94,63 @@ nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
 nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
 nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
 nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+nnoremap <silent> su :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
 " nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 " nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file/rec', 'args': ['~/dotfiles']}])<CR>
 " nnoremap ml :<C-u>call denite#start([{'name': 'file/rec', 'args': [g:memolist_path]}])<CR>
- nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -auto-highlight
+ nnoremap <silent> s/ :<C-u>Denite -buffer-name=search -auto-action='highlight'
         \ line<CR>
- nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search
-        \ -auto-highlight -mode=normal line<CR>
- nnoremap <silent> sg :<C-u>Denite -buffer-name=search
-        \ -no-empty -mode=normal grep<CR>
- nnoremap <silent> sn :<C-u>Denite -buffer-name=search
-        \ -resume -mode=normal -refresh<CR>
+ nnoremap <silent> s* :<C-u>DeniteCursorWord -buffer-name=search -auto-action='highlight'
+        \  -no-start-filter line<CR>
+ nnoremap <silent> sg :<C-u>Denite -buffer-name=search -auto-action='preview' -no-start-filter
+        \ -no-empty grep<CR>
+ nnoremap <silent> sn :<C-u>Denite -buffer-name=search -auto-action='highlight' -no-start-filter
+        \ -resume -refresh -cursor-pos=+1 <CR>
  nnoremap <silent> s;
         \ :<C-u>Denite command_history command <CR>
- " nnoremap <silent> <C-k> :<C-u>Denite -mode=normal change jump<CR>
+
+ function! s:denite_my_settings() abort
+    nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+    nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+    nnoremap <silent><buffer><expr> <esc> denite#do_map('quit')
+    nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> a denite#do_map('open_filter_buffer')
+    nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+    nnoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
+    nnoremap <silent><buffer><expr> <C-x> denite#do_map('do_action', 'quick_move')
+endfunction
+
+function! s:denite_filter_my_settings() abort
+  " open and close preview window
+  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action').':<C-u>pc<CR>'
+  inoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
+  " quit and close preview window
+  inoremap <silent><buffer><expr> <esc> denite#do_map('quit').':<C-u>pc<CR>'
+  imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+  inoremap <silent><buffer> <C-g>
+  \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
+  inoremap <silent><buffer> <C-t>
+  \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
+  " call deoplete#custom#buffer_option('auto_complete', v:false)
+endfunction
+
+augroup DENITE
+    autocmd!
+    autocmd FileType denite call s:denite_my_settings()
+    autocmd FileType denite-filter call s:denite_filter_my_settings()
+augroup end
+
 '''
 hook_post_source = '''
  if executable('pt')
    call denite#custom#var('file/rec', 'command',
   \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
    call denite#custom#var('grep', 'command',
-  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden'])
+  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden', '--ignore=.git/*'])
    call denite#custom#var('grep', 'default_opts', [])
    call denite#custom#var('grep', 'recursive_opts', [])
  else
@@ -136,6 +169,25 @@ hook_post_source = '''
  call denite#custom#alias('source', 'buffer/project', 'buffer')
  call denite#custom#source('buffer/project', 'matchers',
       \ ['matcher/fruzzy', 'matcher_project_files', 'matcher/ignore_current_buffer'])
+
+ " Change ignore_globs
+ call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+       \ [ '.git/', '.ropeproject/', '__pycache__/',
+       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+
+
+call denite#custom#option('_', {
+      \ 'cached_filter': v:true,
+      \ 'cursor_shape': v:true,
+      \ 'cursor_wrap': v:true,
+      \ 'highlight_filter_background': 'DeniteFilter',
+      \ 'highlight_matched_char': 'Underlined',
+      \ 'prompt': '> ',
+      \ 'split': 'floating',
+      \ 'start_filter': v:true,
+      \ 'statusline': v:false,
+      \ 'max_dynamic_update_candidates': 1000000,
+      \ })
 '''
 
 [[plugins]]
@@ -231,7 +283,7 @@ hook_add = '''
 repo = 'Shougo/defx.nvim'
 hook_add = '''
 nnoremap <silent>   [Space]f
-\ :<C-u>Defx -listed -resume -buffer-name=tab`tabpagenr()`<CR>
+\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort
@@ -301,5 +353,36 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
  \ ':<C-u>wincmd w<CR>' :
  \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
+ nnoremap <silent><buffer><expr> C
+ \ defx#do_action('toggle_columns',
+ \                'mark:indent:icon:filename:type:size:time')
 endfunction
+'''
+hook_post_source = '''
+call defx#custom#column('filename', {
+     \ 'min_width': 80,
+     \ 'max_width': 300,
+     \ })
+'''
+
+# [[plugins]]
+# repo = 'tbodt/deoplete-tabnine'
+# depends = ['deoplete.nvim']
+# on_event = ['InsertEnter']
+# hook_post_update = '''
+# if has('win32') || has('win64')
+#   let cmd = 'powershell.exe .\install.ps1'
+# else
+#   let cmd = './install.sh'
+# endif
+# let g:dein#plugin.build = cmd
+# '''
+
+[[plugins]]
+repo = 'iamcco/markdown-preview.nvim'
+on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+build = 'cd app & yarn install'
+hook_add = '''
+let g:mkdp_open_to_the_world = 1
+let g:mkdp_echo_preview_url = 1
 '''

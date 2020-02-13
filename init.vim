@@ -241,7 +241,7 @@ if !IsWindows()
   let s:pyinstall_cache_path = expand('~/.cache/nvim/pyinstall.nvim')
   if &runtimepath !~ '/pyinstall.nvim'
     let g:pyinstall#py_version = '3.7.0'
-    let g:pyinstall#py_modules = ['Send2Trash']
+    let g:pyinstall#py_modules = ['Send2Trash', 'flake8', 'flake8-import-order', 'autopep8', 'black', 'isort']
     if !isdirectory(s:pyinstall_cache_path)
       execute '!git clone --recursive https://github.com/nyatsui/pyinstall.nvim.git' s:pyinstall_cache_path
     endif
@@ -249,7 +249,7 @@ if !IsWindows()
     call pyinstall#install()
   endif
 else
-  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.0\Python.exe')
+  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.4\Python.exe')
 endif
 
 "dein Scripts-----------------------------

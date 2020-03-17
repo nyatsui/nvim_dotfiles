@@ -159,7 +159,8 @@ nnoremap x "_x
 nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
-inoremap <C-y> <C-r>+
+inoremap <C-y> <C-o>P
+inoremap <C-;> <C-r>+
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^
@@ -241,7 +242,7 @@ if !IsWindows()
   let s:pyinstall_cache_path = expand('~/.cache/nvim/pyinstall.nvim')
   if &runtimepath !~ '/pyinstall.nvim'
     let g:pyinstall#py_version = '3.7.0'
-    let g:pyinstall#py_modules = ['Send2Trash', 'flake8', 'flake8-import-order', 'autopep8', 'black', 'isort']
+    let g:pyinstall#py_modules = ['Send2Trash', 'flake8', 'flake8-import-order', 'autopep8', 'black', 'isort','pep8-naming']
     if !isdirectory(s:pyinstall_cache_path)
       execute '!git clone --recursive https://github.com/nyatsui/pyinstall.nvim.git' s:pyinstall_cache_path
     endif

@@ -97,6 +97,8 @@ nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
 nnoremap <silent> su :<C-u>Denite file_mru<CR>
 nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
 nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+nnoremap <silent> sy :<C-u>Denite neoyank<CR>
+nnoremap <silent> sr :<C-u>Denite -resume<CR>
 " nnoremap <silent> <C-u>; :<C-u>Denite -resume -immediately -select=+1<CR>
 " nnoremap <silent> <C-u>- :<C-u>Denite -resume -immediately -select=-1<CR>
 " nnoremap <silent> <C-u><C-d> :<C-u>call denite#start([{'name': 'file/rec', 'args': ['~/dotfiles']}])<CR>
@@ -111,6 +113,8 @@ nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
         \ -resume -refresh -cursor-pos=+1 <CR>
  nnoremap <silent> s;
         \ :<C-u>Denite command_history command <CR>
+ nnoremap <silent> so
+        \ :<C-u>Denite jump change <CR>
 
  function! s:denite_my_settings() abort
     nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')

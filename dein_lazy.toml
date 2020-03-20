@@ -35,24 +35,6 @@ call deoplete#custom#option('auto_complete_delay', 0)
 call deoplete#custom#option('async_timeout', 100)
 '''
 
-# [[plugins]]
-# repo = 'zchee/deoplete-clang'
-# hook_source = '''
-# let g:deoplete#sources#clang#libclang_path = '/usr/local/Cellar/llvm/3.9.1/lib/libclang.dylib'
-# let g:deoplete#sources#clang#clang_header = '/usr/local/Cellar/llvm/3.9.1/lib/clang/'
-# '''
-# on_ft = ['c', 'cpp', 'cmake']
-# depends = ['deoplete.nvim']
-
-# [[plugins]]
-# repo = 'Valloric/YouCompleteMe'
-
-# [[plugins]]
-# repo = 'tweekmonster/deoplete-clang2'
-# on_ft = ['c', 'cpp']
-# on_event = 'InsertEnter'
-# depends = 'deoplete.nvim'
-
 [[plugins]]
 repo = 'Shougo/deoplete-clangx'
 on_ft = ['c', 'cpp']
@@ -77,16 +59,14 @@ repo = 'Shougo/neomru.vim'
 
 [[plugins]]
 repo = 'Shougo/denite.nvim'
-rev = 'eaf26778d5e54eb847349ce978c1a59d4cdec12f'
 depends = ['neomru.vim']
 if = 'has("python3")'
 on_cmd = 'Denite'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-nnoremap <silent> <C-p> :<C-u>Denite file/rec<CR>
+inoremap <silent> <C-p> <Esc>:<C-u>Denite buffer/project file/rec<CR>
 nnoremap <silent> sp :<C-u>Denite buffer/project file/rec<CR>
 nnoremap <silent> sc :<C-u>DeniteBufferDir file/rec<CR>
-nnoremap <silent> <C-b> :<C-u>Denite buffer<CR>
 nnoremap <silent> sB :<C-u>Denite buffer<CR>
 nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
 nnoremap <silent> sC :<C-u>DeniteBuffer buffer/project<CR>

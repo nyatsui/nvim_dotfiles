@@ -252,3 +252,11 @@ let g:ale_python_isort_options = '-m isort'
 let g:ale_python_black_executable = g:python3_host_prog
 let g:ale_python_black_options = '-m black'
 '''
+
+[[plugins]]
+repo = 'bfredl/nvim-miniyank'
+if = "has('win32') || has('win64')"
+hook_add = '''
+map p <Plug>(miniyank-autoput)
+map P <Plug>(miniyank-autoPut)
+'''

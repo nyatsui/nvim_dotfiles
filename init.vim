@@ -119,10 +119,10 @@ nnoremap [Window]Q :<C-u>q<CR>
 
 nnoremap <C-l> <C-^>
 
-inoremap <C-h> <C-o>h
-inoremap <C-j> <C-o>j
-inoremap <C-k> <C-o>k
-inoremap <C-l> <C-o>l
+inoremap <C-h> <Left>
+inoremap <C-j> <Down>
+inoremap <C-k> <Up>
+inoremap <C-l> <Right>
 
 if exists(':tnoremap')
   tnoremap   <ESC>      <C-\><C-n>
@@ -160,6 +160,7 @@ nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
 inoremap <C-y> <C-o>P
+cnoremap <C-y> <C-o>P
 inoremap <C-;> <C-r>+
 
 " Indent paste.
@@ -250,7 +251,7 @@ if !IsWindows()
     call pyinstall#install()
   endif
 else
-  let g:python3_host_prog = expand('~\scoop\apps\python\3.7.4\Python.exe')
+  let g:python3_host_prog = expand('~\scoop\apps\python\3.8.1\Python.exe')
 endif
 
 "dein Scripts-----------------------------

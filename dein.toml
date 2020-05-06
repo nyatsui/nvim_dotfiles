@@ -258,5 +258,6 @@ repo = 'bfredl/nvim-miniyank'
 if = "IsWindows() || IsMac()"
 hook_add = '''
 map p <Plug>(miniyank-autoput)
+xnoremap <expr> p 'pgv"'.v:register.'y`>'
 map P <Plug>(miniyank-autoPut)
 '''

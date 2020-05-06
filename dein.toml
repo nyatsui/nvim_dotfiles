@@ -255,7 +255,7 @@ let g:ale_python_black_options = '-m black'
 
 [[plugins]]
 repo = 'bfredl/nvim-miniyank'
-if = "has('win32') || has('win64')"
+if = "IsWindows() || IsMac()"
 hook_add = '''
 map p <Plug>(miniyank-autoput)
 map P <Plug>(miniyank-autoPut)

@@ -160,8 +160,7 @@ nnoremap [Alt]   <Nop>
 nmap    S  [Alt]
 
 inoremap <C-y> <C-o>P
-cnoremap <C-y> <C-o>P
-inoremap <C-;> <C-r>+
+cnoremap <C-y> <C-r>+
 
 " Indent paste.
 nnoremap <silent> [Alt]p o<Esc>pm``[=`]``^

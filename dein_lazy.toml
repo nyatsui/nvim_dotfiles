@@ -280,7 +280,7 @@ hook_add = '''
 nnoremap <silent>   [Space]f
 \ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
 nnoremap <silent>   [Space]t
-\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icons:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
+\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icon:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
 
 autocmd FileType defx call s:defx_my_settings()
 function! s:defx_my_settings() abort

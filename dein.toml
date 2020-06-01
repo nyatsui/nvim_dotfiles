@@ -205,7 +205,7 @@ xmap ga <Plug>(EasyAlign)
 '''
 
 [[plugins]]
-repo = 'haya14busa/vim-easymotion'
+repo = 'easymotion/vim-easymotion'
 hook_add = '''
 let g:EasyMotion_do_mapping = 0
 let g:EasyMotion_smartcase = 1

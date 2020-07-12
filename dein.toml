@@ -17,6 +17,13 @@ on_ft = 'toml'
 [[plugins]]
 repo = 'osyo-manga/vim-precious'
 depends = ['context_filetype.vim']
+hook_add = '''
+let g:precious_enable_switchers = {
+    \"markdown" : {
+    \    "setfiletype" : 0
+    \},
+    \}
+'''
 
 [[plugins]]
 repo = 'Shougo/context_filetype.vim'
@@ -244,7 +251,7 @@ let g:ale_fixers = {
 
 " Path
 let g:ale_python_flake8_executable = g:python3_host_prog
-let g:ale_python_flake8_options = '-m flake8 --extend-ignore=E111,E114'
+let g:ale_python_flake8_options = '-m flake8 --extend-ignore=E111,E114 --max-line-length 100'
 let g:ale_python_autopep8_executable = g:python3_host_prog
 let g:ale_python_autopep8_options = '-m autopep8'
 let g:ale_python_isort_executable = g:python3_host_prog

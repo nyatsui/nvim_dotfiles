@@ -65,7 +65,7 @@ on_cmd = 'Denite'
 hook_add = '''
 nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
 inoremap <silent> <C-p> <Esc>:<C-u>Denite buffer/project file/rec<CR>
-nnoremap <silent> sp :<C-u>Denite buffer/project file/rec<CR>
+nnoremap <silent> sp :<C-u>Denite buffer file/rec<CR>
 nnoremap <silent> sc :<C-u>DeniteBufferDir file/rec<CR>
 nnoremap <silent> sB :<C-u>Denite buffer<CR>
 nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
@@ -154,6 +154,8 @@ hook_post_source = '''
 
  call denite#custom#source('file/rec', 'matchers',
  \ ['matcher/fruzzy'])
+ call denite#custom#source('buffer', 'matchers',
+ \ ['matcher/fruzzy', 'matcher/ignore_current_buffer'])
  call denite#custom#alias('source', 'file/rec/git', 'file/rec')
  call denite#custom#var('file/rec/git', 'command',
      \ ['git', 'ls-files', '-co', '--exclude-standard'])
@@ -323,6 +325,8 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> .
  \ defx#do_action('repeat')
   nnoremap <silent><buffer><expr> yy
+ \ defx#do_action('yank_path', ":t")
+  nnoremap <silent><buffer><expr> ya
  \ defx#do_action('yank_path')
   nnoremap <silent><buffer><expr> h
  \ defx#do_action('cd', ['..'])

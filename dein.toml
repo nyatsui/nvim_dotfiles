@@ -162,7 +162,7 @@ repo = "kana/vim-tabpagecd"
 [[plugins]]
 repo = "airblade/vim-rooter"
 hook_add = '''
-let g:rooter_use_lcd = 1
+let g:rooter_cd_cmd = "lcd"
 '''
 
 [[plugins]]
@@ -262,9 +262,13 @@ let g:ale_python_black_options = '-m black'
 
 [[plugins]]
 repo = 'bfredl/nvim-miniyank'
-if = "IsWindows() || IsMac()"
 hook_add = '''
 map p <Plug>(miniyank-autoput)
 xnoremap <expr> p 'pgv"'.v:register.'y`>'
 map P <Plug>(miniyank-autoPut)
 '''
+# if = "IsWindows() || IsMac()"
+
+
+[[plugins]]
+repo = 'editorconfig/editorconfig-vim'

@@ -144,7 +144,7 @@ hook_add = '''
 repo = "tpope/vim-fugitive"
 hook_add = '''
 autocmd QuickFixCmdPost *grep* cwindow
-nnoremap <silent> [Window]G :Gstatus<CR>
+nnoremap <silent> [Window]G :Git<CR>
 '''
 
 [[plugins]]

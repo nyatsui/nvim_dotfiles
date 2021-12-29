@@ -195,7 +195,6 @@ augroup END
 if(has('nvim'))
   " Modifiable terminal
   autocmd MyAutoCmd TermOpen * setlocal modifiable
-  autocmd MyAutoCmd TermClose * buffer #
 endif
 
 " Turn off paste mode when leaving insert
@@ -241,7 +240,7 @@ if !IsWindows()
   " Python3 install
   let s:pyinstall_cache_path = expand('~/.cache/nvim/pyinstall.nvim')
   if &runtimepath !~ '/pyinstall.nvim'
-    let g:pyinstall#py_version = '3.7.0'
+    let g:pyinstall#py_version = '3.9.0'
     let g:pyinstall#py_modules = ['Send2Trash', 'flake8', 'flake8-import-order', 'autopep8', 'black', 'isort','pep8-naming', 'jedi']
     if !isdirectory(s:pyinstall_cache_path)
       execute '!git clone --recursive https://github.com/nyatsui/pyinstall.nvim.git' s:pyinstall_cache_path

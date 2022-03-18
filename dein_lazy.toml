@@ -510,6 +510,10 @@ hook_source = '''
       \ 'CmdlineEnter', 'CmdlineChanged',
       \ ])
   call ddc#custom#patch_global('completionMenu', 'pum.vim')
+  inoremap <C-n>       <Cmd>call pum#map#select_relative(+1)<CR>
+  inoremap <C-p>       <Cmd>call pum#map#select_relative(-1)<CR>
+  inoremap <expr><CR>  pum#visible() ? pum#map#confirm() : "<CR>"
+  inoremap <expr><C-e> pum#visible() ? pum#map#cancel() : "<C-e>"
 
   call ddc#enable()
 '''

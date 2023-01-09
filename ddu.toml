@@ -9,7 +9,7 @@ call ddu#custom#patch_global(#{
     \    sourceOptions: #{
     \      _: #{
     \        ignoreCase: v:true,
-    \        matchers: ['matcher_substring', 'matcher_relative',],
+    \        matchers: ['matcher_substring'],
     \      },
     \    },
     \    sourceParams: #{

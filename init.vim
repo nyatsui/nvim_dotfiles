@@ -253,10 +253,19 @@ else
 endif
 
 "dein Scripts-----------------------------
+
+let g:dein#auto_recache = !has('win32')
+let g:dein#auto_remote_plugins = v:false
+let g:dein#enable_notification = v:true
+let g:dein#install_check_diff = v:true
+let g:dein#install_check_remote_threshold = 24 * 60 * 60
+let g:dein#install_copy_vim = has('nvim')
+let g:dein#install_progress_type = 'floating'
+let g:dein#lazy_rplugins = v:true
+let g:dein#types#git#enable_partial_clone = v:true
+
 " プラグインがインストールされるディレクトリ
-if exists('g:nyaovim_version')
-  let s:dein_cache_path = expand('~/.cache/nyaovim/dein')
-elseif has('nvim')
+if has('nvim')
   let s:dein_cache_path = expand('~/.cache/nvim/dein')
 else
   let s:dein_cache_path = expand('~/.cache/vim/dein')
@@ -266,26 +275,38 @@ endif
 let s:dein_dir = s:dein_cache_path .'/repos/github.com/Shougo/dein.vim'
 
 " dein.vim がなければ github から落としてくる
-if &runtimepath !~ '/dein.vim'
+if &runtimepath !~# '/dein.vim'
+  let s:dein_dir = fnamemodify('dein.vim', ':p')
   if !isdirectory(s:dein_dir)
-    execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    let s:dein_dir = s:dein_cache_path . '/dein/repos/github.com/Shougo/dein.vim'
+    if !isdirectory(s:dein_dir)
+      execute '!git clone https://github.com/Shougo/dein.vim' s:dein_dir
+    endif
   endif
-  execute 'set runtimepath+=' . fnamemodify(s:dein_dir, ':p')
+  execute 'set runtimepath^=' . substitute(
+        \ fnamemodify(s:dein_dir, ':p') , '[/\\]$', '', '')
 endif
 
+
 " 設定開始
-if dein#load_state(s:dein_dir)
-  call dein#begin(s:dein_dir)
+if dein#load_state(s:dein_cache_path)
+  call dein#begin(s:dein_cache_path)
 
   " プラグインリストを収めた TOML ファイル
   " 予め TOML ファイルを用意しておく
   let g:rc_dir    = expand("~/.config/nvim/")
   let s:toml      = g:rc_dir . 'dein.toml'
   let s:lazy_toml = g:rc_dir . 'dein_lazy.toml'
+  let s:ddu_lazy_toml = g:rc_dir . 'ddu.toml'
+  let s:ddc_lazy_toml = g:rc_dir . 'ddc.toml'
+  " let s:toml      = g:rc_dir . 'local/dein.toml'
+  " let s:lazy_toml = g:rc_dir . 'local/dein_lazy.toml'
 
   " TOML を読み込み、キャッシュしておく
   call dein#load_toml(s:toml,      {'lazy': 0})
   call dein#load_toml(s:lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:ddu_lazy_toml, {'lazy': 1})
+  call dein#load_toml(s:ddc_lazy_toml, {'lazy': 1})
 
   " 設定終了
   call dein#end()

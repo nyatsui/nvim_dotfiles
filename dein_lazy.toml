@@ -57,135 +57,135 @@
 [[plugins]]
 repo = 'Shougo/neomru.vim'
 
-[[plugins]]
-repo = 'Shougo/denite.nvim'
-depends = ['neomru.vim']
-if = 'has("python3")'
-on_cmd = 'Denite'
-hook_add = '''
-nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
-inoremap <silent> <C-p> <Esc>:<C-u>Denite buffer/project file/rec<CR>
-nnoremap <silent> sp :<C-u>Denite buffer file/rec<CR>
-nnoremap <silent> sc :<C-u>DeniteBufferDir file/rec<CR>
-nnoremap <silent> sB :<C-u>Denite buffer<CR>
-nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
-nnoremap <silent> sC :<C-u>DeniteBuffer buffer/project<CR>
-nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
-nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
-nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
-nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
-nnoremap <silent> su :<C-u>Denite file_mru<CR>
-nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
-nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
-nnoremap <silent> sy :<C-u>Denite neoyank<CR>
-nnoremap <silent> sg :<C-u>Denite -buffer-name=search -auto-action='preview' -no-start-filter
-       \ -no-empty grep<CR>
-nnoremap <silent> sn :<C-u>Denite -buffer-name=search -auto-action='highlight' -no-start-filter
-       \ -resume -refresh -cursor-pos=+1 <CR>
-nnoremap <silent> s;
-       \ :<C-u>Denite command_history command <CR>
-nnoremap <silent> so
-       \ :<C-u>Denite jump change <CR>
-
-nnoremap <silent><expr> s/ wordcount().chars > 30000 ?
- \ ":\<C-u>Denite -buffer-name=search -start-filter -auto-action='highlight'
- \  -search line/external\<CR>" :
- \ ":\<C-u>Denite -buffer-name=search -start-filter -auto-action='highlight'
- \  -search line:forward\<CR>"
-nnoremap <silent><expr> * wordcount().chars > 30000 ?
- \ ":\<C-u>DeniteCursorWord -buffer-name=search -no-start-filter -auto-action='highlight' -search line/external\<CR>" :
- \ ":\<C-u>DeniteCursorWord -buffer-name=search -no-start-filter -auto-action='highlight' -search line:forward\<CR>"
-xnoremap <silent> *
- \ "qy:Denite -input=`@q` -buffer-name=search -no-start-filter -auto-action='highlight' -search line:forward<CR>"
-
-nnoremap <silent> ;r
-     \ :<C-u>Denite -buffer-name=register
-     \ register neoyank<CR>
-xnoremap <silent> ;r
-     \ :<C-u>Denite -default-action=replace -buffer-name=register
-     \ register neoyank<CR>
-
-function! s:denite_my_settings() abort
-   nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
-   nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
-   nnoremap <silent><buffer><expr> <esc> denite#do_map('quit')
-   nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
-   nnoremap <silent><buffer><expr> q denite#do_map('quit')
-   nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
-   nnoremap <silent><buffer><expr> a denite#do_map('open_filter_buffer')
-   nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
-   nnoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
-   nnoremap <silent><buffer><expr> <C-x> denite#do_map('do_action', 'quick_move')
-endfunction
-
-function! s:denite_filter_my_settings() abort
-  " open and close preview window
-  inoremap <silent><buffer><expr> <CR> denite#do_map('do_action').':<C-u>pc<CR>'
-  inoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
-  " quit and close preview window
-  inoremap <silent><buffer><expr> <esc> denite#do_map('quit').':<C-u>pc<CR>'
-  imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
-  inoremap <silent><buffer> <C-g>
-  \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
-  inoremap <silent><buffer> <C-t>
-  \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
-  " call deoplete#custom#buffer_option('auto_complete', v:false)
-  nnoremap <silent><buffer><expr> <C-l> denite#do_map('redraw')
-endfunction
-
-augroup DENITE
-    autocmd!
-    autocmd FileType denite call s:denite_my_settings()
-    autocmd FileType denite-filter call s:denite_filter_my_settings()
-augroup end
-
-'''
-hook_post_source = '''
- if executable('pt')
-   call denite#custom#var('file/rec', 'command',
-  \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
-   call denite#custom#var('grep', 'command',
-  \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden', '--ignore=.git/*'])
-   call denite#custom#var('grep', 'default_opts', [])
-   call denite#custom#var('grep', 'recursive_opts', [])
- else
-   call denite#custom#var('file/rec', 'command', ['scantree.py'])
- endif
-
- call denite#custom#source('file/rec', 'matchers',
- \ ['matcher/fruzzy'])
- call denite#custom#source('buffer', 'matchers',
- \ ['matcher/fruzzy', 'matcher/ignore_current_buffer'])
- call denite#custom#alias('source', 'file/rec/git', 'file/rec')
- call denite#custom#var('file/rec/git', 'command',
-     \ ['git', 'ls-files', '-co', '--exclude-standard'])
- call denite#custom#source(
-     \ 'file_mru', 'matchers', ['matcher/fruzzy', 'matcher_project_files'])
- call denite#custom#source('file_old', 'matchers',
-      \ ['matcher/fruzzy', 'matcher_project_files'])
- call denite#custom#alias('source', 'buffer/project', 'buffer')
- call denite#custom#source('buffer/project', 'matchers',
-      \ ['matcher/fruzzy', 'matcher_project_files', 'matcher/ignore_current_buffer'])
-
- " Change ignore_globs
- call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
-       \ [ '.git/', '.ropeproject/', '__pycache__/',
-       \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
-
-
-call denite#custom#option('_', {
-      \ 'cached_filter': v:true,
-      \ 'cursor_shape': v:true,
-      \ 'cursor_wrap': v:true,
-      \ 'highlight_filter_background': 'DeniteFilter',
-      \ 'highlight_matched_char': 'Underlined',
-      \ 'prompt': '> ',
-      \ 'split': 'floating',
-      \ 'start_filter': v:true,
-      \ 'statusline': v:false,
-      \ 'max_dynamic_update_candidates': 1000000,
-      \ })
-'''
+# [[plugins]]
+# repo = 'Shougo/denite.nvim'
+# depends = ['neomru.vim']
+# if = 'has("python3")'
+# on_cmd = 'Denite'
+# hook_add = '''
+# nnoremap <silent> <C-u><C-t> :<C-u>Denite filetype<CR>
+# inoremap <silent> <C-p> <Esc>:<C-u>Denite buffer/project file/rec<CR>
+# nnoremap <silent> sp :<C-u>Denite buffer file/rec<CR>
+# nnoremap <silent> sc :<C-u>DeniteBufferDir file/rec<CR>
+# nnoremap <silent> sB :<C-u>Denite buffer<CR>
+# nnoremap <silent> sb :<C-u>Denite buffer/project<CR>
+# nnoremap <silent> sC :<C-u>DeniteBuffer buffer/project<CR>
+# nnoremap <silent> <C-u><C-j> :<C-u>Denite line<CR>
+# nnoremap <silent> <C-u><C-g> :<C-u>Denite grep<CR>
+# nnoremap <silent> <C-u><C-]> :<C-u>DeniteCursorWord grep<CR>
+# nnoremap <silent> <C-u><C-u> :<C-u>Denite file_mru<CR>
+# nnoremap <silent> su :<C-u>Denite file_mru<CR>
+# nnoremap <silent> <C-u><C-y> :<C-u>Denite neoyank<CR>
+# nnoremap <silent> <C-u><C-r> :<C-u>Denite -resume<CR>
+# nnoremap <silent> sy :<C-u>Denite neoyank<CR>
+# nnoremap <silent> sg :<C-u>Denite -buffer-name=search -auto-action='preview' -no-start-filter
+#      \ -no-empty grep<CR>
+# nnoremap <silent> sn :<C-u>Denite -buffer-name=search -auto-action='highlight' -no-start-filter
+#      \ -resume -refresh -cursor-pos=+1 <CR>
+# nnoremap <silent> s;
+#      \ :<C-u>Denite command_history command <CR>
+# nnoremap <silent> so
+#      \ :<C-u>Denite jump change <CR>
+# 
+# nnoremap <silent><expr> s/ wordcount().chars > 30000 ?
+#\ ":\<C-u>Denite -buffer-name=search -start-filter -auto-action='highlight'
+#\  -search line/external\<CR>" :
+#\ ":\<C-u>Denite -buffer-name=search -start-filter -auto-action='highlight'
+#\  -search line:forward\<CR>"
+# nnoremap <silent><expr> * wordcount().chars > 30000 ?
+#\ ":\<C-u>DeniteCursorWord -buffer-name=search -no-start-filter -auto-action='highlight' -search line/external\<CR>" :
+#\ ":\<C-u>DeniteCursorWord -buffer-name=search -no-start-filter -auto-action='highlight' -search line:forward\<CR>"
+# xnoremap <silent> *
+#\ "qy:Denite -input=`@q` -buffer-name=search -no-start-filter -auto-action='highlight' -search line:forward<CR>"
+# 
+# nnoremap <silent> ;r
+#    \ :<C-u>Denite -buffer-name=register
+#    \ register neoyank<CR>
+# xnoremap <silent> ;r
+#    \ :<C-u>Denite -default-action=replace -buffer-name=register
+#    \ register neoyank<CR>
+# 
+# function! s:denite_my_settings() abort
+#    nnoremap <silent><buffer><expr> <CR> denite#do_map('do_action')
+#    nnoremap <silent><buffer><expr> p denite#do_map('do_action', 'preview')
+#    nnoremap <silent><buffer><expr> <esc> denite#do_map('quit')
+#    nnoremap <silent><buffer><expr> <C-c> denite#do_map('quit')
+#    nnoremap <silent><buffer><expr> q denite#do_map('quit')
+#    nnoremap <silent><buffer><expr> i denite#do_map('open_filter_buffer')
+#    nnoremap <silent><buffer><expr> a denite#do_map('open_filter_buffer')
+#    nnoremap <silent><buffer><expr> <Space> denite#do_map('toggle_select').'j'
+#    nnoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
+#    nnoremap <silent><buffer><expr> <C-x> denite#do_map('do_action', 'quick_move')
+# endfunction
+# 
+# function! s:denite_filter_my_settings() abort
+#   " open and close preview window
+#   inoremap <silent><buffer><expr> <CR> denite#do_map('do_action').':<C-u>pc<CR>'
+#   inoremap <silent><buffer><expr> <tab> denite#do_map('choose_action')
+#   " quit and close preview window
+#   inoremap <silent><buffer><expr> <esc> denite#do_map('quit').':<C-u>pc<CR>'
+#   imap <silent><buffer> <C-c> <Plug>(denite_filter_quit)
+#   inoremap <silent><buffer> <C-g>
+# \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
+#   inoremap <silent><buffer> <C-t>
+# \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR>:call denite#call_map('open_filter_buffer')<CR>
+#   " call deoplete#custom#buffer_option('auto_complete', v:false)
+#   nnoremap <silent><buffer><expr> <C-l> denite#do_map('redraw')
+# endfunction
+# 
+# augroup DENITE
+#     autocmd!
+#     autocmd FileType denite call s:denite_my_settings()
+#     autocmd FileType denite-filter call s:denite_filter_my_settings()
+# augroup end
+# 
+# '''
+# hook_post_source = '''
+#  if executable('pt')
+#    call denite#custom#var('file/rec', 'command',
+# \ ['pt', '--follow', '--nocolor', '--nogroup', '--hidden', '--ignore=.git/*', (has('win32') ? '-g:' : '-g='), ''])
+#    call denite#custom#var('grep', 'command',
+# \ ['pt', '--nogroup', '--nocolor', '--smart-case', '--hidden', '--ignore=.git/*'])
+#    call denite#custom#var('grep', 'default_opts', [])
+#    call denite#custom#var('grep', 'recursive_opts', [])
+#  else
+#    call denite#custom#var('file/rec', 'command', ['scantree.py'])
+#  endif
+# 
+#  call denite#custom#source('file/rec', 'matchers',
+#\ ['matcher/fruzzy'])
+#  call denite#custom#source('buffer', 'matchers',
+#\ ['matcher/fruzzy', 'matcher/ignore_current_buffer'])
+#  call denite#custom#alias('source', 'file/rec/git', 'file/rec')
+#  call denite#custom#var('file/rec/git', 'command',
+#    \ ['git', 'ls-files', '-co', '--exclude-standard'])
+#  call denite#custom#source(
+#    \ 'file_mru', 'matchers', ['matcher/fruzzy', 'matcher_project_files'])
+#  call denite#custom#source('file_old', 'matchers',
+#     \ ['matcher/fruzzy', 'matcher_project_files'])
+#  call denite#custom#alias('source', 'buffer/project', 'buffer')
+#  call denite#custom#source('buffer/project', 'matchers',
+#     \ ['matcher/fruzzy', 'matcher_project_files', 'matcher/ignore_current_buffer'])
+# 
+#  " Change ignore_globs
+#  call denite#custom#filter('matcher/ignore_globs', 'ignore_globs',
+#      \ [ '.git/', '.ropeproject/', '__pycache__/',
+#      \   'venv/', 'images/', '*.min.*', 'img/', 'fonts/'])
+# 
+# 
+# call denite#custom#option('_', {
+#     \ 'cached_filter': v:true,
+#     \ 'cursor_shape': v:true,
+#     \ 'cursor_wrap': v:true,
+#     \ 'highlight_filter_background': 'DeniteFilter',
+#     \ 'highlight_matched_char': 'Underlined',
+#     \ 'prompt': '> ',
+#     \ 'split': 'floating',
+#     \ 'start_filter': v:true,
+#     \ 'statusline': v:false,
+#     \ 'max_dynamic_update_candidates': 1000000,
+#     \ })
+# '''
 
 [[plugins]]
 repo = 'critiqjo/lldb.nvim'
@@ -205,8 +205,7 @@ hook_add = '''
 [[plugins]]
 repo = 'Shougo/deol.nvim'
 on_cmd = 'Deol'
-depends = ['denite.nvim', 'ddc.vim']
-on_source = ['defx.nvim', 'denite.nvim']
+depends = ['ddc.vim']
 hook_add = '''
   nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'bash'})<CR>
   nnoremap <silent> [Space]s :<C-u>Deol bash <CR>
@@ -272,98 +271,98 @@ hook_add = '''
 # [[plugins]]
 # repo = 'bfredl/nvim-ipy'
 
-[[plugins]]
-repo = 'Shougo/defx.nvim'
-hook_add = '''
-nnoremap <silent>   [Space]f
-\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
-nnoremap <silent>   [Space]t
-\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icon:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
-
-autocmd FileType defx call s:defx_my_settings()
-function! s:defx_my_settings() abort
-  " Define mappings
-  nnoremap <silent><buffer><expr> <CR>
- \ defx#async_action('open')
-  nnoremap <silent><buffer><expr> O
- \ defx#async_action('drop')
-  nnoremap <silent><buffer><expr> c
- \ defx#do_action('copy')
-  nnoremap <silent><buffer><expr> !
- \ defx#do_action('execute_command')
-  nnoremap <silent><buffer> m m
-  nnoremap <silent><buffer><expr> m
- \ defx#do_action('move')
-  nnoremap <silent><buffer><expr> p
- \ defx#do_action('paste')
-  nnoremap <silent><buffer><expr> l
- \ defx#async_action('open_directory')
-  nnoremap <silent><buffer><expr> E
- \ defx#do_action('open', 'vsplit')
-  nnoremap <silent><buffer><expr> P
- \ defx#do_action('open', 'pedit')
-  nnoremap <silent><buffer><expr> o
- \ defx#is_directory() ?
- \ defx#do_action('open_or_close_tree') :
- \ defx#async_action('drop')
-  nnoremap <silent><buffer><expr> K
- \ defx#do_action('new_directory')
-  nnoremap <silent><buffer><expr> N
- \ defx#do_action('new_file')
-  nnoremap <silent><buffer><expr> M
- \ defx#do_action('new_multiple_files')
-  nnoremap <silent><buffer><expr> dd
- \ defx#do_action('remove_trash')
-  nnoremap <silent><buffer><expr> r
- \ defx#do_action('rename')
-  nnoremap <silent><buffer><expr> x
- \ defx#do_action('execute_system')
-  nnoremap <silent><buffer><expr> >
- \ defx#do_action('toggle_ignored_files')
-  nnoremap <silent><buffer><expr> .
- \ defx#do_action('repeat')
-  nnoremap <silent><buffer><expr> yy
- \ defx#do_action('yank_path', ":t")
-  nnoremap <silent><buffer><expr> ya
- \ defx#do_action('yank_path')
-  nnoremap <silent><buffer><expr> h
- \ defx#do_action('cd', ['..'])
-  nnoremap <silent><buffer><expr> ~
- \ defx#do_action('cd')
-  nnoremap <silent><buffer><expr> \
- \ defx#do_action('cd', getcwd())
-  nnoremap <silent><buffer><expr> q
- \ defx#do_action('quit')
-  nnoremap <silent><buffer> sq sq
-  nnoremap <silent><buffer><expr> <Space>
- \ defx#do_action('toggle_select') . 'j'
-  vnoremap <silent><buffer><expr> <Space>
- \ defx#do_action('toggle_select_visual')
-  nnoremap <silent><buffer><expr> *
- \ defx#do_action('toggle_select_all')
-  nnoremap <silent><buffer><expr> j
- \ line('.') == line('$') ? 'gg' : 'j'
-  nnoremap <silent><buffer><expr> k
- \ line('.') == 1 ? 'G' : 'k'
-  nnoremap <silent><buffer><expr> <C-l>
- \ defx#do_action('redraw')
-  nnoremap <silent><buffer><expr> <C-g>
- \ defx#do_action('print')
-  nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
- \ ':<C-u>wincmd w<CR>' :
- \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
- nnoremap <silent><buffer><expr> C
- \ defx#do_action('toggle_columns',
- \                'mark:indent:icon:filename:type:size:time')
-endfunction
-'''
-
-hook_post_source = '''
-call defx#custom#column('filename', {
-     \ 'min_width': 80,
-     \ 'max_width': 300,
-     \ })
-'''
+# [[plugins]]
+# repo = 'Shougo/defx.nvim'
+# hook_add = '''
+# nnoremap <silent>   [Space]f
+#\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
+# nnoremap <silent>   [Space]t
+#\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icon:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
+# 
+# autocmd FileType defx call s:defx_my_settings()
+# function! s:defx_my_settings() abort
+#   " Define mappings
+#   nnoremap <silent><buffer><expr> <CR>
+# \ defx#async_action('open')
+#   nnoremap <silent><buffer><expr> O
+# \ defx#async_action('drop')
+#   nnoremap <silent><buffer><expr> c
+# \ defx#do_action('copy')
+#   nnoremap <silent><buffer><expr> !
+# \ defx#do_action('execute_command')
+#   nnoremap <silent><buffer> m m
+#   nnoremap <silent><buffer><expr> m
+# \ defx#do_action('move')
+#   nnoremap <silent><buffer><expr> p
+# \ defx#do_action('paste')
+#   nnoremap <silent><buffer><expr> l
+# \ defx#async_action('open_directory')
+#   nnoremap <silent><buffer><expr> E
+# \ defx#do_action('open', 'vsplit')
+#   nnoremap <silent><buffer><expr> P
+# \ defx#do_action('open', 'pedit')
+#   nnoremap <silent><buffer><expr> o
+# \ defx#is_directory() ?
+# \ defx#do_action('open_or_close_tree') :
+# \ defx#async_action('drop')
+#   nnoremap <silent><buffer><expr> K
+# \ defx#do_action('new_directory')
+#   nnoremap <silent><buffer><expr> N
+# \ defx#do_action('new_file')
+#   nnoremap <silent><buffer><expr> M
+# \ defx#do_action('new_multiple_files')
+#   nnoremap <silent><buffer><expr> dd
+# \ defx#do_action('remove_trash')
+#   nnoremap <silent><buffer><expr> r
+# \ defx#do_action('rename')
+#   nnoremap <silent><buffer><expr> x
+# \ defx#do_action('execute_system')
+#   nnoremap <silent><buffer><expr> >
+# \ defx#do_action('toggle_ignored_files')
+#   nnoremap <silent><buffer><expr> .
+# \ defx#do_action('repeat')
+#   nnoremap <silent><buffer><expr> yy
+# \ defx#do_action('yank_path', ":t")
+#   nnoremap <silent><buffer><expr> ya
+# \ defx#do_action('yank_path')
+#   nnoremap <silent><buffer><expr> h
+# \ defx#do_action('cd', ['..'])
+#   nnoremap <silent><buffer><expr> ~
+# \ defx#do_action('cd')
+#   nnoremap <silent><buffer><expr> \
+# \ defx#do_action('cd', getcwd())
+#   nnoremap <silent><buffer><expr> q
+# \ defx#do_action('quit')
+#   nnoremap <silent><buffer> sq sq
+#   nnoremap <silent><buffer><expr> <Space>
+# \ defx#do_action('toggle_select') . 'j'
+#   vnoremap <silent><buffer><expr> <Space>
+# \ defx#do_action('toggle_select_visual')
+#   nnoremap <silent><buffer><expr> *
+# \ defx#do_action('toggle_select_all')
+#   nnoremap <silent><buffer><expr> j
+# \ line('.') == line('$') ? 'gg' : 'j'
+#   nnoremap <silent><buffer><expr> k
+# \ line('.') == 1 ? 'G' : 'k'
+#   nnoremap <silent><buffer><expr> <C-l>
+# \ defx#do_action('redraw')
+#   nnoremap <silent><buffer><expr> <C-g>
+# \ defx#do_action('print')
+#   nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
+# \ ':<C-u>wincmd w<CR>' :
+# \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
+#  nnoremap <silent><buffer><expr> C
+# \ defx#do_action('toggle_columns',
+# \                'mark:indent:icon:filename:type:size:time')
+# endfunction
+# '''
+#
+# hook_post_source = '''
+# call defx#custom#column('filename', {
+#     \ 'min_width': 80,
+#     \ 'max_width': 300,
+#     \ })
+# '''
 
 # [[plugins]]
 # repo = 'tbodt/deoplete-tabnine'
@@ -446,127 +445,6 @@ hook_add = '''
 
 [[plugins]]
 repo = 'vim-denops/denops.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc.vim'
-depends = ['context_filetype.vim', 'denops.vim', 'pum.vim']
-on_event = 'InsertEnter'
-hook_source = '''
-
-  call ddc#custom#patch_global(
-    \ 'sources', ['around', 'file'],
-    \ )
-
-  call ddc#custom#patch_global('sourceOptions', {
-      \ '_': {
-      \   'ignoreCase': v:true,
-      \   'matchers': ['matcher_head'],
-      \   'sorters': ['sorter_rank'],
-      \   'converters': ['converter_remove_overlap'],
-      \ },
-      \ 'around': {
-      \   'mark': 'A',
-      \   'matchers': ['matcher_head', 'matcher_length'],
-      \ },
-      \ 'cmdline': {
-      \   'mark': 'cmdline',
-      \   'forceCompletionPattern': '\S/\S*',
-      \ },
-      \ 'nextword': {
-      \   'mark': 'nextword',
-      \   'minAutoCompleteLength': 2,
-      \   'isVolatile': v:true,
-      \ },
-      \ 'nvim-lsp': {
-      \   'mark': 'lsp',
-      \   'forceCompletionPattern': '\.\w*|:\w*|->\w*'
-      \ },
-      \ 'file': {
-      \   'mark': 'F',
-      \   'isVolatile': v:true,
-      \   'minAutoCompleteLength': 1000,
-      \   'forceCompletionPattern': '\S/\S*'
-      \ },
-      \ 'cmdline-history': {
-      \   'mark': 'history',
-      \   'sorters': [],
-      \ },
-      \ 'shell-history': {'mark': 'shell'},
-      \ })
-
-  call ddc#custom#patch_filetype(['python'],
-    \ 'sources',
-    \ ['nvim-lsp', 'around']
-    \ )
-
-  call ddc#custom#patch_filetype(['deol'], {
-    \ 'keywordPattern': '[0-9a-zA-Z_./-]',
-    \ 'sources': ['shell-history', 'around'],
-    \ })
-
-  " Use pum.vim
-  call ddc#custom#patch_global('autoCompleteEvents', [
-      \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
-      \ 'CmdlineEnter', 'CmdlineChanged',
-      \ ])
-  call ddc#custom#patch_global('completionMenu', 'pum.vim')
-  inoremap <C-n>       <Cmd>call pum#map#select_relative(+1)<CR>
-  inoremap <C-p>       <Cmd>call pum#map#select_relative(-1)<CR>
-  inoremap <expr><CR>  pum#visible() ? pum#map#confirm() : "<CR>"
-  inoremap <expr><C-e> pum#visible() ? pum#map#cancel() : "<C-e>"
-
-  call ddc#enable()
-'''
-hook_add = '''
-  " nnoremap :       <Cmd>call CommandlinePre(':')<CR>:
-  " nnoremap ?       <Cmd>call CommandlinePre('/')<CR>?
-'''
-
-[[plugins]]
-repo = 'Shougo/pum.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-around'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-nextword'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-cmdline'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-line'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-nvim-lsp'
-on_source = 'nvim-lspconfig'
-
-[[plugins]]
-repo = 'Shougo/ddc-matcher_head'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-matcher_length'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-sorter_rank'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-cmdline-history'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'LumaKernel/ddc-file'
-on_source = 'ddc.vim'
-
-[[plugins]]
-repo = 'Shougo/ddc-omni'
 
 [[plugins]]
 repo = 'nathom/filetype.nvim'

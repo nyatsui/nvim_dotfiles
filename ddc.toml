@@ -1,0 +1,134 @@
+[[plugins]]
+repo = 'Shougo/ddc.vim'
+depends = ['context_filetype.vim', 'denops.vim', 'pum.vim']
+on_event = 'InsertEnter'
+hook_source = '''
+
+  call ddc#custom#patch_global(
+    \ 'sources', ['around', 'file'],
+    \ )
+
+  call ddc#custom#patch_global(
+    \ 'ui', 'pum',
+    \)
+
+  call ddc#custom#patch_global('sourceOptions', {
+      \ '_': {
+      \   'ignoreCase': v:true,
+      \   'matchers': ['matcher_head'],
+      \   'sorters': ['sorter_rank'],
+      \   'converters': ['converter_remove_overlap'],
+      \ },
+      \ 'around': {
+      \   'mark': 'A',
+      \   'matchers': ['matcher_head', 'matcher_length'],
+      \ },
+      \ 'cmdline': {
+      \   'mark': 'cmdline',
+      \   'forceCompletionPattern': '\S/\S*',
+      \ },
+      \ 'nextword': {
+      \   'mark': 'nextword',
+      \   'minAutoCompleteLength': 1,
+      \   'isVolatile': v:true,
+      \ },
+      \ 'nvim-lsp': {
+      \   'mark': 'lsp',
+      \   'forceCompletionPattern': '\.\w*|:\w*|->\w*'
+      \ },
+      \ 'file': {
+      \   'mark': 'F',
+      \   'isVolatile': v:true,
+      \   'minAutoCompleteLength': 2,
+      \   'forceCompletionPattern': '\S/\S*'
+      \ },
+      \ 'cmdline-history': {
+      \   'mark': 'history',
+      \   'sorters': [],
+      \ },
+      \ 'shell-history': {'mark': 'shell'},
+      \ })
+
+  call ddc#custom#patch_filetype(['python'],
+    \ 'sources',
+    \ ['nvim-lsp', 'around']
+    \ )
+
+  call ddc#custom#patch_filetype(['deol'], {
+    \ 'keywordPattern': '[0-9a-zA-Z_./-]',
+    \ 'sources': ['shell-history', 'around'],
+    \ })
+
+  " Use pum.vim
+  call ddc#custom#patch_global('autoCompleteEvents', [
+      \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
+      \ 'CmdlineEnter', 'CmdlineChanged',
+      \ ])
+  call ddc#custom#patch_global('completionMenu', 'pum.vim')
+  inoremap <C-n>       <Cmd>call pum#map#select_relative(+1)<CR>
+  inoremap <C-p>       <Cmd>call pum#map#select_relative(-1)<CR>
+  inoremap <expr><CR>  pum#visible() ? '<Cmd>call pum#map#confirm()<CR>' : '<CR>'
+  inoremap <expr><C-e> pum#visible() ? '<Cmd>call pum#map#cancel()<CR>' : '<C-e>'
+
+  call ddc#enable()
+'''
+hook_add = '''
+  " nnoremap :       <Cmd>call CommandlinePre(':')<CR>:
+  " nnoremap ?       <Cmd>call CommandlinePre('/')<CR>?
+'''
+
+[[plugins]]
+repo = 'Shougo/pum.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-native'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-ui-pum'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-around'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nextword'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-cmdline'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-line'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-nvim-lsp'
+on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_head'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-matcher_length'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-sorter_rank'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-cmdline-history'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'LumaKernel/ddc-file'
+on_source = 'ddc.vim'
+
+[[plugins]]
+repo = 'Shougo/ddc-omni'
+
+

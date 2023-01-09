@@ -1,0 +1,294 @@
+[[plugins]]
+repo = "Shougo/ddu.vim"
+depends = 'denops.vim'
+on_source = 'denops.vim'
+hook_source = '''
+call ddu#custom#patch_global(#{
+    \    ui: 'ff',
+    \    sources: [{'name': 'file_rec', 'params': {}}],
+    \    sourceOptions: #{
+    \      _: #{
+    \        ignoreCase: v:true,
+    \        matchers: ['matcher_substring', 'matcher_relative',],
+    \      },
+    \    },
+    \    sourceParams: #{
+    \      rg: #{
+    \        args: ['--column', '--no-heading', '--color', 'never'],
+    \      },
+    \    },
+    \    kindOptions: #{
+    \      file: #{
+    \        defaultAction: 'open',
+    \      },
+    \    },
+    \    uiOptions: #{
+    \      filer: #{
+    \        toggle: v:true,
+    \      },
+    \    },
+    \    uiParams: #{
+    \       ff: #{
+    \         split: 'floating',
+    \         startFilter: v:true,
+    \       },
+    \       filer: #{
+    \         split: 'no',
+    \         sort: 'filename',
+    \         sortTreesFirst: v:true,
+    \         toggle: v:true,
+    \       },
+    \    },
+    \})
+'''
+
+hook_add = '''
+
+nnoremap <silent> sp :Ddu buffer file_rec<CR>
+nnoremap <silent> sm :Ddu mr<CR>
+nnoremap sg <Cmd>Ddu
+  \ -name=search rg -resume=v:false
+  \ -source-param-input=`input('Pattern: ')`
+  \ <CR>
+nnoremap s/ <Cmd>Ddu
+  \ -name=search line -resume=v:false
+  \ -ui-param-startFilter
+  \ <CR>
+nnoremap s* <Cmd>Ddu
+  \ -name=search line -resume=v:false
+  \ -input=`expand('<cword>')`
+  \ -ui-param-startFilter=v:false
+  \ <CR>
+nnoremap sn <Cmd>Ddu
+  \ -name=search -resume
+  \ -ui-param-startFilter=v:false
+  \ <CR>
+
+autocmd FileType ddu-ff call s:ddu_my_settings()
+function! s:ddu_my_settings() abort
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> <Space>
+        \ <Cmd>call ddu#ui#ff#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer><silent> i
+        \ <Cmd>call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  nnoremap <buffer><silent> q
+        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+endfunction
+
+autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
+function! s:ddu_filter_my_settings() abort
+  inoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  nnoremap <buffer><silent> <CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+  inoremap <buffer><silent> <Esc>
+        \ <Cmd>call ddu#ui#ff#do_action('quit')<CR>
+  nnoremap <buffer><silent> q
+        \ <Cmd>close<CR>
+  inoremap <silent><buffer> <C-g>
+ \ <Esc><C-w>p:call cursor(line('.')+1,0)<CR>:call ddu#ui#ff#do_action('openFilterWindow')<CR>
+  inoremap <silent><buffer> <C-t>
+ \ <Esc><C-w>p:call cursor(line('.')-1,0)<CR>:call ddu#ui#ff#do_action('openFilterWindow')<CR>
+
+endfunction
+
+'''
+
+[[plugins]]
+repo = "Shougo/ddu-ui-ff"
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = "Shougo/ddu-source-file_rec"
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo='shun/ddu-source-buffer'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = "Shougo/ddu-filter-matcher_substring"
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = "Shougo/ddu-kind-file"
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = "Shougo/ddu-commands.vim"
+on_source = 'ddu.vim'
+on_cmd = 'Ddu'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_old'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-file_point'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-line'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-register'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-source-action'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-file_external'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'matsui54/ddu-source-command_history'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'shun/ddu-source-rg'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'mikanIchinose/ddu-source-markdown'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_relative'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-matcher_hidden'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-sorter_alpha'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-filter-converter_display_word'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-column-filename'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'Shougo/ddu-kind-word'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'kuuote/ddu-source-mr'
+on_source = 'ddu.vim'
+
+[[plugins]]
+repo = 'lambdalisue/mr.vim'
+on_source = 'ddu.vim'
+
+
+[[plugins]]
+repo = 'Shougo/ddu-ui-filer'
+on_source = 'ddu.vim'
+hook_add = '''
+  nnoremap [Space]f <Cmd>Ddu
+  \ -name=filer-`win_getid()` -ui=filer -resume -sync file
+  \ -source-option-path=`getcwd()`
+  \ -source-option-columns=filename<CR>
+'''
+hook_source = '''
+  autocmd MyAutoCmd TabEnter,WinEnter,CursorHold,FocusGained *
+  \ call ddu#ui#filer#do_action('checkItems')
+'''
+[plugins.ftplugin]
+ddu-filer = '''
+  nnoremap <buffer> <Space>
+  \ <Cmd>call ddu#ui#filer#do_action('toggleSelectItem')<CR>
+  nnoremap <buffer> *
+  \ <Cmd>call ddu#ui#filer#do_action('toggleAllItems')<CR>
+  nnoremap <buffer> a
+  \ <Cmd>call ddu#ui#filer#do_action('chooseAction')<CR>
+  nnoremap <buffer> q
+  \ <Cmd>call ddu#ui#filer#do_action('quit')<CR>
+  nnoremap <buffer> o
+  \ <Cmd>call ddu#ui#filer#do_action('expandItem',
+  \ {'mode': 'toggle'})<CR>
+  nnoremap <buffer> O
+  \ <Cmd>call ddu#ui#filer#do_action('expandItem',
+  \ {'maxLevel': -1})<CR>
+  "nnoremap <buffer> O
+  "\ <Cmd>call ddu#ui#filer#do_action('collapseItem')<CR>
+  nnoremap <buffer> c
+  \ <Cmd>call ddu#ui#filer#multi_actions([
+  \   ['itemAction', {'name': 'copy'}],
+  \   ['clearSelectAllItems'],
+  \ ])<CR>
+  nnoremap <buffer> dd
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'trash' })<CR>
+  nnoremap <buffer> m
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'move' })<CR>
+  nnoremap <buffer> r
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'rename' })<CR>
+  nnoremap <buffer> x
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'executeSystem' })<CR>
+  nnoremap <buffer> p
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'paste' })<CR>
+  nnoremap <buffer> K
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'newDirectory' })<CR>
+  nnoremap <buffer> N
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'newFile' })<CR>
+  nnoremap <buffer> ~
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'narrow', params: #{ path: expand('~') } })<CR>
+  nnoremap <buffer> h
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{ name: 'narrow', params: #{ path: '..' } })<CR>
+  nnoremap <buffer> I
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction',
+  \ #{
+  \   name: 'narrow',
+  \   params: #{
+  \     path: fnamemodify(input('cwd: ', b:ddu_ui_filer_path, 'dir'), ':p')
+  \   }
+  \ })<CR>
+  nnoremap <buffer> >
+  \ <Cmd>call ddu#ui#filer#do_action('updateOptions', #{
+  \   sourceOptions: #{
+  \     file: #{
+  \       matchers: ToggleHidden('file'),
+  \     },
+  \   },
+  \ })<CR>
+  nnoremap <buffer> <C-l>
+  \ <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
+  nnoremap <buffer><expr> <CR>
+  \ ddu#ui#filer#is_tree() ?
+  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>" :
+  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'open' })<CR>"
+  nnoremap <buffer><expr> l
+  \ ddu#ui#filer#is_tree() ?
+  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>" :
+  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'open' })<CR>"
+  nnoremap <buffer> gr
+  \ <Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'grep' })<CR>
+  function! ToggleHidden(name)
+    let current = ddu#custom#get_current(b:ddu_ui_name)
+    let source_options = get(current, 'sourceOptions', {})
+    let source_options_name = get(source_options, a:name, {})
+    let matchers = get(source_options_name, 'matchers', [])
+    return empty(matchers) ? ['matcher_hidden'] : []
+  endfunction
+'''

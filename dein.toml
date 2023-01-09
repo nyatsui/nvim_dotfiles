@@ -120,6 +120,9 @@ on_if  = '''
 
 [[plugins]]
 repo = 'bronson/vim-trailing-whitespace'
+hook_add = '''
+let g:extra_whitespace_ignored_filetypes = ['deol']
+'''
 
 [[plugins]]
 repo = 'zebult/auto-gtags.vim'
@@ -282,10 +285,10 @@ hook_source = '''
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true,              -- false will disable the whole extension
-    disable = { "vue", "ruby" },  -- list of language that will be disabled
-  },
+  -- highlight = {
+  --   enable = true,              -- false will disable the whole extension
+  --   disable = { "vue", "ruby" },  -- list of language that will be disabled
+  -- },
 }
 EOF
 '''

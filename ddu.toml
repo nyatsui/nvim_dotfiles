@@ -128,7 +128,7 @@ endfunction
 autocmd FileType ddu-ff-filter call s:ddu_filter_my_settings()
 function! s:ddu_filter_my_settings() abort
   inoremap <buffer><silent> <CR>
-        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
+        \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR><Esc>
   nnoremap <buffer><silent> <CR>
         \ <Cmd>call ddu#ui#ff#do_action('itemAction')<CR>
   inoremap <buffer><silent> <Esc>
@@ -324,7 +324,7 @@ ddu-filer = '''
   nnoremap <buffer> <C-l>
   \ <Cmd>call ddu#ui#filer#do_action('checkItems')<CR>
   nnoremap <buffer><expr> <CR>
-  \ ddu#ui#filer#is_tree() ?
+  \ ddu#ui#get_item()->get('isTree', v:false) ?
   \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>" :
   \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'open' })<CR>"
   nnoremap <buffer><expr> l

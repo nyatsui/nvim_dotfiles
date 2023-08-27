@@ -3,19 +3,28 @@ repo = "Shougo/ddu.vim"
 depends = 'denops.vim'
 on_source = 'denops.vim'
 hook_source = '''
+
+call ddu#custom#patch_global(#{
+    \  ui: 'filer',
+    \  actionOptions: #{
+    \    narrow: #{
+    \      quit: v:false,
+    \    },
+    \  },
+    \})
+
 call ddu#custom#patch_global(#{
     \    ui: 'ff',
-    \    sources: [{'name': 'file_rec', 'params': {}}],
     \    sourceOptions: #{
     \      _: #{
     \        ignoreCase: v:true,
     \        matchers: ['matcher_substring'],
     \      },
-    \    },
-    \    sourceParams: #{
-    \      rg: #{
-    \        args: ['--column', '--no-heading', '--color', 'never'],
-    \      },
+    \     file_rec: #{
+    \       matchers: [
+    \         'matcher_substring', 'matcher_hidden',
+    \       ],
+    \     },
     \    },
     \    kindOptions: #{
     \      file: #{
@@ -31,6 +40,7 @@ call ddu#custom#patch_global(#{
     \       ff: #{
     \         split: 'floating',
     \         startFilter: v:true,
+    \         filterFloatingPosition: 'bottom',
     \       },
     \       filer: #{
     \         split: 'no',
@@ -40,6 +50,44 @@ call ddu#custom#patch_global(#{
     \       },
     \    },
     \})
+
+call ddu#custom#patch_global(#{
+  \   sourceParams: #{
+  \     file_rg: #{
+  \       cmd: ['rg', '--files', '--glob', '!.git',
+  \               '--color', 'never', '--no-messages'],
+  \       updateItems: 50000,
+  \     },
+  \     rg: #{
+  \       args: [
+  \         '--ignore-case', '--column', '--no-heading', '--color', 'never',
+  \       ],
+  \     },
+  \   }
+  \ })
+
+command! DduRgLive call <SID>ddu_rg_live()
+function! s:ddu_rg_live() abort
+  call ddu#start({
+        \   'volatile': v:true,
+        \   'sources': [{
+        \     'name': 'rg',
+        \     'options': {'matchers': []},
+        \   }],
+        \   'uiParams': {'ff': {
+        \     'ignoreEmpty': v:false,
+        \     'autoResize': v:false,
+        \   }},
+        \ })
+endfunction
+
+call ddu#custom#patch_global(#{
+    \   filterParams: #{
+    \     matcher_substring: #{
+    \       highlightMatched: 'Search',
+    \     },
+    \   }
+    \ })
 '''
 
 hook_add = '''
@@ -48,6 +96,7 @@ nnoremap <silent> sp :Ddu buffer file_rec<CR>
 nnoremap <silent> sm :Ddu mr<CR>
 nnoremap sg <Cmd>Ddu
   \ -name=search rg -resume=v:false
+  \ -ui-param-ignoreEmpty
   \ -source-param-input=`input('Pattern: ')`
   \ <CR>
 nnoremap s/ <Cmd>Ddu
@@ -279,9 +328,7 @@ ddu-filer = '''
   \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>" :
   \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'open' })<CR>"
   nnoremap <buffer><expr> l
-  \ ddu#ui#filer#is_tree() ?
-  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>" :
-  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'open' })<CR>"
+  \ "<Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'narrow' })<CR>"
   nnoremap <buffer> gr
   \ <Cmd>call ddu#ui#filer#do_action('itemAction', #{ name: 'grep' })<CR>
   function! ToggleHidden(name)

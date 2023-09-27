@@ -187,74 +187,74 @@ repo = 'Shougo/neomru.vim'
 #     \ })
 # '''
 
-[[plugins]]
-repo = 'critiqjo/lldb.nvim'
-on_ft = ['c', 'cpp']
-hook_add = '''
-    nmap <M-b> <Plug>LLBreakSwitch
-    vmap <F2> <Plug>LLStdInSelected
-    nnoremap <F4> :LLstdin<CR>
-    nnoremap <F5> :LLmode debug<CR>
-    nnoremap <S-F5> :LLmode code<CR>
-    nnoremap <F8> :LL continue<CR>
-    nnoremap <S-F8> :LL process interrupt<CR>
-    nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
-    vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
-'''
-
-[[plugins]]
-repo = 'Shougo/deol.nvim'
-on_cmd = 'Deol'
-depends = ['ddc.vim']
-hook_add = '''
-  nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'bash'})<CR>
-  nnoremap <silent> [Space]s :<C-u>Deol bash <CR>
-  nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
-'''
-hook_source = '''
-  let g:deol#prompt_pattern = '\w*%'
-  autocmd FileType deol call s:on_deol()
-  function! s:on_deol() abort
-    nnoremap <silent><buffer> sq sq
-  endfunction
-'''
-
-[[plugins]]
-repo = 'Shougo/neoyank.vim'
-on_if = 1
-on_event = 'TextYankPost'
-on_source = ['denite.nvim']
+# [[plugins]]
+# repo = 'critiqjo/lldb.nvim'
+# on_ft = ['c', 'cpp']
+# hook_add = '''
+#     nmap <M-b> <Plug>LLBreakSwitch
+#     vmap <F2> <Plug>LLStdInSelected
+#     nnoremap <F4> :LLstdin<CR>
+#     nnoremap <F5> :LLmode debug<CR>
+#     nnoremap <S-F5> :LLmode code<CR>
+#     nnoremap <F8> :LL continue<CR>
+#     nnoremap <S-F8> :LL process interrupt<CR>
+#     nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
+#     vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/deol.nvim'
+# on_cmd = 'Deol'
+# depends = ['ddc.vim']
+# hook_add = '''
+#   nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'bash'})<CR>
+#   nnoremap <silent> [Space]s :<C-u>Deol zsh <CR>
+#   nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
+# '''
+# hook_source = '''
+#   let g:deol#prompt_pattern = '\w*%'
+#   autocmd FileType deol call s:on_deol()
+#   function! s:on_deol() abort
+#     nnoremap <silent><buffer> sq sq
+#   endfunction
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/neoyank.vim'
+# on_if = 1
+# on_event = 'TextYankPost'
+# on_source = ['denite.nvim']
 
 # [[plugins]]
 # repo = "huawenyu/neogdb.vim"
 # on_ft = ['c', 'cpp']
 
-[[plugins]]
-repo = 'plasticboy/vim-markdown'
-on_ft = ['markdown']
-hook_add = '''
-let g:vim_markdown_folding_disabled = 1
-" let g:vim_markdown_folding_level = 6
-'''
-
-[[plugins]]
-repo = 'dhruvasagar/vim-table-mode'
-on_ft = ['markdown']
-hook_add = '''
-let g:table_mode_corner="|"
-'''
+# [[plugins]]
+# repo = 'plasticboy/vim-markdown'
+# on_ft = ['markdown']
+# hook_add = '''
+# let g:vim_markdown_folding_disabled = 1
+# " let g:vim_markdown_folding_level = 6
+# '''
+# 
+# [[plugins]]
+# repo = 'dhruvasagar/vim-table-mode'
+# on_ft = ['markdown']
+# hook_add = '''
+# let g:table_mode_corner="|"
+# '''
 
 # [[plugins]]
 # repo = 'Shougo/neoinclude.vim'
 
-[[plugins]]
-repo = 'raghur/fruzzy'
-on_source = ['denite.nvim']
-hook_source = '''
-let g:fruzzy#usenative = 1
-let g:fruzzy#sortonempty = 0
-'''
-hook_post_update = 'call fruzzy#install()'
+# [[plugins]]
+# repo = 'raghur/fruzzy'
+# on_source = ['denite.nvim']
+# hook_source = '''
+# let g:fruzzy#usenative = 1
+# let g:fruzzy#sortonempty = 0
+# '''
+# hook_post_update = 'call fruzzy#install()'
 
 [[plugins]]
 repo = 'rhysd/accelerated-jk'
@@ -377,17 +377,17 @@ hook_add = '''
 # let g:dein#plugin.build = cmd
 # '''
 
-[[plugins]]
-repo = 'iamcco/markdown-preview.nvim'
-on_ft = ['markdown', 'pandoc.markdown', 'rmd']
-build = 'cd app & yarn install'
-hook_add = '''
-let g:mkdp_open_to_the_world = 1
-let g:mkdp_echo_preview_url = 1
-'''
-
-[[plugins]]
-repo = 'lambdalisue/vim-findent'
+# [[plugins]]
+# repo = 'iamcco/markdown-preview.nvim'
+# on_ft = ['markdown', 'pandoc.markdown', 'rmd']
+# build = 'cd app & yarn install'
+# hook_add = '''
+# let g:mkdp_open_to_the_world = 1
+# let g:mkdp_echo_preview_url = 1
+# '''
+# 
+# [[plugins]]
+# repo = 'lambdalisue/vim-findent'
 
 # [[plugins]]
 # repo = 'ncm2/float-preview.nvim'
@@ -399,17 +399,17 @@ repo = 'lambdalisue/vim-findent'
 #   let g:float_preview#max_height = 20
 # '''
 
-[[plugins]]
-repo = 'tyru/columnskip.vim'
-on_map = {n = '<Plug>'}
-hook_add = '''
-  nmap gj <Plug>(columnskip-j)
-  nmap gk <Plug>(columnskip-k)
-  omap gj <Plug>(columnskip-j)
-  xmap gk <Plug>(columnskip-k)
-  xmap gj <Plug>(columnskip-j)
-  omap gk <Plug>(columnskip-k)
-'''
+# [[plugins]]
+# repo = 'tyru/columnskip.vim'
+# on_map = {n = '<Plug>'}
+# hook_add = '''
+#   nmap gj <Plug>(columnskip-j)
+#   nmap gk <Plug>(columnskip-k)
+#   omap gj <Plug>(columnskip-j)
+#   xmap gk <Plug>(columnskip-k)
+#   xmap gj <Plug>(columnskip-j)
+#   omap gk <Plug>(columnskip-k)
+# '''
 
 # [[plugins]]
 # repo = 'Shougo/neosnippet.vim'
@@ -446,28 +446,24 @@ hook_add = '''
 [[plugins]]
 repo = 'vim-denops/denops.vim'
 
-[[plugins]]
-repo = 'nathom/filetype.nvim'
-if = 'has("nvim")'
-hook_source = '''
-  " Do not source the default filetype.vim
-  let g:did_load_filetypes = 1
-'''
-
-[[plugins]]
-repo = 'Shougo/neco-vim'
-on_ft = ['vim', 'toml', 'markdown']
-depends = 'ddc.vim'
-hook_source = '''
-  call ddc#custom#patch_filetype(
-          \ ['vim'], 'sources', ['necovim', 'around', 'file']
-          \ )
-'''
-
-[[plugins]]
-repo = 'Shougo/ddc-converter_remove_overlap'
-on_source = 'ddc.vim'
-
+# [[plugins]]
+# repo = 'nathom/filetype.nvim'
+# if = 'has("nvim")'
+# hook_source = '''
+#   " Do not source the default filetype.vim
+#   let g:did_load_filetypes = 1
+# '''
+# 
+# [[plugins]]
+# repo = 'Shougo/neco-vim'
+# on_ft = ['vim', 'toml', 'markdown']
+# depends = 'ddc.vim'
+# hook_source = '''
+#   call ddc#custom#patch_filetype(
+#          \ ['vim'], 'sources', ['necovim', 'around', 'file']
+#          \ )
+# '''
+# 
 [[plugins]]
 repo = 'neovim/nvim-lspconfig'
 on_ft = ['typescript', 'python']

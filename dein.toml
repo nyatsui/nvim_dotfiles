@@ -174,8 +174,8 @@ repo = 'yonchu/accelerated-smooth-scroll'
 # [[plugins]]
 # repo = 'yuttie/comfortable-motion.vim'
 
-[[plugins]]
-repo = 'equalsraf/neovim-gui-shim'
+# [[plugins]]
+# repo = 'equalsraf/neovim-gui-shim'
 
 [[plugins]]
 repo = 'vim-pandoc/vim-pandoc'
@@ -292,3 +292,6 @@ repo = 'editorconfig/editorconfig-vim'
 # }
 # EOF
 # '''
+
+[[plugins]]
+repo = 'vim-denops/denops.vim'

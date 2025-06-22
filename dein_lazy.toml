@@ -201,24 +201,24 @@ repo = 'Shougo/neomru.vim'
 #     nnoremap <F9> :LL print <C-R>=expand('<cword>')<CR>
 #     vnoremap <F9> :<C-U>LL print <C-R>=lldb#util#get_selection()<CR><CR>
 # '''
-# 
-# [[plugins]]
-# repo = 'Shougo/deol.nvim'
-# on_cmd = 'Deol'
-# depends = ['ddc.vim']
-# hook_add = '''
-#   nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'bash'})<CR>
-#   nnoremap <silent> [Space]s :<C-u>Deol zsh <CR>
-#   nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
-# '''
-# hook_source = '''
-#   let g:deol#prompt_pattern = '\w*%'
-#   autocmd FileType deol call s:on_deol()
-#   function! s:on_deol() abort
-#     nnoremap <silent><buffer> sq sq
-#   endfunction
-# '''
-# 
+
+[[plugins]]
+repo = 'Shougo/deol.nvim'
+rev = '51d2367d3373457327e583819c00381387b8c51e'
+depends = ['ddc.vim']
+hook_add = '''
+  nnoremap <silent> [Window]N :<C-u>call deol#new({'command': 'zsh'})<CR>
+  nnoremap <silent> [Space]s :<C-u>Deol <CR>
+  nnoremap <silent> [Window]D  :<C-u>call deol#kill_editor()<CR>
+'''
+hook_source = '''
+  let g:deol#prompt_pattern = '\w*%'
+  autocmd FileType deol call s:on_deol()
+  function! s:on_deol() abort
+    nnoremap <silent><buffer> sq sq
+  endfunction
+'''
+
 # [[plugins]]
 # repo = 'Shougo/neoyank.vim'
 # on_if = 1
@@ -271,98 +271,98 @@ hook_add = '''
 # [[plugins]]
 # repo = 'bfredl/nvim-ipy'
 
-# [[plugins]]
-# repo = 'Shougo/defx.nvim'
-# hook_add = '''
-# nnoremap <silent>   [Space]f
-#\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
-# nnoremap <silent>   [Space]t
-#\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icon:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
-# 
-# autocmd FileType defx call s:defx_my_settings()
-# function! s:defx_my_settings() abort
-#   " Define mappings
-#   nnoremap <silent><buffer><expr> <CR>
-# \ defx#async_action('open')
-#   nnoremap <silent><buffer><expr> O
-# \ defx#async_action('drop')
-#   nnoremap <silent><buffer><expr> c
-# \ defx#do_action('copy')
-#   nnoremap <silent><buffer><expr> !
-# \ defx#do_action('execute_command')
-#   nnoremap <silent><buffer> m m
-#   nnoremap <silent><buffer><expr> m
-# \ defx#do_action('move')
-#   nnoremap <silent><buffer><expr> p
-# \ defx#do_action('paste')
-#   nnoremap <silent><buffer><expr> l
-# \ defx#async_action('open_directory')
-#   nnoremap <silent><buffer><expr> E
-# \ defx#do_action('open', 'vsplit')
-#   nnoremap <silent><buffer><expr> P
-# \ defx#do_action('open', 'pedit')
-#   nnoremap <silent><buffer><expr> o
-# \ defx#is_directory() ?
-# \ defx#do_action('open_or_close_tree') :
-# \ defx#async_action('drop')
-#   nnoremap <silent><buffer><expr> K
-# \ defx#do_action('new_directory')
-#   nnoremap <silent><buffer><expr> N
-# \ defx#do_action('new_file')
-#   nnoremap <silent><buffer><expr> M
-# \ defx#do_action('new_multiple_files')
-#   nnoremap <silent><buffer><expr> dd
-# \ defx#do_action('remove_trash')
-#   nnoremap <silent><buffer><expr> r
-# \ defx#do_action('rename')
-#   nnoremap <silent><buffer><expr> x
-# \ defx#do_action('execute_system')
-#   nnoremap <silent><buffer><expr> >
-# \ defx#do_action('toggle_ignored_files')
-#   nnoremap <silent><buffer><expr> .
-# \ defx#do_action('repeat')
-#   nnoremap <silent><buffer><expr> yy
-# \ defx#do_action('yank_path', ":t")
-#   nnoremap <silent><buffer><expr> ya
-# \ defx#do_action('yank_path')
-#   nnoremap <silent><buffer><expr> h
-# \ defx#do_action('cd', ['..'])
-#   nnoremap <silent><buffer><expr> ~
-# \ defx#do_action('cd')
-#   nnoremap <silent><buffer><expr> \
-# \ defx#do_action('cd', getcwd())
-#   nnoremap <silent><buffer><expr> q
-# \ defx#do_action('quit')
-#   nnoremap <silent><buffer> sq sq
-#   nnoremap <silent><buffer><expr> <Space>
-# \ defx#do_action('toggle_select') . 'j'
-#   vnoremap <silent><buffer><expr> <Space>
-# \ defx#do_action('toggle_select_visual')
-#   nnoremap <silent><buffer><expr> *
-# \ defx#do_action('toggle_select_all')
-#   nnoremap <silent><buffer><expr> j
-# \ line('.') == line('$') ? 'gg' : 'j'
-#   nnoremap <silent><buffer><expr> k
-# \ line('.') == 1 ? 'G' : 'k'
-#   nnoremap <silent><buffer><expr> <C-l>
-# \ defx#do_action('redraw')
-#   nnoremap <silent><buffer><expr> <C-g>
-# \ defx#do_action('print')
-#   nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
-# \ ':<C-u>wincmd w<CR>' :
-# \ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
-#  nnoremap <silent><buffer><expr> C
-# \ defx#do_action('toggle_columns',
-# \                'mark:indent:icon:filename:type:size:time')
-# endfunction
-# '''
-#
-# hook_post_source = '''
-# call defx#custom#column('filename', {
-#     \ 'min_width': 80,
-#     \ 'max_width': 300,
-#     \ })
-# '''
+ [[plugins]]
+ repo = 'Shougo/defx.nvim'
+ hook_add = '''
+ nnoremap <silent>   [Space]f
+\ :<C-u>Defx -listed -resume -winwidth=200 -buffer-name=tab`tabpagenr()`<CR>
+ nnoremap <silent>   [Space]t
+\ :<C-u>Defx -split=vertical -direction=topleft -resume -columns=mark:indent:icon:filename -winwidth=35 -buffer-name=tab`tabpagenr()`<CR>
+
+autocmd FileType defx call s:defx_my_settings()
+function! s:defx_my_settings() abort
+  " Define mappings
+  nnoremap <silent><buffer><expr> <CR>
+\ defx#async_action('open')
+  nnoremap <silent><buffer><expr> O
+\ defx#async_action('drop')
+  nnoremap <silent><buffer><expr> c
+\ defx#do_action('copy')
+  nnoremap <silent><buffer><expr> !
+\ defx#do_action('execute_command')
+  nnoremap <silent><buffer> m m
+  nnoremap <silent><buffer><expr> m
+\ defx#do_action('move')
+  nnoremap <silent><buffer><expr> p
+\ defx#do_action('paste')
+  nnoremap <silent><buffer><expr> l
+\ defx#async_action('open_directory')
+  nnoremap <silent><buffer><expr> E
+\ defx#do_action('open', 'vsplit')
+  nnoremap <silent><buffer><expr> P
+\ defx#do_action('open', 'pedit')
+  nnoremap <silent><buffer><expr> o
+\ defx#is_directory() ?
+\ defx#do_action('open_or_close_tree') :
+\ defx#async_action('drop')
+  nnoremap <silent><buffer><expr> K
+\ defx#do_action('new_directory')
+  nnoremap <silent><buffer><expr> N
+\ defx#do_action('new_file')
+  nnoremap <silent><buffer><expr> M
+\ defx#do_action('new_multiple_files')
+  nnoremap <silent><buffer><expr> dd
+\ defx#do_action('remove_trash')
+  nnoremap <silent><buffer><expr> r
+\ defx#do_action('rename')
+  nnoremap <silent><buffer><expr> x
+\ defx#do_action('execute_system')
+  nnoremap <silent><buffer><expr> >
+\ defx#do_action('toggle_ignored_files')
+  nnoremap <silent><buffer><expr> .
+\ defx#do_action('repeat')
+  nnoremap <silent><buffer><expr> yy
+\ defx#do_action('yank_path', ":t")
+  nnoremap <silent><buffer><expr> ya
+\ defx#do_action('yank_path')
+  nnoremap <silent><buffer><expr> h
+\ defx#do_action('cd', ['..'])
+  nnoremap <silent><buffer><expr> ~
+\ defx#do_action('cd')
+  nnoremap <silent><buffer><expr> \
+\ defx#do_action('cd', getcwd())
+  nnoremap <silent><buffer><expr> q
+\ defx#do_action('quit')
+  nnoremap <silent><buffer> sq sq
+  nnoremap <silent><buffer><expr> <Space>
+\ defx#do_action('toggle_select') . 'j'
+  vnoremap <silent><buffer><expr> <Space>
+\ defx#do_action('toggle_select_visual')
+  nnoremap <silent><buffer><expr> *
+\ defx#do_action('toggle_select_all')
+  nnoremap <silent><buffer><expr> j
+\ line('.') == line('$') ? 'gg' : 'j'
+  nnoremap <silent><buffer><expr> k
+\ line('.') == 1 ? 'G' : 'k'
+  nnoremap <silent><buffer><expr> <C-l>
+\ defx#do_action('redraw')
+  nnoremap <silent><buffer><expr> <C-g>
+\ defx#do_action('print')
+  nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ?
+\ ':<C-u>wincmd w<CR>' :
+\ ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
+ nnoremap <silent><buffer><expr> C
+\ defx#do_action('toggle_columns',
+\                'mark:indent:icon:filename:type:size:time')
+endfunction
+'''
+
+hook_post_source = '''
+call defx#custom#column('filename', {
+    \ 'min_width': 80,
+    \ 'max_width': 300,
+    \ })
+'''
 
 # [[plugins]]
 # repo = 'tbodt/deoplete-tabnine'
@@ -443,9 +443,6 @@ hook_add = '''
 # [[plugins]]
 # repo = 'Shougo/neosnippet-snippets'
 
-[[plugins]]
-repo = 'vim-denops/denops.vim'
-
 # [[plugins]]
 # repo = 'nathom/filetype.nvim'
 # if = 'has("nvim")'
@@ -464,52 +461,110 @@ repo = 'vim-denops/denops.vim'
 #          \ )
 # '''
 # 
+# [[plugins]]
+# repo = 'neovim/nvim-lspconfig'
+# on_ft = ['typescript', 'python']
+# if = 'has("nvim")'
+# depends = 'ddc.vim'
+# hook_source = '''
+#   lua << EOF
+#   local nvim_lsp = require('lspconfig')
+# 
+#   local on_attach = function (client, bufnr)
+#       local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
+#       local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+# 
+#       local opts = { noremap=true, silent=true, buffer = bufnr }
+#       buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+#       buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+#       buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+#       buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+#       buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+#       buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+#       buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
+#       buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
+#       buf_set_keymap('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
+#       buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
+#       buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
+#       buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
+#       buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
+#       buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
+#       buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
+#       buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
+#       buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
+#       buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
+#       buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
+#       buf_set_keymap('n', '[Window]f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
+#   end
+# 
+#   local mason = require('mason')
+#   mason.setup({
+#     ui = {
+#       icons = {
+#         package_installed = "✓",
+#         package_pending = "➜",
+#         package_uninstalled = "✗"
+#       }
+#     }
+#   })
+# 
+#   local mason_lspconfig = require('mason-lspconfig')
+#   mason_lspconfig.setup_handlers({ function(server)
+#     local opts = {}
+#     opts.on_attach = on_attach
+#     nvim_lsp[server].setup(opts)
+#   end })
+# 
+# EOF
+# '''
+
 [[plugins]]
-repo = 'neovim/nvim-lspconfig'
-on_ft = ['typescript', 'python']
-if = 'has("nvim")'
-depends = 'ddc.vim'
+repo ='williamboman/mason.nvim'
+on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo ='williamboman/mason-lspconfig.nvim'
+on_source = 'nvim-lspconfig'
+
+[[plugins]]
+repo = "nvim-lua/plenary.nvim"
+
+[[plugins]]
+repo = "nomnivore/ollama.nvim"
+depends = ['plenary.nvim']
+on_cmd = ["Ollama","OllamaModel","OllamaServe","OllamaServeStop"]
+
+hook_add = '''
+nnoremap <silent><buffer><expr> <leader>oo :<C-u>lua require('ollama').prompt()<CR>
+nnoremap <silent><buffer><expr> <leader>oG :<C-u>lua require('ollama').prompt('Generate_Code')<CR>
+'''
+
 hook_source = '''
-  lua << EOF
-  local nvim_lsp = require('lspconfig')
+lua << EOF
 
-  local on_attach = function (client, bufnr)
-      local function buf_set_keymap(...) vim.api.nvim_buf_set_keymap(bufnr, ...) end
-      local function buf_set_option(...) vim.api.nvim_buf_set_option(bufnr, ...) end
+---@type Ollama.Config
+opts = {
+  model = "mistral",
+  url = "http://127.0.0.1:11434",
+  serve = {
+    on_start = false,
+    command = "ollama",
+    args = { "serve" },
+    stop_command = "pkill",
+    stop_args = { "-SIGTERM", "ollama" },
+  },
 
-      local opts = { noremap=true, silent=true }
-      buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-      buf_set_keymap('n', 'gD', '<cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-      buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-      buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-      buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-      buf_set_keymap('n', 'gs', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-      buf_set_keymap('n', '<C-k>', '<cmd>lua vim.lsp.buf.signature_help()<CR>', opts)
-      buf_set_keymap('n', 'gr', '<cmd>lua vim.lsp.buf.references()<CR>', opts)
-      buf_set_keymap('n', 'gx', '<cmd>lua vim.lsp.diagnostic.show_line_diagnostics()<CR>', opts)
-      buf_set_keymap('n', '<space>wa', '<cmd>lua vim.lsp.buf.add_workspace_folder()<CR>', opts)
-      buf_set_keymap('n', '<space>wr', '<cmd>lua vim.lsp.buf.remove_workspace_folder()<CR>', opts)
-      buf_set_keymap('n', '<space>wl', '<cmd>lua print(vim.inspect(vim.lsp.buf.list_workspace_folders()))<CR>', opts)
-      buf_set_keymap('n', '<space>D', '<cmd>lua vim.lsp.buf.type_definition()<CR>', opts)
-      buf_set_keymap('n', '<space>rn', '<cmd>lua vim.lsp.buf.rename()<CR>', opts)
-      buf_set_keymap('n', '<space>ca', '<cmd>lua vim.lsp.buf.code_action()<CR>', opts)
-      buf_set_keymap('n', '<space>e', '<cmd>lua vim.diagnostic.open_float()<CR>', opts)
-      buf_set_keymap('n', '[d', '<cmd>lua vim.diagnostic.goto_prev()<CR>', opts)
-      buf_set_keymap('n', ']d', '<cmd>lua vim.diagnostic.goto_next()<CR>', opts)
-      buf_set_keymap('n', '<space>q', '<cmd>lua vim.diagnostic.setloclist()<CR>', opts)
-      buf_set_keymap('n', '[Window]f', '<cmd>lua vim.lsp.buf.formatting()<CR>', opts)
-  end
+  -- View the actual default prompts in ./lua/ollama/prompts.lua
+  prompts = {
+    Sample_Prompt = {
+      prompt = "This is a sample prompt that receives $input and $sel(ection), among others.",
+      input_label = "> ",
+      model = "mistral",
+      action = "display",
+    }
+  }
+}
 
-  local lsp_installer = require("nvim-lsp-installer")
-  lsp_installer.on_server_ready(function(server)
-    local opts = {}
-    opts.on_attach = on_attach
-    server:setup(opts)
-    vim.cmd [[ do User LspAttachBuffers ]]
-  end)
 EOF
 '''
 
-[[plugins]]
-repo ='williamboman/nvim-lsp-installer'
-on_source = 'nvim-lspconfig'

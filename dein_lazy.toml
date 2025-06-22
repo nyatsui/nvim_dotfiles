@@ -573,3 +573,17 @@ opts = {
 EOF
 '''
 
+[[plugins]]
+repo = 'github/copilot.vim'
+
+[[plugins]]
+repo = 'CopilotC-Nvim/CopilotChat.nvim'
+depends = ['github/copilot.vim', 'nvim-lua/plenary.nvim']
+branch = 'canary'
+hook_source = '''
+lua << EOF
+require("CopilotChat").setup {
+  -- See Configuration section for options
+}
+EOF
+'''

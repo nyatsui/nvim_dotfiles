@@ -33,6 +33,7 @@ hook_source = '''
       \   'isVolatile': v:true,
       \ },
       \ 'lsp': {
+      \   'isVolatile': v:true,
       \   'mark': 'lsp',
       \   'forceCompletionPattern': '\.\w*|:\w*|->\w*'
       \ },
@@ -49,6 +50,16 @@ hook_source = '''
       \ 'shell-history': {'mark': 'shell'},
       \ })
 
+call ddc#custom#patch_global('sourceParams', #{
+      \   lsp: #{
+      \     snippetEngine: denops#callback#register({
+      \           body -> vsnip#anonymous(body)
+      \     }),
+      \     enableResolveItem: v:true,
+      \     enableAdditionalTextEdit: v:true,
+      \   }
+      \ })
+
   call ddc#custom#patch_filetype(['python'],
     \ 'sources',
     \ ['lsp', 'around']
@@ -63,6 +74,7 @@ hook_source = '''
       \ 'InsertEnter', 'TextChangedI', 'TextChangedP',
       \ 'CmdlineEnter', 'CmdlineChanged',
       \ ])
+
   call ddc#custom#patch_global('ui', 'pum')
   inoremap <C-n>       <Cmd>call pum#map#select_relative(+1)<CR>
   inoremap <C-p>       <Cmd>call pum#map#select_relative(-1)<CR>
@@ -134,4 +146,5 @@ on_source = 'ddc.vim'
 [[plugins]]
 repo = 'Shougo/ddc-omni'
 
-
+[[plugins]]
+repo = 'Shougo/ddc-source-cmdline_history'

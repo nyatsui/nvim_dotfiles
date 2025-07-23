@@ -1,54 +1,51 @@
 return {
-  -- LSPのインストーラー (Mason)
+  -- LSP管理のコア
   {
-    "williamboman/mason.nvim",
+    'williamboman/mason.nvim',
     config = function()
       require("mason").setup({
-        ui = {
-          icons = {
-            package_installed = "✓",
-            package_pending = "➜",
-            package_uninstalled = "✗",
-          },
+        -- 自動でインストールしてほしいツールをここに列挙
+        ensure_installed = {
+          "pyright",  -- Python LSP
+          "lua_ls",   -- Lua LSP
+          "flake8",   -- Python Linter
         },
       })
     end,
   },
 
-  -- MasonとLSP設定を繋ぐプラグイン
   {
-    "williamboman/mason-lspconfig.nvim",
-    dependencies = { "williamboman/mason.nvim", "neovim/nvim-lspconfig" },
+    'williamboman/mason-lspconfig.nvim',
+    dependencies = { 'mason.nvim', 'nvim-lspconfig' },
+  },
+
+  {
+    'neovim/nvim-lspconfig',
+    dependencies = { 'mason-lspconfig.nvim', "hrsh7th/cmp-nvim-lsp" },
     config = function()
-      -- require('user.lsp.setup') で共通設定を読み込む
-      local lsp_setup = require("user.lsp.setup")
+      local lspconfig = require('lspconfig')
+      local capabilities = require('cmp_nvim_lsp').default_capabilities() -- nvim-cmpと連携
 
+      -- on_attach関数 (LSPがバッファにアタッチされたときにキーマップを設定)
+      local on_attach = function(client, bufnr)
+        local map = function(mode, lhs, rhs, desc)
+          vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, desc = 'LSP: ' .. desc })
+        end
+        map('n', 'gd', vim.lsp.buf.definition, 'Go to Definition')
+        map('n', 'K', vim.lsp.buf.hover, 'Hover')
+        map('n', '<leader>ca', vim.lsp.buf.code_action, 'Code Action')
+        map('n', '<leader>rn', vim.lsp.buf.rename, 'Rename')
+      end
+
+      -- mason-lspconfigにサーバー設定を任せる
       require("mason-lspconfig").setup({
-        -- ここにインストールしたいLSPサーバー名を記述すると自動でインストールされる
         ensure_installed = { "pyright", "lua_ls" },
-
-        -- LSPサーバーごとのセットアップ
         handlers = {
-          -- デフォルトのハンドラ。大半のLSPはこれでOK。
+          -- デフォルトのハンドラ
           function(server_name)
             require("lspconfig")[server_name].setup({
-              on_attach = lsp_setup.on_attach,
-              capabilities = lsp_setup.capabilities,
-            })
-          end,
-
-          -- Python (pyright) 用に特別な設定を上書き
-          ["pyright"] = function()
-            require("lspconfig").pyright.setup({
-              on_attach = lsp_setup.on_attach,
-              capabilities = lsp_setup.capabilities,
-              settings = {
-                python = {
-                  analysis = {
-                    typeCheckingMode = "basic",
-                  },
-                },
-              },
+              on_attach = on_attach,
+              capabilities = capabilities,
             })
           end,
         },
@@ -56,25 +53,16 @@ return {
     end,
   },
 
-  -- LSP設定の本体
+  -- 静的解析 (ALEの代替)
   {
-    "neovim/nvim-lspconfig",
-    dependencies = { "hrsh7th/cmp-nvim-lsp" },
+    'mfussenegger/nvim-lint',
     config = function()
-      require("user.lsp.setup")
-    end,
-  },
-
-  -- 静的解析 (nvim-lint)
-  {
-    "mfussenegger/nvim-lint",
-    config = function()
-      local lint = require("lint")
+      local lint = require('lint')
       lint.linters_by_ft = {
-        python = { "flake8" },
+        python = { 'flake8' },
       }
       -- ファイル保存時に自動でlintを実行
-      vim.api.nvim_create_autocmd({ "BufWritePost" }, {
+      vim.api.nvim_create_autocmd({ 'BufWritePost' }, {
         callback = function()
           lint.try_lint()
         end,

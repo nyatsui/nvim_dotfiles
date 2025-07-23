@@ -12,7 +12,7 @@ opt.hidden = true -- バッファを隠すのを許可
 
 -- UI関連
 opt.number = true -- 行番号
-opt.relativenumber = true -- 相対行番号
+opt.relativenumber = false -- 相対行番号
 opt.cursorline = true -- カーソル行をハイライト
 opt.cursorcolumn = true -- カーソル列をハイライト
 opt.scrolloff = 8 -- スクロール時に上下8行の余裕を保つ

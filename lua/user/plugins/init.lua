@@ -21,6 +21,7 @@ local plugin_config_files = {
   "user.plugins.ai",
   "user.plugins.git",
   "user.plugins.editing",
+  "user.plugins.defx",
 }
 
 -- 各ファイルを読み込み、メインのpluginsリストに内容を結合していく

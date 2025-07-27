@@ -14,16 +14,13 @@ return {
     -- VeryLazyイベントで読み込むことで、起動時のパフォーマンスを向上させます
     event = "VeryLazy",
     config = function()
-      -- setup()は必要に応じて呼び出します（通常はデフォルトでOK）
       require("Comment").setup()
-
-      -- ★ こちらが修正後の正しいキーマップ設定です
-      local api = require("Comment.api")
-      vim.keymap.set({ "n", "v" }, "<C-/>", api.toggle.linewise.current, {
-        silent = true,
-        noremap = true,
-        desc = "Toggle comment",
-      })
+      -- Toggle in Op-pending mode
+      vim.keymap.set('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)')
+      vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
+      -- Toggle in VISUAL mode
+      vim.keymap.set('x', '<C-/>', '<Plug>(comment_toggle_linewise_visual)')
+      vim.keymap.set('x', '<C-_>', '<Plug>(comment_toggle_linewise_visual)')
     end,
   },
 

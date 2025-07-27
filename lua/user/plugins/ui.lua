@@ -32,6 +32,8 @@ return {
       require('lualine').setup({
         options = {
           theme = 'auto', -- カラースキームに合わせる
+          component_separators = { left = "", right = "" },
+          section_separators = { left = "", right = "" },
         },
       })
     end,
@@ -48,5 +50,10 @@ return {
   },
 
   { 'tpope/vim-repeat' },
-  { 'rhysd/accelerated-jk' },
+  { 'rhysd/accelerated-jk',
+    config = function()
+        vim.keymap.set("n", "<silent>j", "<Plug>(accelerated_jk_gj)")
+        vim.keymap.set("n", "<silent>k", "<Plug>(accelerated_jk_gk)")
+    end,
+  },
 }

@@ -14,8 +14,8 @@ local plugins = {}
 -- 読み込むプラグイン設定ファイルのリスト
 local plugin_config_files = {
   "user.plugins.ui",
-  "user.plugins.lsp",
-  "user.plugins.cmp",
+  -- "user.plugins.autocmd",
+  "user.plugins.completion",
   "user.plugins.ddu",
   "user.plugins.terminal",
   "user.plugins.ai",

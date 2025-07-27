@@ -26,4 +26,5 @@ vim.g.use_defx = true
 -- 他のすべての設定ファイルを読み込む
 require('user.core.options')
 require('user.core.keymaps')
+require('user.core.diagnostics')
 require('user.plugins') -- lazy.nvimのセットアップとプラグイン読み込み

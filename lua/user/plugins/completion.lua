@@ -18,7 +18,7 @@ return {
     dependencies = {
       "williamboman/mason.nvim",
       "williamboman/mason-lspconfig.nvim",
-      "hrsh7th/cmp-nvim-lsp", -- 依存関係を明記
+      "hrsh7th/cmp-nvim-lsp",
     },
     config = function()
       -- 1. nvim-cmpと連携するためのcapabilities（機能宣言）

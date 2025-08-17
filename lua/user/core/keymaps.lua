@@ -16,6 +16,8 @@ vim.keymap.set('n', '<leader>', '<Nop>', { noremap = true, silent = true, desc =
 noremap('n', '<C-S>', '<Cmd>update<CR>', 'Save buffer')
 noremap('i', '<C-S>', '<Esc><Cmd>update<CR>', 'Save buffer')
 
+-- noremap('x', 'p', 'pgv"'.v:register.'y`>')
+
 -- 行移動
 noremap('n', '<C-Up>', '"zdd<Up>"zP', 'Move line up')
 noremap('n', '<C-Down>', '"zdd"zp', 'Move line down')
@@ -87,3 +89,5 @@ map('x', '#', function()
   local final_keys = cmd_str .. "<Left><Left><Left>"
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>' .. final_keys, true, false, true), 'n', false)
 end, { desc = 'Replace selection' })
+
+vim.cmd("source ~/.config/nvim/vim_config/keymaps.vim")

@@ -22,6 +22,7 @@ local plugin_config_files = {
   "user.plugins.git",
   "user.plugins.editing",
   "user.plugins.defx",
+  "user.plugins.deol",
 }
 
 -- 各ファイルを読み込み、メインのpluginsリストに内容を結合していく

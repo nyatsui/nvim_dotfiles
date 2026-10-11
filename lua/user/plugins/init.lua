@@ -32,6 +32,11 @@ for _, file in ipairs(plugin_config_files) do
 end
 
 require("lazy").setup(plugins, {
+  -- dev = true のプラグインは ~/workspace/<名前> を優先し、無ければ GitHub から取得
+  dev = {
+    path = "~/workspace",
+    fallback = true,
+  },
   checker = {
     enabled = true,
     notify = true,

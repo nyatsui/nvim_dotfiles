@@ -18,6 +18,10 @@ noremap('i', '<C-S>', '<Esc><Cmd>update<CR>', 'Save buffer')
 
 -- noremap('x', 'p', 'pgv"'.v:register.'y`>')
 
+-- 折り返し時に表示行単位での移動できるようにする
+noremap('n', 'j', 'gj', 'Down')
+noremap('n', 'k', 'gk', 'Up')
+
 -- 行移動
 noremap('n', '<C-Up>', '"zdd<Up>"zP', 'Move line up')
 noremap('n', '<C-Down>', '"zdd"zp', 'Move line down')

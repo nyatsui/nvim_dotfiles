@@ -7,7 +7,7 @@ return {
       "Shougo/ddt-ui-terminal"
     },
     config = function()
-        vim.cmd("source ~/.config/nvim/vim_config/ddt.vim")
+        vim.cmd("source " .. vim.fn.fnameescape(vim.fn.stdpath("config") .. "/vim_config/ddt.vim"))
     end,
   },
 }

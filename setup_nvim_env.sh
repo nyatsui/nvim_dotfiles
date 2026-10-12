@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Neovimの設定ディレクトリパス
-NVIM_CONFIG_DIR="$HOME/.config/nvim"
+NVIM_CONFIG_DIR="${XDG_CONFIG_HOME:-$HOME/.config}/${NVIM_APPNAME:-nvim}"
 # 仮想環境のパス
 VENV_PATH="$NVIM_CONFIG_DIR/.venv"
 

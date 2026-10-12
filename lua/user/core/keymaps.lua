@@ -94,4 +94,4 @@ map('x', '#', function()
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>' .. final_keys, true, false, true), 'n', false)
 end, { desc = 'Replace selection' })
 
-vim.cmd("source ~/.config/nvim/vim_config/keymaps.vim")
+vim.cmd("source " .. vim.fn.fnameescape(vim.fn.stdpath("config") .. "/vim_config/keymaps.vim"))

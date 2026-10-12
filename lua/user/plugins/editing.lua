@@ -57,6 +57,41 @@ return {
   { "kana/vim-textobj-user" },
   { "kana/vim-textobj-fold", dependencies = { "kana/vim-textobj-user" } },
 
+  -- 整形 (conform.nvim)。保存時の自動整形はしない（会社のコードで無関係な差分を出さないため）。
+  -- <leader>cf / :Format で手動整形。選択範囲だけの整形にも対応（ruff_format など範囲対応の整形ツールのみ）。
+  -- 整形ツールは :MasonInstall ruff stylua で入れる。プロジェクトの pyproject.toml の設定が使われる。
+  {
+    "stevearc/conform.nvim",
+    cmd = { "ConformInfo" },
+    keys = {
+      {
+        "<leader>cf",
+        function()
+          require("conform").format({ async = true, lsp_format = "fallback" })
+        end,
+        mode = { "n", "x" },
+        desc = "Format buffer / selection",
+      },
+    },
+    opts = {
+      formatters_by_ft = {
+        python = { "ruff_fix", "ruff_organize_imports", "ruff_format" },
+        lua = { "stylua" },
+      },
+      default_format_opts = { lsp_format = "fallback" },
+    },
+    init = function()
+      vim.api.nvim_create_user_command("Format", function(args)
+        local range = nil
+        if args.count ~= -1 then
+          local last = vim.api.nvim_buf_get_lines(0, args.line2 - 1, args.line2, true)[1]
+          range = { start = { args.line1, 0 }, ["end"] = { args.line2, last:len() } }
+        end
+        require("conform").format({ async = true, lsp_format = "fallback", range = range })
+      end, { range = true, desc = "Format buffer (or range) with conform.nvim" })
+    end,
+  },
+
   -- その他
   { "editorconfig/editorconfig-vim" },
   { "chrismccord/bclose.vim" },

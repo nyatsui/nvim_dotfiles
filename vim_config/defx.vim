@@ -41,7 +41,7 @@ function! s:defx_my_settings() abort
   nnoremap <silent><buffer><expr> <C-l> defx#do_action('redraw')
   nnoremap <silent><buffer><expr> <C-g> defx#do_action('print')
   nnoremap <silent><buffer><expr> <Tab> winnr('$') != 1 ? ':<C-u>wincmd w<CR>' : ':<C-u>Defx -buffer-name=temp -split=vertical<CR>'
- nnoremap <silent><buffer><expr> Cdefx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
+  nnoremap <silent><buffer><expr> C defx#do_action('toggle_columns', 'mark:indent:icon:filename:type:size:time')
 endfunction
 
 call defx#custom#column('filename', {

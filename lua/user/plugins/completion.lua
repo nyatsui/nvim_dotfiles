@@ -24,28 +24,40 @@ return {
       -- 1. nvim-cmpと連携するためのcapabilities（機能宣言）
       local capabilities = require("cmp_nvim_lsp").default_capabilities()
 
-      -- 2. LSPがアタッチされたときの共通設定 (キーマップなど)
-      local on_attach = function(client, bufnr)
-        local map = function(mode, lhs, rhs, desc)
-          vim.keymap.set(mode, lhs, rhs, { silent = true, buffer = bufnr, desc = "LSP: " .. desc })
-        end
-        map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
-        map("n", "K", vim.lsp.buf.hover, "Hover")
-        map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
-        map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
-      end
+      -- すべてのLSPサーバーに capabilities を渡す (Neovim 0.11+ の vim.lsp.config)
+      vim.lsp.config("*", { capabilities = capabilities })
 
-      -- 3. mason-lspconfigを使ってサーバーをセットアップ
+      -- 2. LSPがアタッチされたときの共通設定 (キーマップなど)
+      -- mason-lspconfig v2 では handlers / on_attach が呼ばれないので LspAttach で設定する
+      vim.api.nvim_create_autocmd("LspAttach", {
+        group = vim.api.nvim_create_augroup("UserLspKeymaps", { clear = true }),
+        callback = function(args)
+          local bufnr = args.buf
+          local map = function(mode, lhs, rhs, desc, extra)
+            local o = { silent = true, buffer = bufnr, desc = "LSP: " .. desc }
+            vim.keymap.set(mode, lhs, rhs, vim.tbl_extend("force", o, extra or {}))
+          end
+          map("n", "gd", vim.lsp.buf.definition, "Go to Definition")
+          map("n", "gD", vim.lsp.buf.declaration, "Go to Declaration")
+          map("n", "gi", vim.lsp.buf.implementation, "Go to Implementation")
+          -- gr は Neovim 標準の grr / grn などの頭と重なるので nowait で待たずに実行
+          map("n", "gr", vim.lsp.buf.references, "References", { nowait = true })
+          map("n", "gs", vim.lsp.buf.signature_help, "Signature Help")
+          map("n", "K", vim.lsp.buf.hover, "Hover")
+          map("n", "<leader>D", vim.lsp.buf.type_definition, "Type Definition")
+          map("n", "<leader>ca", vim.lsp.buf.code_action, "Code Action")
+          map("n", "<leader>rn", vim.lsp.buf.rename, "Rename")
+          map("n", "<leader>q", vim.diagnostic.setloclist, "Diagnostics to location list")
+          -- 整形は conform.nvim (<leader>cf と同じ)
+          map({ "n", "x" }, "sf", function()
+            require("conform").format({ async = true, lsp_format = "fallback" })
+          end, "Format")
+        end,
+      })
+
+      -- 3. mason-lspconfigでサーバーを入れて自動で有効化 (v2 は automatic_enable)
       require("mason-lspconfig").setup({
         ensure_installed = { "pyright", "lua_ls" },
-        handlers = {
-          function(server_name)
-            require("lspconfig")[server_name].setup({
-              on_attach = on_attach,
-              capabilities = capabilities,
-            })
-          end,
-        },
       })
     end,
   },

@@ -22,6 +22,13 @@ noremap('i', '<C-S>', '<Esc><Cmd>update<CR>', 'Save buffer')
 noremap('n', 'j', 'gj', 'Down')
 noremap('n', 'k', 'gk', 'Up')
 
+-- コメントアウト: Neovim 0.10+ 組み込みの gc / gcc を使う
+-- (Comment.nvim は python や sh で "[Comment.nvim] nil" になりコメントできなかったので外した)
+map('n', '<C-/>', 'gcc', { remap = true, desc = 'Toggle comment' })
+map('n', '<C-_>', 'gcc', { remap = true, desc = 'Toggle comment' })
+map('x', '<C-/>', 'gc', { remap = true, desc = 'Toggle comment' })
+map('x', '<C-_>', 'gc', { remap = true, desc = 'Toggle comment' })
+
 -- 行移動
 noremap('n', '<C-Up>', '"zdd<Up>"zP', 'Move line up')
 noremap('n', '<C-Down>', '"zdd"zp', 'Move line down')

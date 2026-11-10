@@ -8,22 +8,6 @@ return {
     end,
   },
 
-  -- コメントアウト
-  {
-    "numToStr/Comment.nvim",
-    -- VeryLazyイベントで読み込むことで、起動時のパフォーマンスを向上させます
-    event = "VeryLazy",
-    config = function()
-      require("Comment").setup()
-      -- Toggle in Op-pending mode
-      vim.keymap.set('n', '<C-/>', '<Plug>(comment_toggle_linewise_current)')
-      vim.keymap.set('n', '<C-_>', '<Plug>(comment_toggle_linewise_current)')
-      -- Toggle in VISUAL mode
-      vim.keymap.set('x', '<C-/>', '<Plug>(comment_toggle_linewise_visual)')
-      vim.keymap.set('x', '<C-_>', '<Plug>(comment_toggle_linewise_visual)')
-    end,
-  },
-
   -- 整列
   {
     "junegunn/vim-easy-align",

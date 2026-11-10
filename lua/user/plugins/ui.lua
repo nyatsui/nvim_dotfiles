@@ -1,29 +1,4 @@
 return {
-  -- カラースキーム
-  {
-    'loctvl842/monokai-pro.nvim',
-    priority = 1000,
-    config = function()
-      require('monokai-pro').setup({
-        transparent_background = true, -- 背景透過
-        filter = 'pro',
-        terminal_colors = true,
-        devicons = true, -- highlight the icons of `nvim-web-devicons`
-        -- カーソル行やVisual選択、検索の色をここで設定
-        custom_highlights = {
-          Visual = { bg = '#303030' },
-          CursorLine = { bg = '#303030' },
-          Search = { bg = '#767676' },
-        },
-        -- コメントの色
-        custom_colors = {
-          comment = '#008800',
-        },
-      })
-      vim.cmd.colorscheme('monokai-pro')
-    end,
-  },
-
   -- ステータスライン
   {
     'nvim-lualine/lualine.nvim',

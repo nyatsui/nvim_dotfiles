@@ -43,7 +43,9 @@ return {
       { "<leader>ac", "<cmd>CoagentChanges<cr>", desc = "Coagent changes" },
     },
     opts = {
-      mode = "supervised",
+      -- judge.workspaces に無い作業ディレクトリでは supervised で動き、警告が出る
+      -- （そこで使うときは :CoagentMode judge で確認のうえ有効にする）
+      mode = "judge",
       model = "auto", -- Copilot Free では個別モデルを直接使えないため Auto を明示
       judge = {
         -- judge が ask と判断したコマンドは、こちらに聞かずにエージェントへ理由付きで戻す

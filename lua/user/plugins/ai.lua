@@ -45,6 +45,11 @@ return {
     opts = {
       mode = "supervised",
       model = "auto", -- Copilot Free では個別モデルを直接使えないため Auto を明示
+      judge = {
+        -- judge が ask と判断したコマンドは、こちらに聞かずにエージェントへ理由付きで戻す
+        -- （削除・作業ディレクトリ外・ネットワーク・インストールは従来どおりこちらに聞く）
+        on_ask = "agent",
+      },
     },
   },
 
